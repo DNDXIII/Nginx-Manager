@@ -9953,10 +9953,10 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\NB23160\\Documents\\Visual Studio 2017\\Projects\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+      "projectUniqueName": "D:\\Nginx-Manager\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
       "projectName": "WebApplication1",
-      "projectPath": "D:\\NB23160\\Documents\\Visual Studio 2017\\Projects\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
-      "outputPath": "D:\\NB23160\\Documents\\Visual Studio 2017\\Projects\\WebApplication1\\WebApplication1\\obj\\",
+      "projectPath": "D:\\Nginx-Manager\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+      "outputPath": "D:\\Nginx-Manager\\WebApplication1\\WebApplication1\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"
