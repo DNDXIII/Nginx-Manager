@@ -31,11 +31,10 @@ namespace WebApplication1.Controllers
         [HttpGet("list")]
         public IActionResult GetFilter(string _sort, string _order = "ASC", int _start = 0, int _end = 24)
         {
-            int a = 1;
 
-            var svrs = _serverRepository.GetMany(Request.Query);
+            var svrs = _serverRepository.GetList(_sort, _order, _start, _end);
 
-            if (svrs.Count() == 0)
+            if (svrs ==null|| svrs.Count() == 0)
                 return NotFound();
 
             return Ok(svrs);

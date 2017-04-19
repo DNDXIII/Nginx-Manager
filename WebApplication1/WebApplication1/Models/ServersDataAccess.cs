@@ -86,30 +86,33 @@ namespace WebApplication1.Models
             await _serverCollection.ReplaceOneAsync(filter, sv);
         }
 
-        public IEnumerable<Server> GetMany(IQueryCollection query)
+        public IEnumerable<Server> GetList(string sort, string order, int start, int end)
         {
-             return GetManyAsync(query).Result;
+            List<Server> svs = GetListAsync(sort,order).Result.ToList();
+
+            if (svs.Count() - start > end - start)
+                return svs.GetRange(start, (end - start));
+            else
+                if (svs.Count() > start)
+                  return svs.GetRange(start, (svs.Count - start));
+                else
+                  return null;
         }
 
-        private async Task<IEnumerable<Server>> GetManyAsync(IQueryCollection query)
+        private async Task<IEnumerable<Server>> GetListAsync(string sort, string order)
         {
-
-            IEnumerable<Server> res = new List<Server>();
-            FilterDefinition<Server> filter = new BsonDocument();
-            Char[] chars = { '{', '}' };
-            foreach (String key in query.Keys)
-            {
-                String value = query[key].ToString().Trim(chars);
-
-                filter = filter & Builders<Server>.Filter.Eq(FirstCharToUpper(key), value);
-
-            }
-            return await (_serverCollection.Find(filter).ToListAsync());
+            var filter = new BsonDocument();
+            if(order=="ASC")
+                return (await _serverCollection.Find(filter).Sort(Builders<Server>.Sort.Ascending(order)).ToListAsync());
+            else
+                return (await _serverCollection.Find(filter).Sort(Builders<Server>.Sort.Descending(order)).ToListAsync());
         }
 
+
+        /*
         private static string FirstCharToUpper(string input)
         {
             return input.First().ToString().ToUpper() + input.Substring(1);
-        }
+        }*/
     }
 }

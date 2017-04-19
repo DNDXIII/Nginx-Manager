@@ -14,6 +14,6 @@ namespace WebApplication1.Models
         Server GetById(int id);
         void Delete(int sv);
         void Update(Server sv);
-        IEnumerable<Server> GetMany(IQueryCollection query);
+        IEnumerable<Server> GetList(string sort, string order, int start, int end);
     }
 }
