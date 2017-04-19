@@ -15,9 +15,9 @@ import {
  * The REST dialect is similar to the one of FakeRest
  * @see https://github.com/marmelab/FakeRest
  * @example
- * GET_LIST     => GET http://my.api.url/posts?sort=['title','ASC']&range=[0, 24]
+ * GET_LIST     => GET http://my.api.url/posts?_sort=title&_order=ASC&_start=0&_end=24
  * GET_ONE      => GET http://my.api.url/posts/123
- * GET_MANY     => GET http://my.api.url/posts?filter={ids:[123,456,789]}
+ * GET_MANY     => GET http://my.api.url/posts/123, GET http://my.api.url/posts/456, GET http://my.api.url/posts/789
  * UPDATE       => PUT http://my.api.url/posts/123
  * CREATE       => POST http://my.api.url/posts/123
  * DELETE       => DELETE http://my.api.url/posts/123
@@ -33,27 +33,24 @@ export default (apiUrl, httpClient = fetchJson) => {
         let url = '';
         const options = {};
         switch (type) {/*
-        case GET_LIST: {
+         case GET_LIST: {
             const { page, perPage } = params.pagination;
             const { field, order } = params.sort;
             const query = {
-                sort: JSON.stringify([field, order]),
-                range: JSON.stringify([(page - 1) * perPage, (page * perPage) - 1]),
-                filter: JSON.stringify(params.filter),
+                ...params.filter,
+                _sort: field,
+                _order: order,
+                _start: (page - 1) * perPage,
+                _end: page * perPage,
             };
-            url = `${apiUrl}/${resource}?${queryParameters(query)}`;
+            url = `${apiUrl}/${resource}/list?${queryParameters(query)}`;
             break;
+        }
         }*/
         case GET_ONE:
             url = `${apiUrl}/${resource}/${params.restId}`;
             break;
-      /*  case GET_MANY: {
-            const query = {
-                filter: JSON.stringify({ restId: params.ids }),
-            };
-            url = `${apiUrl}/${resource}?${queryParameters(query)}`;
-            break;
-        }
+      /*  
         case GET_MANY_REFERENCE: {
             const { page, perPage } = params.pagination;
             const { field, order } = params.sort;
@@ -118,6 +115,11 @@ export default (apiUrl, httpClient = fetchJson) => {
      * @returns {Promise} the Promise for a REST response
      */
     return (type, resource, params) => {
+        if (type === GET_MANY) {
+            return Promise.all(params.ids.map(restId => httpClient(`${apiUrl}/${resource}/${restId}`)))
+                .then(responses => ({ data: responses.map(response => response.json) }));
+        }
+
         const { url, options } = convertRESTRequestToHTTP(type, resource, params);
         return httpClient(url, options)
             .then(response => convertHTTPResponseToREST(response, type, resource, params));

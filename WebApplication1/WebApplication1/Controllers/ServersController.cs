@@ -27,21 +27,12 @@ namespace WebApplication1.Controllers
             return _serverRepository.GetAll();
         }
 
-        // GET api/values/5
-        [HttpGet("{id}", Name = "GetServer")]
-        public IActionResult Get(int id)
+        //Get api/values?_sort=title&_order=ASC&_start=0&_end=24     /{order=ASC}/{start=0}/{end=24}
+        [HttpGet("list")]
+        public IActionResult GetFilter(string _sort, string _order = "ASC", int _start = 0, int _end = 24)
         {
-            var sv = _serverRepository.GetById(id);
-            if (sv == null)
-                return NotFound();
+            int a = 1;
 
-            return Ok(sv);
-        }
-        //Get api/values/many?name=server1&ip=192.2.1.5
-        [Route("many")]
-        [HttpGet]
-        public IActionResult GetFilter()
-        {
             var svrs = _serverRepository.GetMany(Request.Query);
 
             if (svrs.Count() == 0)
@@ -50,6 +41,18 @@ namespace WebApplication1.Controllers
             return Ok(svrs);
         }
 
+
+        // GET api/values/5
+        [HttpGet("{id:int}", Name = "GetServer")]
+        public IActionResult Get(int id)
+        {
+            var sv = _serverRepository.GetById(id);
+            if (sv == null)
+                return NotFound();
+
+            return Ok(sv);
+        }
+       
         // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody]Server value)

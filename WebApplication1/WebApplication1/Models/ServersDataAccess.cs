@@ -96,10 +96,11 @@ namespace WebApplication1.Models
 
             IEnumerable<Server> res = new List<Server>();
             FilterDefinition<Server> filter = new BsonDocument();
+            Char[] chars = { '{', '}' };
             foreach (String key in query.Keys)
             {
-                Char[] chars = { '{', '}' };
                 String value = query[key].ToString().Trim(chars);
+
                 filter = filter & Builders<Server>.Filter.Eq(FirstCharToUpper(key), value);
 
             }
