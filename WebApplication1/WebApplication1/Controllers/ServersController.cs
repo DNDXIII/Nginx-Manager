@@ -12,9 +12,9 @@ namespace WebApplication1.Controllers
     [Route("api/servers")]
     public class ServersController : Controller
     {
-        private readonly IServersRepository _serverRepository;
+        private readonly IRepository<Server> _serverRepository;
 
-        public ServersController(IServersRepository serverRepository)
+        public ServersController(IRepository<Server> serverRepository)
         {
             _serverRepository = serverRepository;
         }
@@ -23,7 +23,6 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public IEnumerable<Server> Get()
         {
-
             return _serverRepository.GetAll();
         }
 
@@ -42,8 +41,8 @@ namespace WebApplication1.Controllers
 
 
         // GET api/values/5
-        [HttpGet("{id:int}", Name = "GetServer")]
-        public IActionResult Get(int id)
+        [HttpGet("{id}", Name = "GetServer")]
+        public IActionResult Get(string id)
         {
             var sv = _serverRepository.GetById(id);
             if (sv == null)
@@ -59,18 +58,14 @@ namespace WebApplication1.Controllers
             if (value == null)
                 return BadRequest();
 
-            var sv = _serverRepository.GetById(value.RestId);
-
-            if (sv != null)
-                return BadRequest();
-
             var createdSv = _serverRepository.Add(value);
-            return CreatedAtRoute("GetServer", new { id = createdSv.Id }, createdSv);
+
+            return Json(createdSv);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]Server value)
+        public IActionResult Put(string id, [FromBody]Server value)
         {
             if (value == null)
                 return BadRequest();
@@ -80,17 +75,16 @@ namespace WebApplication1.Controllers
             if (note == null)
                 return NotFound();
 
-            if (note.RestId != value.RestId)
-                return BadRequest();
+           
 
-            _serverRepository.Update(value);
+            _serverRepository.Update(id, value);
 
             return new OkResult();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string id)
         { 
             var sv = _serverRepository.GetById(id);
             if (sv == null)

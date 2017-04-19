@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Reflection;
-
+using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace WebApplication1.Models
 {
-    public class Server
-    {
-        public ObjectId Id { get; set; }
-        [BsonElement("RestId")]
-        public int RestId { get; set; }
+    public class Server { 
+        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+        public string Id { get; set; }
         [BsonElement("Name")]
         public string Name { get; set; }
         [BsonElement("Ip")]
