@@ -28,7 +28,7 @@ namespace WebApplication1.Models
 
             foreach (var up in _upstreams.Values)
             {
-                var i = 0;//to count wich server im on
+                var i = 0;//to count wich of the upstream's servers im on
                 strb.AppendLine("upstream " + up.Name + " {");
 
                 var pType = _proxyTypes[up.ProxyTypeId];
