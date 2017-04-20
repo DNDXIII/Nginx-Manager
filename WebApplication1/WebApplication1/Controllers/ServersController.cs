@@ -19,29 +19,29 @@ namespace WebApplication1.Controllers
             _serverRepository = serverRepository;
         }
 
-        // GET: api/values
+        //since i couldnt find a way to make a specific route using only the query string
+        // GET: api/values || Get: api/servers?_sort=title&_order=sdf&_start=1&_end=2
         [HttpGet]
-        public IEnumerable<Server> Get()
+        public IActionResult Get([FromQuery] string _sort, [FromQuery] string _order = "ASC", [FromQuery] int _start = 0, [FromQuery] int _end = 24)
         {
-            return _serverRepository.GetAll();
+            if (_sort == null) { 
+           
+                return Ok(_serverRepository.GetAll());
+            }
+            else
+            {
+                var svrs = _serverRepository.GetList(_sort, _order, _start, _end);
+
+                if (svrs == null || svrs.Count() == 0)
+                    return NotFound();
+
+                return Ok(svrs);
+            }
+
         }
-
-        //Get api/values?_sort=title&_order=ASC&_start=0&_end=24     /{order=ASC}/{start=0}/{end=24}
-        [HttpGet("list")]
-        public IActionResult GetFilter(string _sort, string _order = "ASC", int _start = 0, int _end = 24)
-        {
-
-            var svrs = _serverRepository.GetList(_sort, _order, _start, _end);
-
-            if (svrs ==null|| svrs.Count() == 0)
-                return NotFound();
-
-            return Ok(svrs);
-        }
-
-
+       
         // GET api/values/5
-        [HttpGet("{id}", Name = "GetServer")]
+        [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
             var sv = _serverRepository.GetById(id);
