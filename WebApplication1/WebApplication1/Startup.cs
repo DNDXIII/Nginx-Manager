@@ -31,6 +31,8 @@ namespace WebApplication1
         {
             services.AddScoped<IRepository<Upstream>, UpstreamDataAccess>();
             services.AddScoped<IRepository<Server>, ServersDataAccess>();
+            services.AddScoped<IRepository<ProxyType>, ProxyTypeDataAccess>();
+
 
 
 

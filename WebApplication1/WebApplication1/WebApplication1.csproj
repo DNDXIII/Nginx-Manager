@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\NginxGenConfigController.cs" />
+    <Compile Remove="Models\NGINXConfig.cs" />
     <Compile Remove="Models\UpstreamRepository.cs" />
   </ItemGroup>
 

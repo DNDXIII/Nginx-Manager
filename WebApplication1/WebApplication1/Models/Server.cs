@@ -7,6 +7,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Reflection;
 using MongoDB.Bson.Serialization.IdGenerators;
+using System.Text;
 
 namespace WebApplication1.Models
 {
@@ -19,6 +20,17 @@ namespace WebApplication1.Models
         public string Ip { get; set; }
         [BsonElement("Port")]
         public int Port { get; set; }
-       
+
+        public string GenerateConfig()//TODO
+        {
+            var strb = new StringBuilder();
+
+
+
+            return strb.ToString();
+        }
+
     }
+
+    
 }
