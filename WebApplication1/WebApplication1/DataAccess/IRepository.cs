@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace WebApplication1.Models
+namespace WebApplication1.DataAccess
 {
     public interface IRepository<E>
     {
