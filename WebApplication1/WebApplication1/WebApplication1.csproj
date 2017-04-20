@@ -5,9 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\UpstreamsController.cs" />
-    <Compile Remove="DataAccess\UpstreamDataAccess.cs" />
-    <Compile Remove="Models\Upstream.cs" />
     <Compile Remove="Models\UpstreamRepository.cs" />
   </ItemGroup>
 

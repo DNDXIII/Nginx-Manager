@@ -99,11 +99,17 @@ namespace WebApplication1.Models
 
         private async Task<IEnumerable<E>> GetListAsync(string sort, string order)
         {
+            var _sort = FirstCharToUpper(sort);//name=> Name
             var filter = new BsonDocument();
             if(order=="ASC")
-                return (await _collection.Find(filter).Sort(Builders<E>.Sort.Ascending(order)).ToListAsync());
+                return (await _collection.Find(filter).Sort(Builders<E>.Sort.Ascending(_sort)).ToListAsync());
             else
-                return (await _collection.Find(filter).Sort(Builders<E>.Sort.Descending(order)).ToListAsync());
+                return (await _collection.Find(filter).Sort(Builders<E>.Sort.Descending(_sort)).ToListAsync());
+        }
+
+        private string FirstCharToUpper(string input)
+        {
+            return input.First().ToString().ToUpper() + input.Substring(1);
         }
     }
 }
