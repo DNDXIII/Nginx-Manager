@@ -9,8 +9,6 @@ namespace WebApplication1.Models
 {
     public class Location
     {
-        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
-        public string Id { get; set; }
         [BsonElement("Path")]
         public string Path { get; set; }
         [BsonElement("Pass")]

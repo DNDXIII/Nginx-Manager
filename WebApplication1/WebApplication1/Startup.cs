@@ -32,9 +32,13 @@ namespace WebApplication1
             UpstreamDataAccess u = new UpstreamDataAccess();
             ServersDataAccess s = new ServersDataAccess();
             ProxyTypeDataAccess p = new ProxyTypeDataAccess();
+            VirtualServerDataAccess vs = new VirtualServerDataAccess();
+
             services.AddSingleton<IRepository<Upstream>>(u);
             services.AddSingleton<IRepository<Server>>(s);
             services.AddSingleton<IRepository<ProxyType>>(p);
+            services.AddSingleton<IRepository<VirtualServer>>(vs);
+
 
             services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p));
 
