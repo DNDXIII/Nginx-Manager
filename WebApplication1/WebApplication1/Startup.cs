@@ -40,7 +40,7 @@ namespace WebApplication1
             services.AddSingleton<IRepository<VirtualServer>>(vs);
 
 
-            services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p));
+            services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p, vs));
 
             // Add framework services.
             services.AddMvc();

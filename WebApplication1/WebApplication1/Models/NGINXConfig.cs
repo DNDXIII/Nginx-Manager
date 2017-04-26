@@ -21,6 +21,11 @@ namespace WebApplication1.Models
                 strb.AppendLine(up.GenerateConfig(allRep));
             }
 
+            foreach(var vs in allRep.VirtualServerRep.GetAll())
+            {
+                strb.AppendLine(vs.GenerateConfig(allRep));
+            }
+
             return strb.ToString();
         }
 

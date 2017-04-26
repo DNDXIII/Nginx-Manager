@@ -37,9 +37,9 @@ namespace WebApplication1.Models
             var strb = new StringBuilder();
             var pType = allRep.ProxyTypeRep.GetById(ProxyTypeId);
 
-            strb.AppendLine("upstream " + Name.Replace(" ", String.Empty) + " {");
+            strb.AppendLine("upstream " + Name.Replace(" ", "_") + " {");
             if(pType.ProxyValue != "")
-                strb.AppendLine("   " + pType.ProxyValue);            
+                strb.AppendLine("   " + pType.ProxyValue + ";");            
 
             for(int i = 0; i < ServerIds.Count; i++)
             {

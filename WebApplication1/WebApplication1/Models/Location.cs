@@ -3,7 +3,9 @@ using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using WebApplication1.DataAccess;
 
 namespace WebApplication1.Models
 {
@@ -20,6 +22,21 @@ namespace WebApplication1.Models
         public Location()
         {
             PassType = "proxy_pass";
+        }
+
+        public string GenerateConfig(AllRepositories allRep)
+        {
+            var strb = new StringBuilder();
+
+            strb.AppendLine("   location " + Path + " {");
+
+            strb.AppendLine("       " + PassType + " " + allRep.UpstreamRep.GetById(Pass).Name.Replace(" ", "_") + ";");
+           
+
+            strb.AppendLine("   }");
+
+
+            return strb.ToString();
         }
     }
 }
