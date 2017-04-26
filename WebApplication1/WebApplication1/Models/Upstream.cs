@@ -6,7 +6,6 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using System.Text;
-using WebApplication1.DataAccess;
 
 namespace WebApplication1.Models
 {
@@ -32,21 +31,12 @@ namespace WebApplication1.Models
             Weights = new int[] { };
         }
 
-        public string GenerateConfig(AllRepositories allRep)
+        public string GenerateConfig()
         {
             var strb = new StringBuilder();
-            var pType = allRep.ProxyTypeRep.GetById(ProxyTypeId);
 
-            strb.AppendLine("upstream " + Name.Replace(" ", String.Empty) + " {");
-            if(pType.ProxyValue != "")
-                strb.AppendLine("   " + pType.ProxyValue);            
+            strb.AppendLine("upstream " + Name + " {");
 
-            for(int i = 0; i < ServerIds.Count; i++)
-            {
-                strb.Append(allRep.ServerRep.GetById(ServerIds[i]).GenerateConfig(this, pType.Name, i));
-            }
-
-            strb.AppendLine("}");
 
             return strb.ToString();
         }

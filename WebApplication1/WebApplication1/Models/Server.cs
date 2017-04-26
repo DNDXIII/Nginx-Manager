@@ -21,16 +21,11 @@ namespace WebApplication1.Models
         [BsonElement("Port")]
         public int Port { get; set; }
 
-        public string GenerateConfig(Upstream up, string pType, int i)//TODO
+        public string GenerateConfig()//TODO
         {
             var strb = new StringBuilder();
 
-            strb.Append("   server " + Address + ":" + Port);
 
-            if (pType == "Weighted Load Balancing")
-                strb.Append(" weight=" + up.Weights[i]);
-
-            strb.AppendLine(";");
 
             return strb.ToString();
         }

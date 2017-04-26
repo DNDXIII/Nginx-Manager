@@ -29,14 +29,12 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            UpstreamDataAccess u = new UpstreamDataAccess();
-            ServersDataAccess s = new ServersDataAccess();
-            ProxyTypeDataAccess p = new ProxyTypeDataAccess();
-            services.AddSingleton<IRepository<Upstream>>(u);
-            services.AddSingleton<IRepository<Server>>(s);
-            services.AddSingleton<IRepository<ProxyType>>(p);
+            services.AddSingleton<IRepository<Upstream>>(new UpstreamDataAccess());
+            services.AddSingleton<IRepository<Server>>(new ServersDataAccess());
+            services.AddSingleton<IRepository<ProxyType>>(new ProxyTypeDataAccess());
 
-            services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p));
+
+
 
             // Add framework services.
             services.AddMvc();
