@@ -38,6 +38,7 @@ namespace WebApplication1.Models
                 foreach(var svId in up.ServerIds)
                 {
                     var sv = _servers[svId];
+
                     strb.Append("   server " + sv.Ip + ":" + sv.Port );
 
                     if (pType.Name == "Weighted Load Balancing")

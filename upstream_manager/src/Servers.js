@@ -14,7 +14,7 @@ export const ServerList=(servers)=> (
     <List {...servers} filters={<ServerFilter/>}>
         <Datagrid>
             <TextField source="name" />
-            <TextField source="ip"/>
+            <TextField source="address"/>
             <TextField source="port"/>
             <EditButton/>
         </Datagrid>
@@ -25,7 +25,7 @@ export const ServerEdit=(servers)=> (
     <Edit title={<EntityName/>}  {...servers}>
         <SimpleForm >
             <TextInput source="name" defaultValue="" validation={{ required: true }} />
-            <TextInput source="ip" defaultValue="" validation={{ required: true }}/>
+            <TextInput source="address" defaultValue="" validation={{ required: true }}/>
             <NumberInput source="port" defaultValue="" validation={{ required: true , min:0, max:65535}}/>
             <button>ehueheu</button>
         </SimpleForm>
@@ -36,7 +36,7 @@ export const ServerCreate=(servers)=>(
     <Create {...servers }>
         <SimpleForm >
             <TextInput source="name" defaultValue="" validation={{ required: true }} />
-            <TextInput source="ip" defaultValue="" validation={{ required: true }}/>
+            <TextInput source="address" defaultValue="" validation={{ required: true }}/>
             <NumberInput source="port" defaultValue="" validation={{ required: true, min:0, max:65535 }}/>
 
         </SimpleForm>

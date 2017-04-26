@@ -16,8 +16,8 @@ namespace WebApplication1.Models
         public string Id { get; set; }
         [BsonElement("Name")]
         public string Name { get; set; }
-        [BsonElement("Ip")]
-        public string Ip { get; set; }
+        [BsonElement("Address")]
+        public string Address { get; set; }
         [BsonElement("Port")]
         public int Port { get; set; }
 
