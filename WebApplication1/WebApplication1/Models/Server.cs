@@ -21,7 +21,7 @@ namespace WebApplication1.Models
         [BsonElement("Port")]
         public int Port { get; set; }
 
-        public string GenerateConfig(Upstream up, string pType)//TODO
+        public string GenerateConfig(Upstream up, string pType, int i)//TODO
         {
             var strb = new StringBuilder();
 

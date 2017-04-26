@@ -19,8 +19,8 @@ namespace WebApplication1.Controllers
             _config = new NGINXConfig();
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        [HttpGet]
+        public IActionResult Get()
         {
             return Ok(_config.GenerateConfig(_allRep));
         }
