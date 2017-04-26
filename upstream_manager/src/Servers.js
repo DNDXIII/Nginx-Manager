@@ -27,7 +27,6 @@ export const ServerEdit=(servers)=> (
             <TextInput source="name" defaultValue="" validation={{ required: true }} />
             <TextInput source="address" defaultValue="" validation={{ required: true }}/>
             <NumberInput source="port" defaultValue="" validation={{ required: true , min:0, max:65535}}/>
-            <button>ehueheu</button>
         </SimpleForm>
     </Edit>
 );

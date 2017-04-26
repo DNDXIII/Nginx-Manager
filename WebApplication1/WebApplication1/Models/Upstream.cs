@@ -6,6 +6,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using System.Text;
+using WebApplication1.DataAccess;
 
 namespace WebApplication1.Models
 {
@@ -25,6 +26,7 @@ namespace WebApplication1.Models
         public int FailTimeout { get; set; }
         [BsonElement("Weights")]
         public int[] Weights { get; set; }
+        private AllRepositories allRep;
 
         public Upstream()
         {
@@ -34,9 +36,17 @@ namespace WebApplication1.Models
         public string GenerateConfig()
         {
             var strb = new StringBuilder();
+            var pType = allRep._proxyRep.GetById(ProxyTypeId);
 
             strb.AppendLine("upstream " + Name + " {");
+            strb.AppendLine(pType.ProxyValue);            
 
+            for(int i = 0; i < ServerIds.Count; i++)
+            {
+                strb.Append(allRep._svRep.GetById(ServerIds[i]).GenerateConfig(this, pType.Name));
+            }
+
+            strb.AppendLine("}");
 
             return strb.ToString();
         }
