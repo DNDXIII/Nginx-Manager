@@ -26,12 +26,15 @@ namespace WebApplication1.Models
         public int FailTimeout { get; set; }
         [BsonElement("Weights")]
         public int[] Weights { get; set; }
-
+        
+        [BsonElement("FreeText")]
+        public string FreeText { get; set; }
+        
         public Upstream()
         {
             Weights = new int[] { };
+            FreeText="";
         }
-
         public string GenerateConfig(AllRepositories allRep)
         {
             var strb = new StringBuilder();
@@ -45,6 +48,8 @@ namespace WebApplication1.Models
             {
                 strb.Append(allRep.ServerRep.GetById(ServerIds[i]).GenerateConfig(this, pType.Name, i));
             }
+
+            strb.AppendLine(FreeText);
 
             strb.AppendLine("}");
 

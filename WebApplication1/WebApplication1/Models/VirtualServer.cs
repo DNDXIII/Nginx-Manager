@@ -20,6 +20,12 @@ namespace WebApplication1.Models
 
         [BsonElement("Locations")]
         public List<Location> Locations { get; set; }
+        [BsonElement("FreeText")]
+        public string FreeText { get; set; }
+
+        public VirtualServer(){
+            FreeText="";
+        }
 
         public string GenerateConfig(AllRepositories allRep)
         {
@@ -33,6 +39,9 @@ namespace WebApplication1.Models
             {
                 strb.AppendLine(l.GenerateConfig(allRep));
             }
+
+            strb.AppendLine(FreeText);
+
 
             strb.AppendLine("}");
 

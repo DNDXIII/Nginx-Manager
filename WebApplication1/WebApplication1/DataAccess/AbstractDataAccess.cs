@@ -13,14 +13,13 @@ namespace WebApplication1.DataAccess
 
         private IMongoClient _client;
         private IMongoDatabase _db;
-        private IMongoCollection<E> _collection;
+        protected IMongoCollection<E> _collection;
 
         public AbstractDataAccess(string name)
         {
             _client = new MongoClient();
             _db = _client.GetDatabase("NginxDB");
             _collection = _db.GetCollection<E>(name);
-
         }
 
         public E Add(E e)

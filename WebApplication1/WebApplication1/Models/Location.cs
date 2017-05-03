@@ -17,11 +17,14 @@ namespace WebApplication1.Models
         public string Pass { get; set; }
         [BsonElement("PassType")]
         public string PassType { get; set; }
+        [BsonElement("FreeText")]
+        public string FreeText { get; set; }
 
 
         public Location()
         {
             PassType = "proxy_pass";
+            FreeText="";
         }
 
         public string GenerateConfig(AllRepositories allRep)
@@ -32,6 +35,8 @@ namespace WebApplication1.Models
 
             strb.AppendLine("       " + PassType + " " + allRep.UpstreamRep.GetById(Pass).Name.Replace(" ", "_") + ";");
            
+            strb.AppendLine(FreeText);
+
 
             strb.AppendLine("   }");
 
