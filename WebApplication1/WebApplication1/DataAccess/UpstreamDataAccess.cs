@@ -11,7 +11,6 @@ namespace WebApplication1.DataAccess
     public class UpstreamDataAccess : AbstractDataAccess<Upstream>
     {
         public UpstreamDataAccess() : base("Upstreams") {
-            _collection.Indexes.CreateOneAsync(Builders<Upstream>.IndexKeys.Ascending(_=>_.Name));
          }     
     }
 }

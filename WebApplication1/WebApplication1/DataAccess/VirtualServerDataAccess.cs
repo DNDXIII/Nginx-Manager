@@ -11,7 +11,6 @@ namespace WebApplication1.DataAccess
     public class VirtualServerDataAccess :AbstractDataAccess<VirtualServer>
     {   
         public VirtualServerDataAccess() : base("VirtualServers"){ 
-            _collection.Indexes.CreateOneAsync(Builders<VirtualServer>.IndexKeys.Ascending(_=>_.Name));
         }
     }
 }

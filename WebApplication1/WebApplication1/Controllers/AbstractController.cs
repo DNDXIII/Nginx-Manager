@@ -55,12 +55,16 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]E value)
         {
+            try{
             if (value == null)
                 return BadRequest();
 
             var createdE = _repository.Add(value);
 
             return Ok(createdE);
+            }catch{
+                return BadRequest();
+            }
         }
 
         // PUT api/values/5

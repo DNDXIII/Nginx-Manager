@@ -11,8 +11,8 @@ namespace WebApplication1.DataAccess
 {
     public class ServersDataAccess : AbstractDataAccess<Server>
     {
-        public ServersDataAccess() : base("Servers") {
-            _collection.Indexes.CreateOneAsync(Builders<Server>.IndexKeys.Ascending(_=>_.Name));
-         }
-    }
+        public ServersDataAccess() : base("Servers"){
+           
+        }
+    }    
 }

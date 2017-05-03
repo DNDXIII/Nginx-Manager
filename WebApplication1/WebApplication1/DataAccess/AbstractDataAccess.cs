@@ -22,15 +22,32 @@ namespace WebApplication1.DataAccess
             _collection = _db.GetCollection<E>(name);
         }
 
-        public E Add(E e)
+        public async void GenerateIndexesAsync()//TODO
         {
-            AddAsync(e);
-            return e;
+            var options = new CreateIndexOptions() { Unique = true };
+            var field = new StringFieldDefinition<E>("Name");
+            var indexDefinition = new IndexKeysDefinitionBuilder<E>().Ascending(field);
+            await _collection.Indexes.CreateOneAsync(indexDefinition, options);
+        }
+    
+
+        public E Add(E e)
+        { 
+            try{
+                AddAsync(e);
+                return e;   
+            }catch{//TODO
+                throw;
+            }
         }
 
-        private async void AddAsync(E e)
+        private async void AddAsync(E e) 
         {
-            await _collection.InsertOneAsync(e);
+            try{//TODO
+                await _collection.InsertOneAsync(e);
+            }catch{
+                throw ;
+            }
 
         }
 

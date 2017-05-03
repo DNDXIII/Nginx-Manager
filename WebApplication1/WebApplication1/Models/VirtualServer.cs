@@ -17,14 +17,14 @@ namespace WebApplication1.Models
         public string Name { get; set; }
         [BsonElement("Listen")]
         public int Listen { get; set; }
-
         [BsonElement("Locations")]
         public List<Location> Locations { get; set; }
         [BsonElement("FreeText")]
         public string FreeText { get; set; }
+        [BsonElement("SSL")]
+        public bool SSL { get; set; }
 
         public VirtualServer(){
-            FreeText="";
         }
 
         public string GenerateConfig(AllRepositories allRep)
@@ -35,12 +35,19 @@ namespace WebApplication1.Models
             strb.AppendLine("   listen " + Listen +";");
             strb.AppendLine("   server_name " + Name.Replace(" ", "_") + ";\n");
 
+            if(SSL){
+                strb.AppendLine("   ssl on;");
+            }
+
+
             foreach(var l in Locations)
             {
                 strb.AppendLine(l.GenerateConfig(allRep));
             }
 
-            strb.AppendLine(FreeText);
+               
+           if(FreeText!=null)
+                strb.AppendLine(FreeText);
 
 
             strb.AppendLine("}");

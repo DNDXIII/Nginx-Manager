@@ -24,7 +24,6 @@ namespace WebApplication1.Models
         public Location()
         {
             PassType = "proxy_pass";
-            FreeText="";
         }
 
         public string GenerateConfig(AllRepositories allRep)
@@ -35,7 +34,8 @@ namespace WebApplication1.Models
 
             strb.AppendLine("       " + PassType + " " + allRep.UpstreamRep.GetById(Pass).Name.Replace(" ", "_") + ";");
            
-            strb.AppendLine(FreeText);
+           if(FreeText!=null)
+                strb.AppendLine(FreeText);
 
 
             strb.AppendLine("   }");

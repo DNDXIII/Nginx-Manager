@@ -33,20 +33,6 @@ namespace WebApplication1.Models
         [BsonElement("FreeText")]
         public string FreeText { get; set; }
         
-        public Upstream()
-        {
-            Weights = new int[] { };
-            FreeText="";
-            MaxFails=new int[ServerIds.Count];
-            FailTimeout=new int[ServerIds.Count];
-
-            //to fill the arrays with the default values
-            for(int i =0;i<ServerIds.Count;i++){
-                MaxFails[i]=DEFAULT_MAX_FAILS;
-                FailTimeout[i]=DEFAULT_FAIL_TIMEOUT;
-            }
-        }
-
         public string GenerateConfig(AllRepositories allRep)
         {
             var strb = new StringBuilder();
@@ -59,18 +45,19 @@ namespace WebApplication1.Models
             for(int i = 0; i < ServerIds.Count; i++)
             {
                 strb.Append(allRep.ServerRep.GetById(ServerIds[i]).GenerateConfig());
-                
-                if (pType.ProxyValue == "Weighted Load Balancing")
+
+                if (pType.Name == "Weighted")
                     strb.Append(" weight=" + Weights[i]);
-                if(FailTimeout[i]!=DEFAULT_FAIL_TIMEOUT)
+                if(FailTimeout!=null && FailTimeout[i]!=DEFAULT_FAIL_TIMEOUT)
                     strb.Append(" fail_timeout=" + FailTimeout[i]);
-                if(MaxFails[i]!=DEFAULT_MAX_FAILS)
+                if(MaxFails!=null && MaxFails[i]!=DEFAULT_MAX_FAILS)
                     strb.Append(" max_fails=" + MaxFails[i]);
 
                  strb.AppendLine(";");
             }
 
-            strb.AppendLine(FreeText);
+            if(FreeText!=null)
+                strb.AppendLine("   " + FreeText);
 
             strb.AppendLine("}");
 
