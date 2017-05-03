@@ -9,6 +9,8 @@
 # production
 /upstream_manager/build
 
+/WebApplication1/WebApplication1/.vscode
+
 # misc
 .DS_Store
 .env
