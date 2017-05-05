@@ -104,6 +104,7 @@ namespace WebApplication1.DataAccess
         {
             List<E> es = GetListAsync(sort,order).Result.ToList();
 
+            //to return only the number of items requested
             if (es.Count() - start > end - start)
                 return es.GetRange(start, (end - start));
             else
