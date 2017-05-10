@@ -1,6 +1,7 @@
 import React from 'react';
-import { List,Filter, Datagrid, Edit,Delete, Create,NumberInput, TextField, EditButton, SimpleForm, TextInput, LongTextInput} from 'admin-on-rest';
+import { List,Filter, Datagrid, Edit,Delete, Create,NumberInput, TextField, EditButton, SimpleForm, TextInput, LongTextInput} from 'admin-on-rest/lib/mui';
 import{EntityName} from'./Resources'
+import Toggle from 'material-ui/Toggle'
 
 export const VirtualServerList=(props)=> (
     <List {...props} filters={<VirtualServerFilter/>}>
@@ -21,6 +22,31 @@ export const VirtualServerEdit=(props)=> (
     </Edit>
 );
 
+class SSLToggle extends React.Component {  
+    constructor(props) {
+        super(props);
+        this.state = {Toggled: false};
+      }
+
+    handleToggle() {
+        this.setState({Toggled: !this.state.Toggled});
+    }
+
+    render() {
+    return (    
+            <Toggle
+                label="SSL"
+                defaultToggled={this.state.Toggled}
+                onToggle={this.handleToggle.bind(this)}
+                labelPosition="right"
+                toggled={this.state.Toggled}
+            />   
+        );
+    }
+
+}
+
+
 export const VirtualServerCreate=(props)=>(
     <Create {...props }>
         <SimpleForm >
@@ -28,8 +54,10 @@ export const VirtualServerCreate=(props)=>(
             <NumberInput source="listen" defaultValue="80" validation={{ required: true, min:0, max:65535 }}/>
             {/* TODO Locations  https://github.com/marmelab/admin-on-rest/blob/master/docs/Inputs.md*/}
             <TextInput source="name" defaultValue="" validation={{ required: true }} />
+            <LongTextInput source="freetext" defaultValue=""/> 
 
-            <LongTextInput source= "freetext" defaultValue=""/> 
+            <SSLToggle/>
+
  
         </SimpleForm>
     </Create>

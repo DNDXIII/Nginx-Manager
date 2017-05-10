@@ -30,7 +30,7 @@ namespace WebApplication1.Models
         {
             var strb = new StringBuilder();
 
-            strb.AppendLine("   location " + Path + " {");
+            strb.AppendLine("   location " + /*adcionar match type*/ Path + " {");
 
             strb.AppendLine("       " + PassType + " " + allRep.UpstreamRep.GetById(Pass).Name.Replace(" ", "_") + ";");
            
