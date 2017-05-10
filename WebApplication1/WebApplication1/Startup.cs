@@ -33,14 +33,17 @@ namespace WebApplication1
             ServersDataAccess s = new ServersDataAccess();
             ProxyTypeDataAccess p = new ProxyTypeDataAccess();
             VirtualServerDataAccess vs = new VirtualServerDataAccess();
+            SSLDataAccess ssl = new SSLDataAccess();
 
             services.AddSingleton<IRepository<Upstream>>(u);
             services.AddSingleton<IRepository<Server>>(s);
             services.AddSingleton<IRepository<ProxyType>>(p);
             services.AddSingleton<IRepository<VirtualServer>>(vs);
+            services.AddSingleton<IRepository<SSL>>(ssl);
 
 
-            services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p, vs));
+
+            services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p, vs, ssl));
 
             // Add framework services.
             services.AddMvc();

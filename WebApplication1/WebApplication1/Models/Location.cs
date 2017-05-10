@@ -11,12 +11,14 @@ namespace WebApplication1.Models
 {
     public class Location
     {
-        [BsonElement("Path")]
-        public string Path { get; set; }
+        [BsonElement("URI")]
+        public string URI { get; set; }
         [BsonElement("Pass")]
         public string Pass { get; set; }
         [BsonElement("PassType")]
         public string PassType { get; set; }
+        [BsonElement("MatchType")]
+        public string MatchType { get; set; }
         [BsonElement("FreeText")]
         public string FreeText { get; set; }
 
@@ -30,7 +32,7 @@ namespace WebApplication1.Models
         {
             var strb = new StringBuilder();
 
-            strb.AppendLine("   location " + /*adcionar match type*/ Path + " {");
+            strb.AppendLine("   location " + MatchType + " " + URI + " {");
 
             strb.AppendLine("       " + PassType + " " + allRep.UpstreamRep.GetById(Pass).Name.Replace(" ", "_") + ";");
            
