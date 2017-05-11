@@ -1,17 +1,10 @@
 import React from 'react';
-import { List,Filter, Datagrid, Edit,Delete, Create,NumberInput, TextField, EditButton, SimpleForm, TextInput} from 'admin-on-rest/lib/mui';
-import{EntityName} from'./Resources'
-
-
-const ServerFilter=(servers)=> (
-    <Filter {...servers}>
-        <TextInput label="Search" source="q" alwaysOn />
-    </Filter>
-);
+import { List, Datagrid, Edit,Delete, Create,NumberInput, TextField, EditButton, SimpleForm, TextInput} from 'admin-on-rest/lib/mui';
+import{EntityName, Filter} from'./Resources'
 
 
 export const ServerList=(servers)=> (
-    <List {...servers} filters={<ServerFilter/>}>
+    <List {...servers} filters={<Filter/>}>
         <Datagrid>
             <TextField source="name" />
             <TextField source="address"/>

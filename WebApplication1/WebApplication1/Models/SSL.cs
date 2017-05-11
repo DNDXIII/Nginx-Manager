@@ -13,30 +13,30 @@ namespace WebApplication1.Models
     {
         [BsonElement("Name")]
         public string Name { get; set; }
-        [BsonElement("SSLCertificate")]
-        public string SSLCertificate { get; set; }
-        [BsonElement("SSLTrstCertificate")]
-        public string SSLTrstCertificate { get; set; }
-        [BsonElement("SSLKey")]
-        public string SSLKey { get; set; }
-        [BsonElement("SSLProtocols")]
-        public string SSLProtocols { get; set; }
-        [BsonElement("SSLDHParam")]
-        public string SSLDHParam { get; set; }
-        [BsonElement("SSLCiphers")]
-        public string SSLCiphers { get; set; }
-        [BsonElement("SSLPreferServerCiphers")]
-        public bool SSLPreferServerCiphers { get; set; }
-        [BsonElement("SSLSessionCache")]
-        public string SSLSessionCache { get; set; }
-        [BsonElement("SSLSessionTimeout")]
-        public string SSLSessionTimeout { get; set; }
-        [BsonElement("SSLBufferSize")]
-        public int SSLBufferSize { get; set; }
-        [BsonElement("SSLStapling")]
-        public bool SSLStapling { get; set; }
-        [BsonElement("SSLStaplingVerify")]
-        public bool SSLStaplingVerify { get; set; }
+        [BsonElement("Certificate")]
+        public string Certificate { get; set; }
+        [BsonElement("TrstCertificate")]
+        public string TrstCertificate { get; set; }
+        [BsonElement("Key")]
+        public string Key { get; set; }
+        [BsonElement("Protocols")]
+        public string Protocols { get; set; }
+        [BsonElement("DHParam")]
+        public string DHParam { get; set; }
+        [BsonElement("Ciphers")]
+        public string Ciphers { get; set; }
+        [BsonElement("PreferServerCiphers")]
+        public bool PreferServerCiphers { get; set; }
+        [BsonElement("SessionCache")]
+        public string SessionCache { get; set; }
+        [BsonElement("SessionTimeout")]
+        public string SessionTimeout { get; set; }
+        [BsonElement("BufferSize")]
+        public int BufferSize { get; set; }
+        [BsonElement("Stapling")]
+        public bool Stapling { get; set; }
+        [BsonElement("StaplingVerify")]
+        public bool StaplingVerify { get; set; }
 
 
 
@@ -46,24 +46,24 @@ namespace WebApplication1.Models
             string res;//to help create some strings
             
             strb.AppendLine("   ssl on;");
-            strb.AppendLine("   ssl_certificate "+ SSLCertificate + ";");
-            strb.AppendLine("   ssl_trusted_certificate "+ SSLTrstCertificate + ";");
-            strb.AppendLine("   ssl_certificate_key "+ SSLKey + ";");
-            strb.AppendLine("   ssl_protocols " + SSLProtocols + ";");
-            strb.AppendLine("   ssl_dhparam "+ SSLDHParam + ";");
-            strb.AppendLine("   ssl_ciphers "+ SSLCiphers + ";");
+            strb.AppendLine("   ssl_certificate "+ Certificate + ";");
+            strb.AppendLine("   ssl_trusted_certificate "+ TrstCertificate + ";");
+            strb.AppendLine("   ssl_certificate_key "+ Key + ";");
+            strb.AppendLine("   ssl_protocols " + Protocols + ";");
+            strb.AppendLine("   ssl_dhparam "+ DHParam + ";");
+            strb.AppendLine("   ssl_ciphers "+ Ciphers + ";");
 
-            res= (SSLPreferServerCiphers ? "on":"off");
+            res= (PreferServerCiphers ? "on":"off");
             strb.AppendLine("   ssl_prefer_server_ciphers " + res + ";");
             
-            strb.AppendLine("   ssl_session_cache "+ SSLSessionCache + ";");
-            strb.AppendLine("   ssl_session_timeout "+ SSLSessionTimeout + ";");
-            strb.AppendLine("   ssl_buffer_size "+ SSLBufferSize + ";");
+            strb.AppendLine("   ssl_session_cache "+ SessionCache + ";");
+            strb.AppendLine("   ssl_session_timeout "+ SessionTimeout + ";");
+            strb.AppendLine("   ssl_buffer_size "+ BufferSize + ";");
             
-            res= (SSLStapling ? "on":"off");
+            res= (Stapling ? "on":"off");
             strb.AppendLine("   ssl_stapling "+ res + ";");   
             
-            res= (SSLStaplingVerify ? "on":"off");
+            res= (StaplingVerify ? "on":"off");
             strb.AppendLine("   ssl_stapling_verify "+ res + ":\n");
             
             return strb.ToString();

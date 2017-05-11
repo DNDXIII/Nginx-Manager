@@ -1,0 +1,110 @@
+{
+  "applications": [
+    {
+      "name": "application fixe",
+      "locations": [
+        {
+          "uri": "^/CognitiveServicesDemo/ws/stt$",
+          "pass": "591437ffb37092118ca3619f",
+          "passType": "proxy_pass",
+          "matchType": "~*",
+          "freeText": "blubulbulublbub"
+        }
+      ],
+      "id": "59143761b37092118ca3619e"
+    }
+  ],
+  "servers": [
+    {
+      "name": "server fixe",
+      "address": "192.7.2.1",
+      "port": 8080,
+      "id": "59143c2273ecde226486f9b5"
+    },
+    {
+      "name": "server menos fixe",
+      "address": "192.7.2.1",
+      "port": 312,
+      "id": "59144095a6e7931e20aca2ff"
+    }
+  ],
+  "proxytypes": [
+    {
+      "name": "Sticky",
+      "description": "sou um mano fixe",
+      "proxyValue": "sticky",
+      "id": "59143e7cb529eb2bb44b6ba3"
+    },
+    {
+      "name": "Weighted",
+      "description": "im fat",
+      "proxyValue": "",
+      "id": "rJ_WBkMx-"
+    }
+  ],
+  "ssls": [
+    {
+      "name": "ssl giro",
+      "certificate": "/path/certificate.crt",
+      "trstCertificate": "/path/certificate.ca.pem",
+      "key": "/path/certificate.rsa",
+      "protocols": "TLSv1 TLSv1.1 TLSv1.2",
+      "dhParam": "/path/dhparam.pem",
+      "ciphers": "EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:EDH+aRSA:HIGH:!aNULL:!eNULL:!LOW:!RC4:!3DES:!MD5:!EXP:!PSK:!SRP:!SEED:!DSS:!CAMELLIA",
+      "sessionTimeout": "24h",
+      "bufferSize": 1400,
+      "preferServerCiphers": true,
+      "sessionCache": "shared:SSL:10m",
+      "stapling": true,
+      "staplingVerify": true,
+      "id": "5914526ae0a17015c04f0503"
+    },
+    {
+      "name": "ssl2",
+      "certificate": "edmaedn",
+      "trstCertificate": "diasmdsk",
+      "key": "no",
+      "protocols": "deaidmsao",
+      "dhParam": "asmdam",
+      "ciphers": "dsiofqunfsdjfn fdnsjfnqjisnf sdfn sdfnqdjfns jdfksnd fsjfnqd k",
+      "sessionTimeout": "osdms",
+      "bufferSize": 399,
+      "id": "SkCUmZfgZ",
+      "preferServerCiphers": true,
+      "stapling": true,
+      "staplingVerify": true
+    }
+  ],
+  "upstreams": [
+    {
+      "name": "upstream bue fixe oh mano",
+      "proxyTypeId": "59143e7cb529eb2bb44b6ba3",
+      "serverIds": [
+        "59143c2273ecde226486f9b5",
+        "59144095a6e7931e20aca2ff"
+      ],
+      "maxFails": [
+        123,
+        3532
+      ],
+      "failTimeout": [
+        2324,
+        123123
+      ],
+      "weights": null,
+      "freeText": "eheuheueheuheueheuehheuheeuhueheuheueheuhu \n  anasjdnajsndjanafjnf \n  fsdifs",
+      "id": "591437ffb37092118ca3619f"
+    }
+  ],
+  "virtualservers": [
+    {
+      "name": "virtual server fofo",
+      "listen": 80,
+      "locations": null,
+      "application": "59143761b37092118ca3619e",
+      "ssl": "5914526ae0a17015c04f0503",
+      "freeText": "im some god damn free text",
+      "id": "59145255e0a17015c04f0502"
+    }
+  ]
+}

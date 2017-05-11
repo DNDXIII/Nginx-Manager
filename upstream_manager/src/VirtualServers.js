@@ -1,10 +1,10 @@
 import React from 'react';
-import { List,Filter, Datagrid, Edit,Delete, Create,NumberInput, TextField, EditButton, SimpleForm, TextInput, LongTextInput} from 'admin-on-rest/lib/mui';
-import{EntityName} from'./Resources'
+import { List, Datagrid, Edit,Delete, Create,NumberInput, TextField, EditButton, SimpleForm, TextInput, LongTextInput} from 'admin-on-rest/lib/mui';
+import{EntityName, Filter } from'./Resources'
 import Toggle from 'material-ui/Toggle'
 
 export const VirtualServerList=(props)=> (
-    <List {...props} filters={<VirtualServerFilter/>}>
+    <List title="Virtual Servers List" {...props} filters={<Filter/>}>
         <Datagrid>
             <TextField source="name" />
             <EditButton/>
@@ -48,7 +48,7 @@ class SSLToggle extends React.Component {
 
 
 export const VirtualServerCreate=(props)=>(
-    <Create {...props }>
+    <Create title="Create new Virtual Server" {...props }>
         <SimpleForm >
             <TextInput source="name" defaultValue="" validation={{ required: true }} />
             <NumberInput source="listen" defaultValue="80" validation={{ required: true, min:0, max:65535 }}/>
@@ -67,9 +67,4 @@ export const VirtualServerDelete=(props)=>(
     <Delete title={<EntityName/>} {...props}/>
 );
 
-const VirtualServerFilter=(props)=> (
-    <Filter {...props}>
-        <TextInput label="Search" source="q" alwaysOn />
-    </Filter>
-);
 

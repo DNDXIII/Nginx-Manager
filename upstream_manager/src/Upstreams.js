@@ -1,22 +1,15 @@
 import React from 'react';
-import { SingleFieldList, ChipField, List,Filter,NumberInput, TabbedForm,FormTab, Datagrid, Edit,Delete,ReferenceField, Create, TextField, EditButton,  ReferenceInput, SelectInput, SimpleForm, TextInput} from 'admin-on-rest/lib/mui';
-import{EntityName} from'./Resources';
+import { SingleFieldList, ChipField, List,NumberInput, TabbedForm,FormTab, Datagrid, Edit,Delete,ReferenceField, Create, TextField, EditButton,  ReferenceInput, SelectInput, SimpleForm, TextInput} from 'admin-on-rest/lib/mui';
+import{EntityName, Filter} from'./Resources';
 import{ReferenceArrayField} from './ReferenceArrayField'
 
 
-const UpFilter=(upstreams)=> (
-    <Filter {...upstreams}>
-        <TextInput label="Search" source="q" alwaysOn />
-    </Filter>
-);
-
-
 export const UpList=(upstreams)=> (
-    <List {...upstreams} filters={<UpFilter/>}>
+    <List {...upstreams} filters={<Filter/>}>
         <Datagrid>
             <TextField source="name"/>
-            <ReferenceField label="Proxy Type" source="proxyTypeId" reference="proxyTypes" >
-                <TextField source="type"/>
+            <ReferenceField label="Proxy Type" source="proxyTypeId" reference="proxytypes" >
+                <TextField source="name"/>
             </ReferenceField>
             <EditButton/>
         </Datagrid>
