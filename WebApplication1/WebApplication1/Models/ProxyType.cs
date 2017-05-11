@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.Models
 {
-    public class ProxyType
+    public class ProxyType:MongoObject
     {
-        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
-        public string Id { get; set; }
         [BsonElement("Name")]
         public string Name { get; set; }
         [BsonElement("Description")]

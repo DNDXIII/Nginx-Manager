@@ -10,14 +10,11 @@ using WebApplication1.DataAccess;
 
 namespace WebApplication1.Models
 {
-    public class Upstream
+    public class Upstream:MongoObject
     {
         public const int DEFAULT_MAX_FAILS = 1;
         public const int DEFAULT_FAIL_TIMEOUT = 10;
 
-
-        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
-        public string Id{ get; set; }
         [BsonElement("Name")]
         public string Name { get; set; }
         [BsonElement("ProxyTypeId")]

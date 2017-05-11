@@ -13,15 +13,18 @@ namespace WebApplication1.DataAccess
         public IRepository<ProxyType> ProxyTypeRep { get; }
         public IRepository<VirtualServer> VirtualServerRep { get; }
         public IRepository<SSL> SSLRep { get; }
+        public IRepository<Application> ApplicationRep { get; }
 
 
-        public AllRepositories(ServersDataAccess s, UpstreamDataAccess u, ProxyTypeDataAccess p, VirtualServerDataAccess vs, SSLDataAccess ssl)
+        public AllRepositories(ServersDataAccess s, UpstreamDataAccess u, ProxyTypeDataAccess p,
+         VirtualServerDataAccess vs, SSLDataAccess ssl, ApplicationDataAccess app)
         {
             ServerRep = s;
             UpstreamRep = u;
             ProxyTypeRep = p;
             VirtualServerRep = vs;
             SSLRep =ssl;
+            ApplicationRep=app;
         }
     }
 }

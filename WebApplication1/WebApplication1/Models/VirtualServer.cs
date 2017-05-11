@@ -9,16 +9,20 @@ using WebApplication1.DataAccess;
 
 namespace WebApplication1.Models
 {
-    public class VirtualServer
+    public class VirtualServer:MongoObject
     {
-        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
-        public string Id { get; set; }
         [BsonElement("Name")]
         public string Name { get; set; }
         [BsonElement("Listen")]
         public int Listen { get; set; }
-        [BsonElement("Locations")]
-        public List<Location> Locations { get; set; }
+
+
+        [BsonElement("Locations")]//TODO necessario ? talvez para os wildcards?
+        public List<Location> Locations { get; set; }//TODO mudar para list string com os ids das locations ? 
+
+
+        [BsonElement("Application")]
+        public string Application { get; set; }
         [BsonElement("SSL")]
         public string SSL { get; set; }
         [BsonElement("FreeText")]
@@ -34,6 +38,8 @@ namespace WebApplication1.Models
 
             if(SSL!=null)
                 allRep.SSLRep.GetById(SSL).GenerateConfig();
+
+            allRep.ApplicationRep.GetById(Application).GenerateConfig(allRep);   
 
             foreach(var l in Locations)
             {

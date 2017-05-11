@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebApplication1.DataAccess;
+using WebApplication1.Models;
+
 
 namespace WebApplication1.Models
 {
-    public class Location
+    public class Location 
     {
         [BsonElement("URI")]
         public string URI { get; set; }
@@ -26,7 +28,7 @@ namespace WebApplication1.Models
         public Location()
         {
             PassType = "proxy_pass";
-        }
+        }   
 
         public string GenerateConfig(AllRepositories allRep)
         {

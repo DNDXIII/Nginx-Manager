@@ -8,13 +8,16 @@ using MongoDB.Driver;
 
 namespace WebApplication1.DataAccess
 {
-    public class AbstractDataAccess<E> : IRepository<E>
+
+    public class AbstractDataAccess<E> : IRepository<E> where E :MongoObject 
     {
+       
 
         private IMongoClient _client;
         private IMongoDatabase _db;
         protected IMongoCollection<E> _collection;
 
+       
         public AbstractDataAccess(string name)
         {
             _client = new MongoClient();
@@ -88,7 +91,7 @@ namespace WebApplication1.DataAccess
             return (await _collection.Find(filter).ToListAsync());
         }
 
-        public void Update(string id, E e)
+        public void Update(string id, E e)     
         {
             UpdateAsync(id, e);
         }
@@ -96,6 +99,8 @@ namespace WebApplication1.DataAccess
         private async void UpdateAsync(string id, E e)
         {
             var filter = Builders<E>.Filter.Eq("Id", id);
+
+            e.Id=id;
 
             await _collection.ReplaceOneAsync(filter, e);
         }

@@ -9,10 +9,10 @@ using WebApplication1.DataAccess;
 
 namespace WebApplication1.Models
 {
-    public class SSL
+    public class SSL:MongoObject
     {
-        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
-        public string Id { get; set; }
+        [BsonElement("Name")]
+        public string Name { get; set; }
         [BsonElement("SSLCertificate")]
         public string SSLCertificate { get; set; }
         [BsonElement("SSLTrstCertificate")]

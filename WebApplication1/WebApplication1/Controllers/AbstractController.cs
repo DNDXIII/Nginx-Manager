@@ -76,6 +76,7 @@ namespace WebApplication1.Controllers
 
             var note = _repository.GetById(id);
 
+
             if (note == null)
                 return NotFound();
 

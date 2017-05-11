@@ -11,9 +11,8 @@ using System.Text;
 
 namespace WebApplication1.Models
 {
-    public class Server { 
-        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
-        public string Id { get; set; }
+    public class Server:MongoObject
+     { 
         [BsonElement("Name")]
         public string Name { get; set; }
         [BsonElement("Address")]
