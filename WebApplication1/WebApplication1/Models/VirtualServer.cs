@@ -37,18 +37,19 @@ namespace WebApplication1.Models
             strb.AppendLine("   server_name " + Name.Replace(" ", "_") + ";\n");
 
             if(SSL!=null)
-                allRep.SSLRep.GetById(SSL).GenerateConfig();
+                strb.Append(allRep.SSLRep.GetById(SSL).GenerateConfig());
 
-            allRep.ApplicationRep.GetById(Application).GenerateConfig(allRep);   
+            strb.Append(allRep.ApplicationRep.GetById(Application).GenerateConfig(allRep));   
 
-            foreach(var l in Locations)
-            {
-                strb.AppendLine(l.GenerateConfig(allRep));
-            }
+            if(Locations!=null)
+                foreach(var l in Locations)
+                {
+                    strb.Append(l.GenerateConfig(allRep));
+                }
 
                
            if(FreeText!=null)
-                strb.AppendLine(FreeText);
+                strb.AppendLine("   " + FreeText);
 
 
             strb.AppendLine("}");

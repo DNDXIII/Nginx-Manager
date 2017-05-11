@@ -39,7 +39,7 @@ namespace WebApplication1.Models
             strb.AppendLine("       " + PassType + " " + allRep.UpstreamRep.GetById(Pass).Name.Replace(" ", "_") + ";");
            
            if(FreeText!=null)
-                strb.AppendLine(FreeText);
+                strb.AppendLine("       "+FreeText);
 
 
             strb.AppendLine("   }");

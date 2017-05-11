@@ -20,7 +20,7 @@ namespace WebApplication1.Models
         [BsonElement("SSLKey")]
         public string SSLKey { get; set; }
         [BsonElement("SSLProtocols")]
-        public string[] SSLProtocols { get; set; }
+        public string SSLProtocols { get; set; }
         [BsonElement("SSLDHParam")]
         public string SSLDHParam { get; set; }
         [BsonElement("SSLCiphers")]
@@ -49,11 +49,7 @@ namespace WebApplication1.Models
             strb.AppendLine("   ssl_certificate "+ SSLCertificate + ";");
             strb.AppendLine("   ssl_trusted_certificate "+ SSLTrstCertificate + ";");
             strb.AppendLine("   ssl_certificate_key "+ SSLKey + ";");
-            strb.Append("   ssl_protocols");
-            
-            foreach(var e in SSLProtocols)
-                strb.Append(" " + e);
-            strb.AppendLine(";");
+            strb.AppendLine("   ssl_protocols " + SSLProtocols + ";");
             strb.AppendLine("   ssl_dhparam "+ SSLDHParam + ";");
             strb.AppendLine("   ssl_ciphers "+ SSLCiphers + ";");
 
