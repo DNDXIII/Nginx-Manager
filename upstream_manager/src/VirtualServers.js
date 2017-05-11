@@ -1,7 +1,7 @@
 import React from 'react';
-import { List, Datagrid, Edit,Delete, Create,NumberInput, TextField, EditButton, SimpleForm, TextInput, LongTextInput} from 'admin-on-rest/lib/mui';
+import { List, Datagrid, SelectInput, ReferenceInput,Edit,Delete, Create,NumberInput, TextField, EditButton, SimpleForm, TextInput, LongTextInput} from 'admin-on-rest/lib/mui';
 import{EntityName, Filter } from'./Resources'
-import Toggle from 'material-ui/Toggle'
+import RaisedButton from 'material-ui/RaisedButton'
 
 export const VirtualServerList=(props)=> (
     <List title="Virtual Servers List" {...props} filters={<Filter/>}>
@@ -22,29 +22,31 @@ export const VirtualServerEdit=(props)=> (
     </Edit>
 );
 
-class SSLToggle extends React.Component {  
-    constructor(props) {
-        super(props);
-        this.state = {Toggled: false};
-      }
+const Location=()=> (
+    <h1>Boas</h1>
+);
 
-    handleToggle() {
-        this.setState({Toggled: !this.state.Toggled});
-    }
+const AddLocations = React.createClass( {  
+    getInitialState:function(){
+        return {locations:[], i:0};
+    },
 
-    render() {
-    return (    
-            <Toggle
-                label="SSL"
-                defaultToggled={this.state.Toggled}
-                onToggle={this.handleToggle.bind(this)}
-                labelPosition="right"
-                toggled={this.state.Toggled}
-            />   
+    handleAddLocation:function() {
+        var locs = this.state.locations;
+        locs.push(<Location key={this.state.i}/>);
+        this.setState({locations:locs,i:(this.state.i+1)});
+    },
+
+    render: function() {
+    return (
+            <div>
+                {this.state.locations}
+                <RaisedButton label="Add Location" primary={true} onTouchTap={this.handleAddLocation}/>
+            </div>
         );
     }
 
-}
+});
 
 
 export const VirtualServerCreate=(props)=>(
@@ -55,9 +57,14 @@ export const VirtualServerCreate=(props)=>(
             {/* TODO Locations  https://github.com/marmelab/admin-on-rest/blob/master/docs/Inputs.md*/}
             <TextInput source="name" defaultValue="" validation={{ required: true }} />
             <LongTextInput source="freetext" defaultValue=""/> 
+            <ReferenceInput label="Application" source="application" reference="applications" allowEmpty>
+                <SelectInput optionText="name"/>
+            </ReferenceInput>
+            <ReferenceInput label="SSL" source="ssl" reference="ssls" allowEmpty>
+                <SelectInput optionText="name"/>
+            </ReferenceInput>
 
-            <SSLToggle/>
-
+            <AddLocations/>
  
         </SimpleForm>
     </Create>
