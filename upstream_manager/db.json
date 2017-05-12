@@ -3,15 +3,17 @@
     {
       "name": "application fixe",
       "locations": [
-        {
-          "uri": "^/CognitiveServicesDemo/ws/stt$",
-          "pass": "591437ffb37092118ca3619f",
-          "passType": "proxy_pass",
-          "matchType": "~*",
-          "freeText": "blubulbulublbub"
-        }
+        "59145255e0a17015c04f0505"
       ],
       "id": "59143761b37092118ca3619e"
+    },
+    {
+      "name": "erasd",
+      "locations": [
+        "SkeUWMQeb",
+        "59145255e0a17015c04f0505"
+      ],
+      "id": "SyjDWGXg-"
     }
   ],
   "servers": [
@@ -100,11 +102,32 @@
     {
       "name": "virtual server fofo",
       "listen": 80,
-      "locations": null,
+      "freetext": "",
+      "locations": [],
       "application": "59143761b37092118ca3619e",
-      "ssl": "5914526ae0a17015c04f0503",
+      "ssl": null,
       "freeText": "im some god damn free text",
       "id": "59145255e0a17015c04f0502"
+    }
+  ],
+  "locations": [
+    {
+      "name": "location gira como tudo",
+      "uri": "^/CognitiveServicesDemo/ws/stt$",
+      "freeText": "blubulbulublbubasdasd",
+      "pass": "591437ffb37092118ca3619f",
+      "passType": "proxy_pass",
+      "matchType": "~",
+      "id": "59145255e0a17015c04f0505"
+    },
+    {
+      "name": "location fixe 2",
+      "uri": "bububu uir",
+      "freeText": "",
+      "pass": "591437ffb37092118ca3619f",
+      "matchType": "^~",
+      "passType": "proxy_pass",
+      "id": "SkeUWMQeb"
     }
   ]
 }

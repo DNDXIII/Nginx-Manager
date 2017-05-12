@@ -7,6 +7,8 @@ import {VirtualServerCreate, VirtualServerDelete, VirtualServerEdit, VirtualServ
 import {ProxyList,ProxyEdit, ProxyCreate} from './ProxyTypes';
 import {SSLCreate, SSLDelete, SSLEdit, SSLList} from './SSLs';
 import {ApplicationCreate, ApplicationDelete, ApplicationEdit, ApplicationList} from './Applications';
+import {LocationCreate, LocationDelete, LocationEdit, LocationList} from './Locations';
+
 import Cloud from 'material-ui/svg-icons/file/cloud-circle';
 import Cake from 'material-ui/svg-icons/social/cake';
 
@@ -20,6 +22,7 @@ const App=()=> (
         <Resource icon={Cloud} name="virtualservers" list={VirtualServerList} edit={VirtualServerEdit} create={VirtualServerCreate} remove={VirtualServerDelete}/>
         <Resource name="servers" list={ServerList} edit={ServerEdit} create={ServerCreate} remove={ServerDelete}/>
         <Resource name="upstreams" list={UpList} edit={UpEdit} create={UpCreate} remove={UpDelete} />
+        <Resource name="locations" list={LocationList} edit={LocationEdit} create={LocationCreate} remove={LocationDelete} />
         <Resource name="applications" list={ApplicationList} edit={ApplicationEdit} create={ApplicationCreate} remove={ApplicationDelete}/>
         <Resource icon={Cake} name="ssls" list={SSLList} edit={SSLEdit} create={SSLCreate} remove={SSLDelete}/>}
         <Resource name="proxytypes" list={ProxyList} edit={ProxyEdit} create={ProxyCreate}/>

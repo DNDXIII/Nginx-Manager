@@ -11,15 +11,17 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Models
 {
-    public class Location 
+    public class Location :MongoObject
     {
-        [BsonElement("URI")]
+        [BsonElement("Name")]
+        public string Name { get; set; }
+        [BsonElement("URI")]//URI that it matches to
         public string URI { get; set; }
-        [BsonElement("Pass")]
+        [BsonElement("Pass")]//id of the upstream to pass to
         public string Pass { get; set; }
-        [BsonElement("PassType")]
+        [BsonElement("PassType")]//proxy pass...
         public string PassType { get; set; }
-        [BsonElement("MatchType")]
+        [BsonElement("MatchType")]// ~* ...
         public string MatchType { get; set; }
         [BsonElement("FreeText")]
         public string FreeText { get; set; }
@@ -33,8 +35,10 @@ namespace WebApplication1.Models
         public string GenerateConfig(AllRepositories allRep)
         {
             var strb = new StringBuilder();
+            
+            var s = MatchType!=null ? MatchType : "";  
 
-            strb.AppendLine("   location " + MatchType + " " + URI + " {");
+            strb.AppendLine("   location " + s + " " + URI + " {");
 
             strb.AppendLine("       " + PassType + " " + allRep.UpstreamRep.GetById(Pass).Name.Replace(" ", "_") + ";");
            
