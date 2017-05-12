@@ -1,7 +1,6 @@
 import React from 'react';
-import { SingleFieldList,LongTextInput, ChipField, List,NumberInput, TabbedForm,FormTab, Datagrid, Edit,Delete,ReferenceField, Create, TextField, EditButton,  ReferenceInput, SelectInput, SimpleForm, TextInput} from 'admin-on-rest/lib/mui';
+import { CheckboxGroupInput, LongTextInput,  List,NumberInput, Datagrid, Edit,Delete,ReferenceField, Create, TextField, EditButton,  ReferenceInput, SelectInput, SimpleForm, TextInput} from 'admin-on-rest/lib/mui';
 import{EntityName, Filter} from'./Resources';
-import{ReferenceArrayField} from './ReferenceArrayField'
 
 
 export const UpList=(upstreams)=> (
@@ -23,7 +22,9 @@ export const UpEdit=(upstreams)=> (
             <ReferenceInput label="Proxy Type" allowEmpty source="proxyTypeId" reference="proxytypes" validation={{required:true}}  >
                 <SelectInput optionText="name" />
             </ReferenceInput>
-
+            <ReferenceInput label="Servers" source="serverIds" reference="servers" allowEmpty validation={{required:true}}>
+                <CheckboxGroupInput optionText="name"/>
+            </ReferenceInput>
             <LongTextInput source="freetext" defaultValue=""/> 
         </SimpleForm>
     </Edit>
@@ -32,14 +33,15 @@ export const UpEdit=(upstreams)=> (
 
 export const UpCreate=(upstreams)=>(
     <Create {...upstreams }>
-        <SimpleForm >
-            <TextInput source="name" defaultValue="" validation={{ required: true }} />
+       <SimpleForm>
+            <TextInput source="name"/>
             <ReferenceInput label="Proxy Type" allowEmpty source="proxyTypeId" reference="proxytypes" validation={{required:true}}  >
                 <SelectInput optionText="name" />
             </ReferenceInput>
-            <NumberInput label='Maximum Number of Fails' source='max_fails' defaultValue={1} validation={{min:0}} />
-            <NumberInput label='Fail Timeout (seconds)' source='fail_timeout' defaultValue={10} validation={{min:0}} />
-
+            <ReferenceInput label="Servers" source="serverIds" reference="servers" allowEmpty validation={{required:true}}>
+                <CheckboxGroupInput optionText="name"/>
+            </ReferenceInput>
+            <LongTextInput source="freetext" defaultValue=""/> 
         </SimpleForm>
     </Create>
 );

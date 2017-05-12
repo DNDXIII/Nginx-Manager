@@ -15,12 +15,8 @@ namespace WebApplication1.Models
         public string Name { get; set; }
         [BsonElement("Listen")]
         public int Listen { get; set; }
-
-
-        [BsonElement("Locations")]//TODO necessario ? talvez para os wildcards?
-        public List<Location> Locations { get; set; }//TODO mudar para list string com os ids das locations ? 
-
-
+        [BsonElement("Locations")]
+        public List<string> Locations { get; set; }
         [BsonElement("Application")]
         public string Application { get; set; }
         [BsonElement("SSL")]
@@ -38,13 +34,13 @@ namespace WebApplication1.Models
 
             if(SSL!=null)
                 strb.Append(allRep.SSLRep.GetById(SSL).GenerateConfig());
-
-            strb.Append(allRep.ApplicationRep.GetById(Application).GenerateConfig(allRep));   
+            if(Application!=null)
+                strb.Append(allRep.ApplicationRep.GetById(Application).GenerateConfig(allRep));   
 
             if(Locations!=null)
                 foreach(var l in Locations)
                 {
-                    strb.Append(l.GenerateConfig(allRep));
+                    strb.Append(allRep.LocationRep.GetById(l).GenerateConfig(allRep));
                 }
 
                

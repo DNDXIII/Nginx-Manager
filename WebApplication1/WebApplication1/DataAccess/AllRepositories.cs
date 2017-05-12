@@ -14,10 +14,11 @@ namespace WebApplication1.DataAccess
         public IRepository<VirtualServer> VirtualServerRep { get; }
         public IRepository<SSL> SSLRep { get; }
         public IRepository<Application> ApplicationRep { get; }
+        public IRepository<Location> LocationRep { get; }
 
 
         public AllRepositories(ServersDataAccess s, UpstreamDataAccess u, ProxyTypeDataAccess p,
-         VirtualServerDataAccess vs, SSLDataAccess ssl, ApplicationDataAccess app)
+         VirtualServerDataAccess vs, SSLDataAccess ssl, ApplicationDataAccess app, LocationsDataAccess l)
         {
             ServerRep = s;
             UpstreamRep = u;
@@ -25,6 +26,7 @@ namespace WebApplication1.DataAccess
             VirtualServerRep = vs;
             SSLRep =ssl;
             ApplicationRep=app;
+            LocationRep = l;
         }
     }
 }

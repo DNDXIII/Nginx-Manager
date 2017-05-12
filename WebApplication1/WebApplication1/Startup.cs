@@ -35,6 +35,7 @@ namespace WebApplication1
             VirtualServerDataAccess vs = new VirtualServerDataAccess();
             SSLDataAccess ssl = new SSLDataAccess();
             ApplicationDataAccess app = new ApplicationDataAccess();
+            LocationsDataAccess l = new LocationsDataAccess();
 
             services.AddSingleton<IRepository<Upstream>>(u);
             services.AddSingleton<IRepository<Server>>(s);
@@ -42,11 +43,10 @@ namespace WebApplication1
             services.AddSingleton<IRepository<VirtualServer>>(vs);
             services.AddSingleton<IRepository<SSL>>(ssl);
             services.AddSingleton<IRepository<Application>>(app);
+            services.AddSingleton<IRepository<Location>>(l);
 
 
-
-
-            services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p, vs, ssl, app));
+            services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p, vs, ssl, app,l));
 
             // Add framework services.
             services.AddMvc();

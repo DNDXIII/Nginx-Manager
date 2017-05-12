@@ -79,11 +79,12 @@
   ],
   "upstreams": [
     {
+      "freetext": "",
       "name": "upstream bue fixe oh mano",
       "proxyTypeId": "59143e7cb529eb2bb44b6ba3",
       "serverIds": [
-        "59143c2273ecde226486f9b5",
-        "59144095a6e7931e20aca2ff"
+        "59144095a6e7931e20aca2ff",
+        "59143c2273ecde226486f9b5"
       ],
       "maxFails": [
         123,
@@ -96,6 +97,15 @@
       "weights": null,
       "freeText": "eheuheueheuheueheuehheuheeuhueheuheueheuhu \n  anasjdnajsndjanafjnf \n  fsdifs",
       "id": "591437ffb37092118ca3619f"
+    },
+    {
+      "freetext": "",
+      "name": "Upstream menos basofe",
+      "proxyTypeId": "59143e7cb529eb2bb44b6ba3",
+      "serverIds": [
+        "59143c2273ecde226486f9b5"
+      ],
+      "id": "BkQL2X7eZ"
     }
   ],
   "virtualservers": [
@@ -105,9 +115,18 @@
       "freetext": "",
       "locations": [],
       "application": "59143761b37092118ca3619e",
-      "ssl": null,
+      "ssl": "5914526ae0a17015c04f0503",
       "freeText": "im some god damn free text",
       "id": "59145255e0a17015c04f0502"
+    },
+    {
+      "name": "vs mano",
+      "listen": 80,
+      "freetext": "",
+      "locations": [
+        "SkeUWMQeb"
+      ],
+      "id": "rk0O37Qx-"
     }
   ],
   "locations": [
@@ -128,6 +147,15 @@
       "matchType": "^~",
       "passType": "proxy_pass",
       "id": "SkeUWMQeb"
+    },
+    {
+      "name": "lylyl",
+      "uri": "asdak",
+      "freeText": "",
+      "pass": "BkQL2X7eZ",
+      "matchType": "^~",
+      "passType": "scgi_pass",
+      "id": "HJA62QXe-"
     }
   ]
 }

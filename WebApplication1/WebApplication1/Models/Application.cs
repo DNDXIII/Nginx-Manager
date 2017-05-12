@@ -14,7 +14,7 @@ namespace WebApplication1.Models
         [BsonElement("Name")]
         public string Name { get; set; }
         [BsonElement("Locations")]
-        public List<Location> Locations { get; set; } //TODO 
+        public List<string> Locations { get; set; } //TODO 
         
        
         public string GenerateConfig(AllRepositories allRep)
@@ -23,7 +23,7 @@ namespace WebApplication1.Models
 
             foreach(var l in Locations)
             {
-                strb.AppendLine(l.GenerateConfig(allRep));
+                strb.AppendLine(allRep.LocationRep.GetById(l).GenerateConfig(allRep));
             }
 
             return strb.ToString();
