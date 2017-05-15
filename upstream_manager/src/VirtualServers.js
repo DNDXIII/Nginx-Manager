@@ -1,7 +1,6 @@
 import React from 'react';
 import { List, Datagrid,CheckboxGroupInput, SelectInput, ReferenceInput,Edit,Delete, Create,NumberInput, TextField, EditButton, SimpleForm, TextInput, LongTextInput} from 'admin-on-rest/lib/mui';
 import{EntityName, Filter } from'./Resources'
-import RaisedButton from 'material-ui/RaisedButton'
 
 export const VirtualServerList=(props)=> (
     <List title="Virtual Servers List" {...props} filters={<Filter/>}>

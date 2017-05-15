@@ -9,7 +9,7 @@ using MongoDB.Driver;
 namespace WebApplication1.DataAccess
 {
 
-    public class AbstractDataAccess<E> : IRepository<E> where E :MongoObject 
+    public class AbstractDataAccess<E> : IRepository<E>  
     {
        
 
@@ -99,8 +99,6 @@ namespace WebApplication1.DataAccess
         private async void UpdateAsync(string id, E e)
         {
             var filter = Builders<E>.Filter.Eq("Id", id);
-
-            e.Id=id;
 
             await _collection.ReplaceOneAsync(filter, e);
         }

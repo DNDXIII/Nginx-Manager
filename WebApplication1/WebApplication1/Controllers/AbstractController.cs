@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Cors;
 
 namespace WebApplication1.Controllers
 {
-    public class AbstractController<E> : Controller
+    [EnableCors("MyPolicy")]
+    public class AbstractController<E> : Controller where E :MongoObject
     {
         private readonly IRepository<E> _repository;
 
@@ -22,7 +23,6 @@ namespace WebApplication1.Controllers
 
         //since i couldnt find a way to make a specific route using only the query string
         // GET: api/values || Get: api/servers?_sort=title&_order=sdf&_start=1&_end=2
-        [EnableCors("MyPolicy")]
         [HttpGet]
         public IActionResult Get([FromQuery] string _sort, [FromQuery] string _order = "ASC", [FromQuery] int _start = 0, [FromQuery] int _end = 24)
         {
@@ -46,7 +46,6 @@ namespace WebApplication1.Controllers
         }
 
         // GET api/values/5
-        [EnableCors("MyPolicy")]
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
@@ -56,7 +55,7 @@ namespace WebApplication1.Controllers
 
             return Ok(e);
         }
-       
+
         // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody]E value)
@@ -86,11 +85,11 @@ namespace WebApplication1.Controllers
             if (note == null)
                 return NotFound();
 
-           
+            value.Id = id;
 
             _repository.Update(id, value);
 
-            return new OkResult();
+            return Ok(value);
         }
 
         // DELETE api/values/5
