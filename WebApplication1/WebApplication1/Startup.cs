@@ -29,6 +29,13 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             UpstreamDataAccess u = new UpstreamDataAccess();
             ServersDataAccess s = new ServersDataAccess();
             ProxyTypeDataAccess p = new ProxyTypeDataAccess();
@@ -51,7 +58,8 @@ namespace WebApplication1
             // Add framework services.
             services.AddMvc();
 
-            
+
+
 
         }
 

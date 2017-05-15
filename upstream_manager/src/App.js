@@ -18,7 +18,7 @@ import Cake from 'material-ui/svg-icons/social/cake';
 import authClient from './authClient';
 
 const App=()=> (
-    <Admin authClient={authClient} restClient={jsonServerRestClient('http://localhost:3000')}>
+    <Admin authClient={authClient} restClient={jsonServerRestClient('http://localhost:50116/api')}>
         <Resource icon={Cloud} name="virtualservers" list={VirtualServerList} edit={VirtualServerEdit} create={VirtualServerCreate} remove={VirtualServerDelete}/>
         <Resource name="servers" list={ServerList} edit={ServerEdit} create={ServerCreate} remove={ServerDelete}/>
         <Resource name="upstreams" list={UpList} edit={UpEdit} create={UpCreate} remove={UpDelete} />
