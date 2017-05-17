@@ -16,7 +16,7 @@ import CustomRoutes from './CustomRoutes';
 import authClient from './authClient';
 
 const App=()=> (
-    <Admin menu={Menu} customRoutes={CustomRoutes} authClient={authClient} restClient={jsonServerRestClient('http://localhost:50116//api')}>
+    <Admin menu={Menu} customRoutes={CustomRoutes} authClient={authClient} restClient={jsonServerRestClient('http://localhost:58370/api')}>
         <Resource name="virtualservers" list={VirtualServerList} edit={VirtualServerEdit} create={VirtualServerCreate} remove={VirtualServerDelete}/>
         <Resource name="servers" list={ServerList} edit={ServerEdit} create={ServerCreate} remove={ServerDelete}/>
         <Resource name="upstreams" list={UpList} edit={UpEdit} create={UpCreate} remove={UpDelete} />
