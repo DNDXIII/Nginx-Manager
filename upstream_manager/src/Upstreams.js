@@ -25,7 +25,7 @@ export const UpEdit=(upstreams)=> (
             <ReferenceInput label="Servers" source="serverIds" reference="servers" allowEmpty validation={{required:true}}>
                 <CheckboxGroupInput optionText="name"/>
             </ReferenceInput>
-            <LongTextInput source="freetext" defaultValue=""/> 
+            <LongTextInput source="freeText" defaultValue=""/> 
         </SimpleForm>
     </Edit>
 );
@@ -41,7 +41,7 @@ export const UpCreate=(upstreams)=>(
             <ReferenceInput label="Servers" source="serverIds" reference="servers" allowEmpty validation={{required:true}}>
                 <CheckboxGroupInput optionText="name"/>
             </ReferenceInput>
-            <LongTextInput source="freetext" defaultValue=""/> 
+            <LongTextInput source="freeText" defaultValue=""/> 
         </SimpleForm>
     </Create>
 );

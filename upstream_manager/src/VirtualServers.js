@@ -7,7 +7,7 @@ export const VirtualServerList=(props)=> (
         <Datagrid>
             <TextField source="name" />
             <EditButton/>
-        </Datagrid>
+        </Datagrid> 
     </List>
 );
 
@@ -25,7 +25,7 @@ export const VirtualServerEdit=(props)=> (
             <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty validation={{required:true}}>
                 <CheckboxGroupInput optionText="name"/>
             </ReferenceInput>
-            <LongTextInput source="freetext" defaultValue=""/> 
+            <LongTextInput source="freeText" defaultValue=""/> 
         </SimpleForm>
     </Edit>
 );
@@ -45,7 +45,7 @@ export const VirtualServerCreate=(props)=>(
             <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty validation={{required:true}}>
                 <CheckboxGroupInput optionText="name"/>
             </ReferenceInput>
-            <LongTextInput source="freetext" defaultValue=""/> 
+            <LongTextInput source="freeText" defaultValue=""/> 
         </SimpleForm>
     </Create>
 );

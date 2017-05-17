@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace WebApplication1.Controllers
 {
-    [EnableCors("MyPolicy")]
+    [EnableCors("Cors")]
     public class AbstractController<E> : Controller where E :MongoObject
     {
         private readonly IRepository<E> _repository;
