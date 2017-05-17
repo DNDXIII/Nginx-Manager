@@ -4,7 +4,7 @@ import{EntityName, Filter} from'./Resources'
 
 
 export const SSLList=(props)=> (
-    <List {...props} filters={<Filter/>}>
+    <List {...props} filters={<Filter/>} title="SSL's List">
         <Datagrid>
             <TextField source="name" />
             <EditButton/>

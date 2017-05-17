@@ -46,14 +46,21 @@ namespace WebApplication1.Controllers
         }
 
         // GET api/values/5
+        // GET api/values/5,3,1
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            var e = _repository.GetById(id);
-            if (e == null)
+            string[] ids = id.Split(',');
+
+            IList<E> es = new List<E>();
+
+            foreach(var i in ids) {
+                es.Add(_repository.GetById(id));
+            }
+            if (es.Count()==0)
                 return NotFound();
 
-            return Ok(e);
+            return Ok(es);
         }
 
         // POST api/values
