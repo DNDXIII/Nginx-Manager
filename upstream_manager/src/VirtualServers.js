@@ -17,7 +17,7 @@ export const VirtualServerEdit = (props) => (
             <TextInput source="name" defaultValue="" validate={required} />
             <TextInput source="domain" defaultValue="" validate={required} />
             <NumberInput source="listen" defaultValue="80" validate={[required, minValue(0), maxValue(65535)]} />
-            <ReferenceInput label="Application" source="application" reference="applications" allowEmpty>
+            <ReferenceInput label="Application" source="applications" reference="applications" allowEmpty>
                 <CheckboxGroupInput optionText="name" />
             </ReferenceInput>
             <ReferenceInput label="SSL" source="ssl" reference="ssls" allowEmpty>
@@ -26,7 +26,7 @@ export const VirtualServerEdit = (props) => (
             <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty validate={required}>
                 <CheckboxGroupInput optionText="name" />
             </ReferenceInput>
-            <LongTextInput source="freeText" defaultValue="" />
+            <LongTextInput source="freeText" />
         </SimpleForm>
     </Edit>
 );
@@ -38,7 +38,7 @@ export const VirtualServerCreate = (props) => (
             <TextInput source="name" defaultValue="" validate={required} />
             <TextInput source="domain" defaultValue="" validate={required} />
             <NumberInput source="listen" defaultValue="80" validate={[required, minValue(0), maxValue(65535)]} />
-            <ReferenceInput label="Application" source="application" reference="applications" allowEmpty>
+            <ReferenceInput label="Application" source="applications" reference="applications" allowEmpty>
                 <SelectInput optionText="name" />
             </ReferenceInput>
             <ReferenceInput label="SSL" source="ssl" reference="ssls" allowEmpty>
@@ -47,7 +47,7 @@ export const VirtualServerCreate = (props) => (
             <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty validate={required}>
                 <CheckboxGroupInput optionText="name" />
             </ReferenceInput>
-            <LongTextInput source="freeText" defaultValue="" />
+            <LongTextInput source="freeText" />
         </SimpleForm>
     </Create>
 );

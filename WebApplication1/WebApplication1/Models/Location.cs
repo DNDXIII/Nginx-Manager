@@ -26,12 +26,6 @@ namespace WebApplication1.Models
         [BsonElement("FreeText")]
         public string FreeText { get; set; }
 
-
-        public Location()
-        {
-            PassType = "proxy_pass";
-        }
-
         public string GenerateConfig(AllRepositories allRep, string upstreamId)//upstreamId is used when trying to override 
                                                                                //the Pass variable, oterwise should be null
         {
@@ -43,9 +37,10 @@ namespace WebApplication1.Models
 
             string upstreamToPassTo = upstreamId == null ? Pass : upstreamId;
 
-            strb.AppendLine("       " + PassType + " " + allRep.UpstreamRep.GetById(upstreamToPassTo).Name.Replace(" ", "_") + ";");
+            if(PassType!=null && PassType!="")
+                strb.AppendLine("       " + PassType + " " + allRep.UpstreamRep.GetById(upstreamToPassTo).Name.Replace(" ", "_") + ";");
 
-            if (FreeText != null)
+            if (FreeText != null && FreeText!="")
                 strb.AppendLine("       " + FreeText);
 
             strb.AppendLine("   }");

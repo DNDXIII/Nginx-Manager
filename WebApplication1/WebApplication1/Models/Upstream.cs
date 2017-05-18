@@ -33,7 +33,7 @@ namespace WebApplication1.Models
             for(int i = 0; i < ServerIds.Count; i++)
                 strb.AppendLine(allRep.ServerRep.GetById(ServerIds[i]).GenerateConfig());
 
-            if(FreeText!=null)
+            if(FreeText!=null && FreeText!="")
                 strb.AppendLine("   " + FreeText);
 
             strb.AppendLine("}");

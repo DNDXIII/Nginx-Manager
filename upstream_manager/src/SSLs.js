@@ -23,6 +23,7 @@ export const SSLEdit = (props) => (
             <TextInput source="protocols" defaultValue="" validate={required} />
             <TextInput source="dhParam" defaultValue="" validate={required} />
             <LongTextInput source="ciphers" defaultValue="" validate={required} />
+            <TextInput source="sessionCache" defaultValue="" validate={required} />
             <TextInput label="Session Timeout" source="sessionTimeout" defaultValue="" validate={required} />
             <NumberInput label="Buffer Size" source="bufferSize" defaultValue="" validate={required} />
             <BooleanInput label="Prefer Server Ciphers" source="preferServerCiphers" defaultValue={false} />
@@ -43,6 +44,7 @@ export const SSLCreate = (props) => (
             <TextInput source="dhParam" defaultValue="" validate={required} />
             <LongTextInput source="ciphers" defaultValue="" validate={required} />
             <TextInput label="Session Timeout" source="sessionTimeout" defaultValue="" validate={required} />
+            <TextInput source="sessionCache" defaultValue="" validate={required} />
             <NumberInput label="Buffer Size" source="bufferSize" defaultValue="" validate={required} />
             <BooleanInput label="Prefer Server Ciphers" source="preferServerCiphers" defaultValue={false} />
             <BooleanInput source="stapling" defaultValue={false} />

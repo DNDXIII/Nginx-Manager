@@ -6,9 +6,7 @@ export const LocationList=(props)=> (
     <List title="Locations List" {...props} filters={<Filter/>}>
         <Datagrid>
             <TextField source="name" />
-            <ReferenceField label="Passes to:" source="pass" reference="upstreams">
-                <TextField source="name"/>
-            </ReferenceField>
+            <TextField source="uri" />
             <EditButton/>
         </Datagrid>
     </List>
@@ -20,7 +18,7 @@ export const LocationEdit=(props)=> (
         <SimpleForm >
             <TextInput source="name" defaultValue="" validate={required } />
             <TextInput source="uri" defaultValue="" validate={required } />
-            <ReferenceInput label="Upstream to pass to:" source="pass" reference="upstreams">
+            <ReferenceInput label="Upstream to pass to:" source="pass" reference="upstreams" allowEmpty>
                 <SelectInput optionText="name"/>
             </ReferenceInput>
             <SelectInput source="matchType" choices={[
@@ -36,7 +34,7 @@ export const LocationEdit=(props)=> (
                 {id:"scgi_pass"},
                 {id:"memcached_pass"},
             ]} optionText="id" optionValue="id"/>
-            <LongTextInput source="freeText" defaultValue=""  />
+            <LongTextInput source="freeText" />
         </SimpleForm>
     </Edit>
 );
@@ -47,7 +45,7 @@ export const LocationCreate=(props)=>(
         <SimpleForm >
             <TextInput source="name" defaultValue="" validate={required } />
             <TextInput source="uri" defaultValue="" validate={required }  />
-            <ReferenceInput label="Upstream to pass to:" source="pass" reference="upstreams" validate={required } allowEmpty>
+            <ReferenceInput label="Upstream to pass to:" source="pass" reference="upstreams" allowEmpty>
                 <SelectInput optionText="name"/>
             </ReferenceInput>
             <SelectInput source="matchType" choices={[
@@ -63,7 +61,7 @@ export const LocationCreate=(props)=>(
                 {id:"scgi_pass"},
                 {id:"memcached_pass"},
             ]} optionText="id" optionValue="id"/>
-            <LongTextInput source="freeText" defaultValue=""  />
+            <LongTextInput source="freeText" />
         </SimpleForm>
     </Create>
 );

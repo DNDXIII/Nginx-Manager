@@ -34,13 +34,13 @@ namespace WebApplication1.Models
             strb.AppendLine("   listen " + Listen + ";");
             strb.AppendLine("   server_name " + Domain + ";\n");
 
-            if (SSL != null)
+            if (SSL != null && SSL != "")
                 strb.Append(allRep.SSLRep.GetById(SSL).GenerateConfig());
-            if (Applications != null)
+            if (Applications != null && Applications.Count!=0)
                 foreach (string app in Applications)
                     strb.Append(allRep.ApplicationRep.GetById(app).GenerateConfig(allRep));
 
-            if (Locations != null)
+            if (Locations != null && Locations.Count!=0)
                 foreach (var l in Locations)
                     strb.Append(allRep.LocationRep.GetById(l).GenerateConfig(allRep, null));
 

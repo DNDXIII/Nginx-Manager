@@ -42,7 +42,7 @@ namespace WebApplication1.Models
                 strb.Append(" fail_timeout=" + FailTimeout);
             if (MaxFails != DEFAULT_MAX_FAILS)
                 strb.Append(" max_fails=" + MaxFails);
-            strb.AppendLine(";");
+            strb.Append(";");
 
             return strb.ToString();
         }
