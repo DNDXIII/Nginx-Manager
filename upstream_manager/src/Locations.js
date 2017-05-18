@@ -1,5 +1,5 @@
 import React from 'react';
-import { List,ReferenceField, Datagrid, SelectInput, ReferenceInput,Edit,Delete, Create, TextField, EditButton, SimpleForm, TextInput, LongTextInput} from 'admin-on-rest/lib/mui';
+import { required, List,ReferenceField, Datagrid, SelectInput, ReferenceInput,Edit,Delete, Create, TextField, EditButton, SimpleForm, TextInput, LongTextInput} from 'admin-on-rest/lib/mui';
 import{EntityName, Filter } from'./Resources'
 
 export const LocationList=(props)=> (
@@ -9,7 +9,6 @@ export const LocationList=(props)=> (
             <ReferenceField label="Passes to:" source="pass" reference="upstreams">
                 <TextField source="name"/>
             </ReferenceField>
-
             <EditButton/>
         </Datagrid>
     </List>
@@ -19,16 +18,16 @@ export const LocationList=(props)=> (
 export const LocationEdit=(props)=> (
     <Edit title={<EntityName/>}  {...props}>
         <SimpleForm >
-            <TextInput source="name" defaultValue="" validation={{ required: true }} />
-            <TextInput source="uri" defaultValue="" validation={{ required: true }} />
+            <TextInput source="name" defaultValue="" validate={required } />
+            <TextInput source="uri" defaultValue="" validate={required } />
             <ReferenceInput label="Upstream to pass to:" source="pass" reference="upstreams">
                 <SelectInput optionText="name"/>
             </ReferenceInput>
             <SelectInput source="matchType" choices={[
                 {id:"=", description:"Exact match (=)"},
-                {id:"~", description:"Case sensitive (~)"},
-                {id:"~*", description:"Case insensitive (~*)"},
-                {id:"^~", description:"Dunno what to write for this one (^~)"},
+                {id:"~", description:"Regex case sensitive (~)"},
+                {id:"~*", description:"Regex case insensitive (~*)"},
+                {id:"^~", description:"Best non Regex (^~)"},
             ]} optionText="description" optionValue="id" allowEmpty/> 
             <SelectInput source="passType" choices={[
                 {id:"proxy_pass"},
@@ -46,9 +45,9 @@ export const LocationEdit=(props)=> (
 export const LocationCreate=(props)=>(
     <Create title="Create new Virtual Server" {...props }>
         <SimpleForm >
-            <TextInput source="name" defaultValue="" validation={{ required: true }} />
-            <TextInput source="uri" defaultValue="" validation={{ required: true }}  />
-            <ReferenceInput label="Upstream to pass to:" source="pass" reference="upstreams" validation={{ required: true }} allowEmpty>
+            <TextInput source="name" defaultValue="" validate={required } />
+            <TextInput source="uri" defaultValue="" validate={required }  />
+            <ReferenceInput label="Upstream to pass to:" source="pass" reference="upstreams" validate={required } allowEmpty>
                 <SelectInput optionText="name"/>
             </ReferenceInput>
             <SelectInput source="matchType" choices={[

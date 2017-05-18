@@ -114,7 +114,7 @@ namespace WebApplication1.DataAccess
                 if (es.Count() > start)
                   return es.GetRange(start, (es.Count - start));
                 else
-                  return null;
+                  return new List<E>();//empty list 
         }
 
         private async Task<IEnumerable<E>> GetListAsync(string sort, string order)

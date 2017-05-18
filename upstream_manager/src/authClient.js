@@ -25,4 +25,4 @@ function checkLogin( username,password){
     }
     return Promise.reject(LOGIN_FAILED);
 
-}
+}   

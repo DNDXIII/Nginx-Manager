@@ -11,7 +11,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Models
 {
-    public class Location :MongoObject
+    public class Location : MongoObject
     {
         [BsonElement("Name")]
         public string Name { get; set; }
@@ -30,21 +30,23 @@ namespace WebApplication1.Models
         public Location()
         {
             PassType = "proxy_pass";
-        }   
+        }
 
-        public string GenerateConfig(AllRepositories allRep)
+        public string GenerateConfig(AllRepositories allRep, string upstreamId)//upstreamId is used when trying to override 
+                                                                               //the Pass variable, oterwise should be null
         {
             var strb = new StringBuilder();
-            
-            var s = MatchType!=null ? MatchType : "";  
+
+            var s = MatchType != null ? MatchType : "";
 
             strb.AppendLine("   location " + s + " " + URI + " {");
 
-            strb.AppendLine("       " + PassType + " " + allRep.UpstreamRep.GetById(Pass).Name.Replace(" ", "_") + ";");
-           
-           if(FreeText!=null)
-                strb.AppendLine("       "+FreeText);
+            string upstreamToPassTo = upstreamId == null ? Pass : upstreamId;
 
+            strb.AppendLine("       " + PassType + " " + allRep.UpstreamRep.GetById(upstreamToPassTo).Name.Replace(" ", "_") + ";");
+
+            if (FreeText != null)
+                strb.AppendLine("       " + FreeText);
 
             strb.AppendLine("   }");
 

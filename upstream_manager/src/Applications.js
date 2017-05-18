@@ -1,5 +1,5 @@
 import React from 'react';
-import { List,ReferenceInput, Datagrid,CheckboxGroupInput, Edit,Delete, Create, TextField, EditButton, SimpleForm, TextInput  } from 'admin-on-rest/lib/mui';
+import {required, List,ReferenceInput,SelectInput, Datagrid,CheckboxGroupInput, Edit,Delete, Create, TextField, EditButton, SimpleForm, TextInput  } from 'admin-on-rest/lib/mui';
 import{EntityName, Filter} from'./Resources'
 
 
@@ -16,8 +16,11 @@ export const ApplicationList=(props)=> (
 export const ApplicationEdit=(props)=> (
     <Edit title={<EntityName/>}  {...props}>
         <SimpleForm >
-            <TextInput source="name" defaultValue="" validation={{ required: true }} />
-            <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty validation={{required:true}}>
+            <TextInput source="name" defaultValue=""validate={required } />
+            <ReferenceInput label="Override Upstream" allowEmpty source="upstreamId" reference="upstreams" >
+                <SelectInput optionText="name" />
+            </ReferenceInput>
+            <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty validate={required}>
                 <CheckboxGroupInput optionText="name"/>
             </ReferenceInput>
         </SimpleForm>
@@ -27,8 +30,11 @@ export const ApplicationEdit=(props)=> (
 export const ApplicationCreate=(props)=>(
     <Create {...props }>
          <SimpleForm >
-            <TextInput source="name" defaultValue="" validation={{ required: true }} />
-            <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty validation={{required:true}}>
+            <TextInput source="name" defaultValue=""validate={required } />
+            <ReferenceInput label="Override Upstream" allowEmpty source="upstreamId" reference="upstreams" >
+                <SelectInput optionText="name" />
+            </ReferenceInput>
+            <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty validate={required}>
                 <CheckboxGroupInput optionText="name"/>
             </ReferenceInput>
         </SimpleForm>

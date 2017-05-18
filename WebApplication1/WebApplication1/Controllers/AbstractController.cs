@@ -34,9 +34,6 @@ namespace WebApplication1.Controllers
             {
                 var es = _repository.GetList(_sort, _order, _start, _end);
 
-                if (es == null || es.Count() == 0)
-                    return NotFound();
-
                 HttpContext.Response.Headers.Add("X-Total-Count", es.Count().ToString());
                 HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "X-Total-Count");
 
@@ -68,12 +65,12 @@ namespace WebApplication1.Controllers
         public IActionResult Post([FromBody]E value)
         {
             try{
-            if (value == null)
-                return BadRequest();
+                if (value == null)
+                    return BadRequest();
 
-            var createdE = _repository.Add(value);
+                var createdE = _repository.Add(value);
 
-            return Ok(createdE);
+                return Ok(createdE);
             }catch{
                 return BadRequest();
             }
@@ -109,7 +106,7 @@ namespace WebApplication1.Controllers
 
             _repository.Delete(id);
 
-            return new OkResult();
+            return Ok(e);
         }
     }
 }

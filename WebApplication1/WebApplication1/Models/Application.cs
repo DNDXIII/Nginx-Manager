@@ -14,7 +14,9 @@ namespace WebApplication1.Models
         [BsonElement("Name")]
         public string Name { get; set; }
         [BsonElement("Locations")]
-        public List<string> Locations { get; set; } //TODO 
+        public List<string> Locations { get; set; } 
+        [BsonElement("UpstreamId")]
+        public string UpstreamId { get; set; }
         
        
         public string GenerateConfig(AllRepositories allRep)
@@ -23,7 +25,7 @@ namespace WebApplication1.Models
 
             foreach(var l in Locations)
             {
-                strb.AppendLine(allRep.LocationRep.GetById(l).GenerateConfig(allRep));
+                strb.AppendLine(allRep.LocationRep.GetById(l).GenerateConfig(allRep, UpstreamId));
             }
 
             return strb.ToString();
