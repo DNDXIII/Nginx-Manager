@@ -8,6 +8,8 @@ import {ProxyList,ProxyEdit, ProxyCreate} from './ProxyTypes';
 import {SSLCreate, SSLDelete, SSLEdit, SSLList} from './SSLs';
 import {ApplicationCreate, ApplicationDelete, ApplicationEdit, ApplicationList} from './Applications';
 import {LocationCreate, LocationDelete, LocationEdit, LocationList} from './Locations';
+import {GeneralConfigCreate, GeneralConfigList, GeneralConfigEdit, GeneralConfigDelete} from './GeneralConfig';
+
 
 import Menu from './Menu';
 
@@ -22,6 +24,7 @@ const App=()=> (
         <Resource name="applications" list={ApplicationList} edit={ApplicationEdit} create={ApplicationCreate} remove={ApplicationDelete}/>
         <Resource name="ssls"list={SSLList} edit={SSLEdit} create={SSLCreate} remove={SSLDelete}/>}
         <Resource name="proxytypes" list={ProxyList} edit={ProxyEdit} create={ProxyCreate}/>
+        <Resource name="generalconfig" list={GeneralConfigList} edit={GeneralConfigEdit} create={GeneralConfigCreate} delete={GeneralConfigDelete}/>
 
     </Admin>
 );

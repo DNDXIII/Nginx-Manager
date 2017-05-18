@@ -33,17 +33,17 @@ namespace WebApplication1.Models
 
             var s = MatchType != null ? MatchType : "";
 
-            strb.AppendLine("   location " + s + " " + URI + " {");
+            strb.AppendLine("\t\tlocation " + s + " " + URI + " {");
 
             string upstreamToPassTo = upstreamId == null ? Pass : upstreamId;
 
             if(PassType!=null && PassType!="")
-                strb.AppendLine("       " + PassType + " " + allRep.UpstreamRep.GetById(upstreamToPassTo).Name.Replace(" ", "_") + ";");
+                strb.AppendLine("\t\t\t" + PassType + " " + allRep.UpstreamRep.GetById(upstreamToPassTo).Name.Replace(" ", "_") + ";");
 
             if (FreeText != null && FreeText!="")
-                strb.AppendLine("       " + FreeText);
+                strb.AppendLine("\t\t\t" + FreeText);
 
-            strb.AppendLine("   }");
+            strb.AppendLine("\t\t}");
 
 
             return strb.ToString();

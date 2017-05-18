@@ -45,26 +45,26 @@ namespace WebApplication1.Models
             var strb = new StringBuilder();
             string res;//to help create some strings
             
-            strb.AppendLine("   ssl on;");
-            strb.AppendLine("   ssl_certificate "+ Certificate + ";");
-            strb.AppendLine("   ssl_trusted_certificate "+ TrstCertificate + ";");
-            strb.AppendLine("   ssl_certificate_key "+ Key + ";");
-            strb.AppendLine("   ssl_protocols " + Protocols + ";");
-            strb.AppendLine("   ssl_dhparam "+ DHParam + ";");
-            strb.AppendLine("   ssl_ciphers "+ Ciphers + ";");
+            strb.AppendLine("\t\tssl on;");
+            strb.AppendLine("\t\tssl_certificate "+ Certificate + ";");
+            strb.AppendLine("\t\tssl_trusted_certificate "+ TrstCertificate + ";");
+            strb.AppendLine("\t\tssl_certificate_key "+ Key + ";");
+            strb.AppendLine("\t\tssl_protocols " + Protocols + ";");
+            strb.AppendLine("\t\tssl_dhparam "+ DHParam + ";");
+            strb.AppendLine("\t\tssl_ciphers "+ Ciphers + ";");
 
             res= (PreferServerCiphers ? "on":"off");
-            strb.AppendLine("   ssl_prefer_server_ciphers " + res + ";");
+            strb.AppendLine("\t\tssl_prefer_server_ciphers " + res + ";");
             
-            strb.AppendLine("   ssl_session_cache "+ SessionCache + ";");
-            strb.AppendLine("   ssl_session_timeout "+ SessionTimeout + ";");
-            strb.AppendLine("   ssl_buffer_size "+ BufferSize + ";");
+            strb.AppendLine("\t\tssl_session_cache "+ SessionCache + ";");
+            strb.AppendLine("\t\tssl_session_timeout "+ SessionTimeout + ";");
+            strb.AppendLine("\t\tssl_buffer_size "+ BufferSize + ";");
             
             res= (Stapling ? "on":"off");
-            strb.AppendLine("   ssl_stapling "+ res + ";");   
+            strb.AppendLine("\t\tssl_stapling "+ res + ";");   
             
             res= (StaplingVerify ? "on":"off");
-            strb.AppendLine("   ssl_stapling_verify "+ res + ":\n");
+            strb.AppendLine("\t\tssl_stapling_verify "+ res + ":\n");
             
             return strb.ToString();
         }

@@ -43,6 +43,7 @@ namespace WebApplication1
             SSLDataAccess ssl = new SSLDataAccess();
             ApplicationDataAccess app = new ApplicationDataAccess();
             LocationsDataAccess l = new LocationsDataAccess();
+            GeneralConfigDataAccess gc = new GeneralConfigDataAccess();
 
             services.AddSingleton<IRepository<Upstream>>(u);
             services.AddSingleton<IRepository<Server>>(s);
@@ -51,9 +52,11 @@ namespace WebApplication1
             services.AddSingleton<IRepository<SSL>>(ssl);
             services.AddSingleton<IRepository<Application>>(app);
             services.AddSingleton<IRepository<Location>>(l);
+            services.AddSingleton<IRepository<GeneralConfig>>(gc);
 
 
-            services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p, vs, ssl, app,l));
+
+            services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p, vs, ssl, app,l,gc));
 
             // Add framework services.
             services.AddMvc();

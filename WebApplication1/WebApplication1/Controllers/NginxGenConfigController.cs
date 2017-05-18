@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
         {
             Response.ContentType = "text/plain";
             Response.Headers.Append("Content-Description", "File Transfer");
-            Response.Headers.Append("Content-Disposition", "attachment; filename=configuration.config");
+            Response.Headers.Append("Content-Disposition", "attachment; filename=configuration.conf");
             Response.WriteAsync(_config.GenerateConfig(_allRep));
         }
     }

@@ -26,17 +26,17 @@ namespace WebApplication1.Models
             var strb = new StringBuilder();
             var pType = allRep.ProxyTypeRep.GetById(ProxyTypeId);
 
-            strb.AppendLine("upstream " + Name.Replace(" ", "_") + " {");
+            strb.AppendLine("\t" + "upstream " + Name.Replace(" ", "_") + " {");
             if(pType.ProxyValue != "")
-                strb.AppendLine("   " + pType.ProxyValue + ";");            
+                strb.AppendLine("\t\t"+ pType.ProxyValue + ";");            
 
             for(int i = 0; i < ServerIds.Count; i++)
-                strb.AppendLine(allRep.ServerRep.GetById(ServerIds[i]).GenerateConfig());
+                strb.AppendLine("\t" + allRep.ServerRep.GetById(ServerIds[i]).GenerateConfig());
 
             if(FreeText!=null && FreeText!="")
-                strb.AppendLine("   " + FreeText);
+                strb.AppendLine("\t" + FreeText);
 
-            strb.AppendLine("}");
+            strb.AppendLine("\t}");
 
             return strb.ToString();
         }

@@ -30,9 +30,9 @@ namespace WebApplication1.Models
         {
             var strb = new StringBuilder();
 
-            strb.AppendLine("server {");
-            strb.AppendLine("   listen " + Listen + ";");
-            strb.AppendLine("   server_name " + Domain + ";\n");
+            strb.AppendLine("\tserver {");
+            strb.AppendLine("\t\tlisten " + Listen + ";");
+            strb.AppendLine("\t\tserver_name " + Domain + ";\n");
 
             if (SSL != null && SSL != "")
                 strb.Append(allRep.SSLRep.GetById(SSL).GenerateConfig());
@@ -47,10 +47,10 @@ namespace WebApplication1.Models
 
 
             if (FreeText != null)
-                strb.AppendLine("   " + FreeText);
+                strb.AppendLine("\t"+ FreeText);
 
 
-            strb.AppendLine("}");
+            strb.AppendLine("\t}");
 
             return strb.ToString();
         }

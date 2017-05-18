@@ -8,26 +8,13 @@ using WebApplication1.DataAccess;
 namespace WebApplication1.Models
 {
     public class NGINXConfig
-    {
-      
-        public NGINXConfig(){ }
+    { 
+        public NGINXConfig() { }
 
         public string GenerateConfig(AllRepositories allRep)
         {
-            var strb = new StringBuilder();
+            return (allRep.GeneralConfigRep.GetAll().First().GenerateConfig(allRep));
 
-            foreach (var up in allRep.UpstreamRep.GetAll())
-            {
-                strb.AppendLine(up.GenerateConfig(allRep));
-            }
-
-            foreach(var vs in allRep.VirtualServerRep.GetAll())
-            {
-                strb.AppendLine(vs.GenerateConfig(allRep));
-            }
-
-            return strb.ToString();
         }
-
     }
 }
