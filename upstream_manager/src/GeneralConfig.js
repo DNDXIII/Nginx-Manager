@@ -1,12 +1,12 @@
 import React from 'react';
-import {required, List,TextInput,Delete, Datagrid, Edit, Create, TextField, EditButton, SimpleForm, LongTextInput } from 'admin-on-rest/lib/mui';
+import {required, List,Delete, Datagrid, Edit, Create, TextField, EditButton, SimpleForm, LongTextInput } from 'admin-on-rest/lib/mui';
 import { EntityName } from './Resources'
 
 
 export const GeneralConfigList = (props) => (
     <List {...props} title="General Config" >
         <Datagrid>
-            <TextField source="name" />
+            <TextField source="text" />
             <EditButton />
         </Datagrid>
     </List>
@@ -15,7 +15,6 @@ export const GeneralConfigList = (props) => (
 export const GeneralConfigEdit = (props) => (
     <Edit title={<EntityName />}  {...props}>
         <SimpleForm >
-            <TextInput source="name" validate={required}/>
             <LongTextInput source="text" validate={required} />
         </SimpleForm>
     </Edit>

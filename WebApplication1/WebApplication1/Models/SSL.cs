@@ -64,7 +64,7 @@ namespace WebApplication1.Models
             strb.AppendLine("\t\tssl_stapling "+ res + ";");   
             
             res= (StaplingVerify ? "on":"off");
-            strb.AppendLine("\t\tssl_stapling_verify "+ res + ":\n");
+            strb.AppendLine("\t\tssl_stapling_verify "+ res + ";\n");
             
             return strb.ToString();
         }

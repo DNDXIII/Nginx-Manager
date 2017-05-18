@@ -12,8 +12,6 @@ namespace WebApplication1.Models
     {
         [BsonElement("Text")]
         public string Text { get; set;}
-        [BsonElement("Name")]
-        public string Name { get; set; }
 
         public string GenerateConfig(AllRepositories allRep)
         {

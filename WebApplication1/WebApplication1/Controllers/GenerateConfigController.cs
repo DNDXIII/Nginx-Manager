@@ -13,11 +13,11 @@ using Microsoft.AspNetCore.Cors;
 namespace WebApplication1.Controllers
 {
     [Route("api/generateconfig")]
-    public class NginxGenConfigController : Controller
+    public class GenerateConfigController : Controller
     {
         private readonly AllRepositories _allRep;
         private readonly NGINXConfig _config;
-        public NginxGenConfigController(AllRepositories allRep)
+        public GenerateConfigController(AllRepositories allRep)
         {
             _allRep = allRep;
             _config = new NGINXConfig();

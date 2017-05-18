@@ -1,5 +1,5 @@
 import React from 'react';
-import { required, List,ReferenceField, Datagrid, SelectInput, ReferenceInput,Edit,Delete, Create, TextField, EditButton, SimpleForm, TextInput, LongTextInput} from 'admin-on-rest/lib/mui';
+import { required, List, Datagrid, SelectInput, ReferenceInput,Edit,Delete, Create, TextField, EditButton, SimpleForm, TextInput, LongTextInput} from 'admin-on-rest/lib/mui';
 import{EntityName, Filter } from'./Resources'
 
 export const LocationList=(props)=> (
