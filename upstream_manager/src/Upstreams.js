@@ -18,7 +18,11 @@ export const UpList = (upstreams) => (
 export const UpEdit = (upstreams) => (
     <Edit title={<EntityName />} {...upstreams} >
         <SimpleForm>
-            <TextInput source="name" />
+            <TextInput source="name" validate={required}/>
+            <SelectInput source="protocol" optionValue="id" validate={required} choices={[
+                { id: 'http://', name: 'HTTP' },
+                { id: 'https://', name: 'HTTPS' },
+            ]} />
             <ReferenceInput label="Proxy Type" allowEmpty source="proxyTypeId" reference="proxytypes" validate={required}  >
                 <SelectInput optionText="name" />
             </ReferenceInput>
@@ -34,7 +38,11 @@ export const UpEdit = (upstreams) => (
 export const UpCreate = (upstreams) => (
     <Create {...upstreams }>
         <SimpleForm>
-            <TextInput source="name" />
+            <TextInput source="name" validate={required}/>
+            <SelectInput source="protocol" validate={required} optionValue="id" choices={[
+                { id: 'http://', name: 'HTTP' },
+                { id: 'https://', name: 'HTTPS' },
+            ]} />
             <ReferenceInput label="Proxy Type" allowEmpty source="proxyTypeId" reference="proxytypes" validate={required}  >
                 <SelectInput optionText="name" />
             </ReferenceInput>

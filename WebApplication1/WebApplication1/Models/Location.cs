@@ -37,8 +37,10 @@ namespace WebApplication1.Models
 
             string upstreamToPassTo = upstreamId == null ? Pass : upstreamId;
 
-            if(PassType!=null && PassType!="")
-                strb.AppendLine("\t\t\t" + PassType + " " + allRep.UpstreamRep.GetById(upstreamToPassTo).Name.Replace(" ", "_") + ";");
+            var up = allRep.UpstreamRep.GetById(upstreamToPassTo);
+
+            if (PassType!=null && PassType!="")
+                strb.AppendLine("\t\t\t" + PassType + " " +up.Protocol+ up.Name.Replace(" ", "_") + ";");
 
             if (FreeText != null && FreeText!="")
                 strb.AppendLine("\t\t\t" + FreeText);

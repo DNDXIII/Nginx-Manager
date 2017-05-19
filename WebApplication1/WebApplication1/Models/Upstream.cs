@@ -18,6 +18,8 @@ namespace WebApplication1.Models
         public string ProxyTypeId { get; set; }
         [BsonElement("ServerIds")]
         public List<string> ServerIds { get; set; }
+        [BsonElement("Protocol")]
+        public string Protocol { get; set; }
         [BsonElement("FreeText")]
         public string FreeText { get; set; }
         
@@ -26,7 +28,7 @@ namespace WebApplication1.Models
             var strb = new StringBuilder();
             var pType = allRep.ProxyTypeRep.GetById(ProxyTypeId);
 
-            strb.AppendLine("\t" + "upstream " + Name.Replace(" ", "_") + " {");
+            strb.AppendLine("\t" + "upstream " +  Name.Replace(" ", "_") + " {");
             if(pType.ProxyValue != "")
                 strb.AppendLine("\t\t"+ pType.ProxyValue + ";");            
 
