@@ -31,7 +31,7 @@ export default ({ resources, onMenuTap, logout }) => (
 );
 
 function handleTestConfig() {
-    var url = "http://localhost:5000/api/testconfig";
+    var url = "http://localhost:5000/api/config/test";
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", url, true);
     xmlHttp.send(null);

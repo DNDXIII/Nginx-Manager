@@ -34,7 +34,8 @@ namespace WebApplication1.Controllers
             foreach (var sv in _allRep.ServerRep.GetAll())
                 config.Replace(sv.Address, "127.0.0.1");
 
-            System.IO.File.WriteAllText(@"D:\nb23160\Downloads\configuration.conf", config.ToString());
+            var filePath = Path.GetTempFileName();
+            System.IO.File.WriteAllText(filePath, config.ToString());
 
 
 
@@ -42,7 +43,8 @@ namespace WebApplication1.Controllers
             Process p = new Process();
             ProcessStartInfo pi = new ProcessStartInfo();
             pi.FileName = "cmd.exe";
-            pi.Arguments = @"/C docker run -v D:\nb23160\Downloads\configuration.conf:/etc/nginx/nginx.conf -P -it imkulikov/nginx-sticky nginx -t";
+            pi.Arguments = @"/C docker run -v " + filePath + @":/etc/nginx/nginx.conf -P -it imkulikov/nginx-sticky nginx -t";
+            Console.WriteLine(pi.Arguments);
             pi.RedirectStandardOutput = true;
             p.StartInfo = pi;
             p.Start();
@@ -100,10 +102,14 @@ namespace WebApplication1.Controllers
                     //if the test was unsuccessful restore the previous file
                     if (cmd.ExitStatus != 0)
                     {
+                        //remover esta
                         return BadRequest(cmd.CommandText);
                     }
                     else
+                    {
                         return Ok(cmd.CommandText);
+
+                    }
 
                    
 
