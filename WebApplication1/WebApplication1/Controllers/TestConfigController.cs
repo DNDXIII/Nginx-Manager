@@ -10,10 +10,11 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Cors;
 using System.Diagnostics;
+using Renci.SshNet;
 
 namespace WebApplication1.Controllers
 {
-    [Route("api/testconfig")]
+    [Route("api/config")]
     public class TestConfigController : Controller
     {   
         private readonly AllRepositories _allRep;
@@ -22,9 +23,10 @@ namespace WebApplication1.Controllers
             _allRep = allRep;
         }
 
+
         [EnableCors("Cors")]
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("test")]
+        public IActionResult TestConfig()
         {
             //creates the text file
             StringBuilder config = new StringBuilder(_allRep.GeneralConfigRep.GetAll().First().GenerateConfig(_allRep));
@@ -45,15 +47,73 @@ namespace WebApplication1.Controllers
             p.StartInfo = pi;
             p.Start();
 
+
             var s  = p.StandardOutput.ReadToEnd();
 
             p.WaitForExit();
-            
+
+
             //check if it was a positive response
-            if(s.Contains("failed"))
+            if (p.ExitCode!=0)
                 return BadRequest(s);
             return Ok(s);
         }
+
+        [EnableCors("Cors")]
+        [HttpGet("deploy")]
+        public IActionResult DeployConfig()
+        {
+            string host = "192.1239.21.2";
+            int port =22;
+            string username= "pi";
+            string password= "ilikepie";
+            string filePath = @"D:\nb23160\Downloads\configurationTest.conf";
+
+            //create the file
+            System.IO.File.WriteAllText(filePath, _allRep.GeneralConfigRep.GetAll().First().GenerateConfig(_allRep));
+
+
+            //upload the file
+            using (var sftp = new SftpClient(host, port, username, password))
+            {
+
+                sftp.Connect();
+                sftp.ChangeDirectory("/etc/nginx");
+                using (var uplfileStream = System.IO.File.OpenRead(filePath))
+                {
+                    //rename the previous file
+                    sftp.UploadFile(uplfileStream, filePath, true);
+   
+                }
+                sftp.Disconnect();
+                
+            }
+
+            //test the file again
+            using (var sshclient = new SshClient(host, port, username, password))
+            {
+                sshclient.Connect();
+                using (var cmd = sshclient.CreateCommand(@"nginx -t -c etc/nginx/nginxTest.conf"))
+                {
+                    cmd.Execute();
+
+                    //if the test was unsuccessful restore the previous file
+                    if (cmd.ExitStatus != 0)
+                    {
+                        return BadRequest(cmd.CommandText);
+                    }
+                    else
+                        return Ok(cmd.CommandText);
+
+                   
+
+                }
+                sshclient.Disconnect();
+            }
+
+            return Ok();
+        }
+        
 
     }
 }
