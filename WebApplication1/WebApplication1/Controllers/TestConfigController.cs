@@ -116,8 +116,9 @@ namespace WebApplication1.Controllers
                     //if the test was unsuccessful restore the previous file
                     if (cmd.ExitStatus != 0)
                     {
-                        //remove the test file
+                        //go back
                         sshclient.CreateCommand(@"sudo rm /home/azureuser/nginxTest.conf").Execute();
+
                         ret = BadRequest(new StreamReader(cmd.ExtendedOutputStream).ReadToEnd());
                     }
                     //if it was successfull replace the actual file and reload
@@ -127,7 +128,13 @@ namespace WebApplication1.Controllers
                         sshclient.CreateCommand(@"sudo mv /home/azureuser/nginxTest.conf /etc/nginx/nginx.conf").Execute();
                         var reload = sshclient.CreateCommand(@"sudo systemctl reload nginx");
                         reload.Execute();
-                        Console.WriteLine(reload.ExitStatus);
+                        if (reload.ExitStatus != 0)
+                        {
+                            //go back 
+                            sshclient.CreateCommand(@"sudo rm /home/azureuser/nginxTest.conf").Execute();
+
+                            ret = BadRequest(new StreamReader(reload.ExtendedOutputStream).ReadToEnd());
+                        }
                     }
                 }
                 sshclient.Disconnect();

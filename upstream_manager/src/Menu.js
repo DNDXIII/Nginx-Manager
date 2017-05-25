@@ -1,7 +1,9 @@
 import React from 'react';
 import MenuItem from 'material-ui/MenuItem';
+import Divider from 'material-ui/Divider';
 import { Link } from 'react-router-dom';
 import Download from 'material-ui/svg-icons/file/file-download';
+import Upload from 'material-ui/svg-icons/file/file-upload';
 import Router from 'material-ui/svg-icons/hardware/router';
 import Tethering from 'material-ui/svg-icons/device/wifi-tethering';
 import Settings from 'material-ui/svg-icons/action/settings';
@@ -24,8 +26,11 @@ export default ({ resources, onMenuTap, logout }) => (
         <MenuItem containerElement={<Link to="/applications" />} primaryText="Applications" onTouchTap={onMenuTap} leftIcon={<LineWeight />} />
         <MenuItem containerElement={<Link to="/ssls" />} primaryText="SSL's" onTouchTap={onMenuTap} leftIcon={<Lock />} />
         <MenuItem containerElement={<Link to="/proxytypes" />} primaryText="Proxy Types" onTouchTap={onMenuTap} leftIcon={<Router />} />
+        <Divider/>
+        <MenuItem primaryText="Donwload Configuration" onTouchTap={handleDownload} leftIcon={<Download />} />
         <MenuItem primaryText="Test Configuration" onTouchTap={handleTestConfig} leftIcon={<Build />} />
-        <MenuItem primaryText="Generate Configuration" onTouchTap={handleDownload} leftIcon={<Download />} />
+        <MenuItem primaryText="Deploy Configuration" onTouchTap={handleDeployConfig} leftIcon={<Upload />} />
+        <Divider/>
         {logout}
     </div>
 );
@@ -38,7 +43,7 @@ function handleTestConfig() {
 
     xmlHttp.onload = function (e) {
         if (this.status == 200) 
-            alert("The test was successfull:\n "+ this.responseText);
+            alert("The test was successfull:\n"+ this.responseText);
         else if (this.status==400)
             alert("The test failed:\n "+ this.responseText);
         else
@@ -46,8 +51,24 @@ function handleTestConfig() {
     }
 }
 
+function handleDeployConfig() {
+    var url = "http://localhost:5000/api/config/deploy";
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", url, true);
+    xmlHttp.send(null);
+
+    xmlHttp.onload = function (e) {
+        if (this.status == 200) 
+            alert("File has been deployed successfully:\n"+ this.responseText);
+        else if (this.status==400)
+            alert("The file deployment has failed:\n "+ this.responseText);
+        else
+            alert("Something went wrong.");
+    }
+}
+
 function handleDownload() {
-    var url = "http://localhost:5000/api/generateconfig";
+    var url = "http://localhost:5000/api/config/download";
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", url, true);
     xmlHttp.responseType = 'blob'
