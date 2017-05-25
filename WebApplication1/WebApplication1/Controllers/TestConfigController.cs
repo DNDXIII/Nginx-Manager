@@ -67,7 +67,7 @@ namespace WebApplication1.Controllers
 
             //check if it was a positive response
             if (p.ExitCode!=0)
-                return BadRequest(s);
+                return StatusCode(500, s);
             return Ok(s);
         }
 
@@ -84,14 +84,14 @@ namespace WebApplication1.Controllers
             //create the file
 
 
-            //TODO TEMP , ALTERAR !!!!!! apenas pq nao tenho ips como deve ser
+            /*TODO TEMP , ALTERAR !!!!!! apenas pq nao tenho ips como deve ser
             StringBuilder config = new StringBuilder(_allRep.GeneralConfigRep.GetAll().First().GenerateConfig(_allRep));
             foreach (var sv in _allRep.ServerRep.GetAll())
                 config.Replace(sv.Address, "127.0.0.1");
             System.IO.File.WriteAllText(filePath, config.ToString());
-            //TODO TEMP, ALTERAR!!!!
+            TODO TEMP, ALTERAR!!!!*/
 
-            //System.IO.File.WriteAllText(filePath, _allRep.GeneralConfigRep.GetAll().First().GenerateConfig(_allRep));
+            System.IO.File.WriteAllText(filePath, _allRep.GeneralConfigRep.GetAll().First().GenerateConfig(_allRep));
 
             //upload the file
             using (var sftp = new SftpClient(host, port, username, password))
@@ -109,37 +109,54 @@ namespace WebApplication1.Controllers
             using (var sshclient = new SshClient(host, port, username, password))
             {
                 sshclient.Connect();
+
+                if (!createBackup(sshclient))
+                    return StatusCode(500, "Could not create a backup");
+
+
                 using (var cmd = sshclient.CreateCommand(@"sudo nginx -t -c  /home/azureuser/nginxTest.conf"))
                 {
                     var s = cmd.Execute();
 
-                    //if the test was unsuccessful restore the previous file
+                    //if the test was unsuccessful remove the test file
                     if (cmd.ExitStatus != 0)
                     {
-                        //go back
                         sshclient.CreateCommand(@"sudo rm /home/azureuser/nginxTest.conf").Execute();
-
-                        ret = BadRequest(new StreamReader(cmd.ExtendedOutputStream).ReadToEnd());
+                        ret = StatusCode(500, new StreamReader(cmd.ExtendedOutputStream).ReadToEnd());
                     }
-                    //if it was successfull replace the actual file and reload
+                    //if it was successfull try to replace the actual file and reload
                     else
                     {
-                        ret = Ok(new StreamReader(cmd.ExtendedOutputStream).ReadToEnd());
                         sshclient.CreateCommand(@"sudo mv /home/azureuser/nginxTest.conf /etc/nginx/nginx.conf").Execute();
                         var reload = sshclient.CreateCommand(@"sudo systemctl reload nginx");
                         reload.Execute();
                         if (reload.ExitStatus != 0)
                         {
                             //go back 
-                            sshclient.CreateCommand(@"sudo rm /home/azureuser/nginxTest.conf").Execute();
-
-                            ret = BadRequest(new StreamReader(reload.ExtendedOutputStream).ReadToEnd());
+                            restoreBackup(sshclient);
+                            ret = StatusCode(500, new StreamReader(reload.ExtendedOutputStream).ReadToEnd());
                         }
+                        else
+                            ret = Ok(new StreamReader(reload.ExtendedOutputStream).ReadToEnd());
                     }
                 }
                 sshclient.Disconnect();
             }
             return ret;
+        }
+
+        private bool createBackup(SshClient sshclient)
+        {
+            var cmd = sshclient.CreateCommand(@"sudo rm -rf /etc/nginx/backup && sudo mkdir /etc/nginx/backup && sudo cp /etc/nginx/nginx.conf /etc/nginx/backup");
+            cmd.Execute();
+            if (cmd.ExitStatus != 0)//creating backup failed
+                return false;
+            return true;
+        }
+
+        private void restoreBackup(SshClient sshclient)
+        {
+            sshclient.CreateCommand(@"sudo cp /etc/nginx/backup/nginx.conf /etc/nginx/nginx.conf").Execute();
         }
     }
 }

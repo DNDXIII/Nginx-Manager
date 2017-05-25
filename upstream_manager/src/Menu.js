@@ -27,9 +27,9 @@ export default ({ resources, onMenuTap, logout }) => (
         <MenuItem containerElement={<Link to="/ssls" />} primaryText="SSL's" onTouchTap={onMenuTap} leftIcon={<Lock />} />
         <MenuItem containerElement={<Link to="/proxytypes" />} primaryText="Proxy Types" onTouchTap={onMenuTap} leftIcon={<Router />} />
         <Divider/>
-        <MenuItem primaryText="Donwload Configuration" onTouchTap={handleDownload} leftIcon={<Download />} />
-        <MenuItem primaryText="Test Configuration" onTouchTap={handleTestConfig} leftIcon={<Build />} />
-        <MenuItem primaryText="Deploy Configuration" onTouchTap={handleDeployConfig} leftIcon={<Upload />} />
+        <MenuItem primaryText="Donwload" onTouchTap={handleDownload} leftIcon={<Download />} />
+        <MenuItem primaryText="Test Locally" onTouchTap={handleTestConfig} leftIcon={<Build />} />
+        <MenuItem primaryText="Deploy" onTouchTap={handleDeployConfig} leftIcon={<Upload />} />
         <Divider/>
         {logout}
     </div>
@@ -44,7 +44,7 @@ function handleTestConfig() {
     xmlHttp.onload = function (e) {
         if (this.status == 200) 
             alert("The test was successfull:\n"+ this.responseText);
-        else if (this.status==400)
+        else if (this.status==500)
             alert("The test failed:\n "+ this.responseText);
         else
             alert("Something went wrong.");
@@ -60,7 +60,7 @@ function handleDeployConfig() {
     xmlHttp.onload = function (e) {
         if (this.status == 200) 
             alert("File has been deployed successfully:\n"+ this.responseText);
-        else if (this.status==400)
+        else if (this.status==500)
             alert("The file deployment has failed:\n "+ this.responseText);
         else
             alert("Something went wrong.");
