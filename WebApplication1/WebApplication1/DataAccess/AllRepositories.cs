@@ -16,10 +16,13 @@ namespace WebApplication1.DataAccess
         public IRepository<Application> ApplicationRep { get; }
         public IRepository<Location> LocationRep { get; }
         public IRepository<GeneralConfig> GeneralConfigRep { get; }
+        public IRepository<DeploymentServer> DeploymentServerRep { get; }
+
 
 
         public AllRepositories(ServersDataAccess s, UpstreamDataAccess u, ProxyTypeDataAccess p,
-         VirtualServerDataAccess vs, SSLDataAccess ssl, ApplicationDataAccess app, LocationsDataAccess l, GeneralConfigDataAccess gc)
+         VirtualServerDataAccess vs, SSLDataAccess ssl, ApplicationDataAccess app, LocationsDataAccess l, GeneralConfigDataAccess gc,
+         DeploymentServerDataAccess ds)
         {
             ServerRep = s;
             UpstreamRep = u;
@@ -29,6 +32,7 @@ namespace WebApplication1.DataAccess
             ApplicationRep=app;
             LocationRep = l;
             GeneralConfigRep = gc;
+            DeploymentServerRep = ds;
         }
     }
 }

@@ -44,6 +44,7 @@ namespace WebApplication1
             ApplicationDataAccess app = new ApplicationDataAccess();
             LocationsDataAccess l = new LocationsDataAccess();
             GeneralConfigDataAccess gc = new GeneralConfigDataAccess();
+            DeploymentServerDataAccess ds = new DeploymentServerDataAccess();
 
             services.AddSingleton<IRepository<Upstream>>(u);
             services.AddSingleton<IRepository<Server>>(s);
@@ -53,17 +54,12 @@ namespace WebApplication1
             services.AddSingleton<IRepository<Application>>(app);
             services.AddSingleton<IRepository<Location>>(l);
             services.AddSingleton<IRepository<GeneralConfig>>(gc);
+            services.AddSingleton<IRepository<DeploymentServer>>(ds);
 
-
-
-            services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p, vs, ssl, app,l,gc));
+            services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p, vs, ssl, app,l,gc, ds));
 
             // Add framework services.
             services.AddMvc();
-
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

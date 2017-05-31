@@ -17,8 +17,6 @@ namespace WebApplication1.Models
         {
             var strb = new StringBuilder();
 
-            strb.Append(Text);
-
             foreach (var up in allRep.UpstreamRep.GetAll())
             {
                 strb.AppendLine(up.GenerateConfig(allRep));
@@ -30,7 +28,7 @@ namespace WebApplication1.Models
             }
 
             strb.AppendLine("}");
-            return strb.ToString();
+            return Text.Replace("{{config}}", strb.ToString());
         }
 
     }

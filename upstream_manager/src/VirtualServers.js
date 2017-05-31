@@ -1,5 +1,5 @@
 import React from 'react';
-import { required, minValue, maxValue, List, Datagrid, CheckboxGroupInput, SelectInput, ReferenceInput, Edit, Delete, Create, NumberInput, TextField, EditButton, SimpleForm, TextInput, LongTextInput } from 'admin-on-rest/lib/mui';
+import { required, minValue, maxValue, List, Datagrid, SelectArrayInput, SelectInput, ReferenceInput, Edit, Delete, Create, NumberInput, TextField, EditButton, SimpleForm, TextInput, LongTextInput } from 'admin-on-rest/lib/mui';
 import { EntityName, Filter } from './Resources'
 
 export const VirtualServerList = (props) => (
@@ -18,13 +18,13 @@ export const VirtualServerEdit = (props) => (
             <TextInput source="domain" defaultValue="" validate={required} />
             <NumberInput source="listen" defaultValue="80" validate={[required, minValue(0), maxValue(65535)]} />
             <ReferenceInput label="Application" source="applications" reference="applications" allowEmpty>
-                <CheckboxGroupInput optionText="name" />
+                <SelectArrayInput/>
             </ReferenceInput>
             <ReferenceInput label="SSL" source="ssl" reference="ssls" allowEmpty>
                 <SelectInput optionText="name" />
             </ReferenceInput>
             <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty validate={required}>
-                <CheckboxGroupInput optionText="name" />
+                <SelectArrayInput/>
             </ReferenceInput>
             <LongTextInput source="freeText" />
         </SimpleForm>
@@ -39,13 +39,13 @@ export const VirtualServerCreate = (props) => (
             <TextInput source="domain" defaultValue="" validate={required} />
             <NumberInput source="listen" defaultValue="80" validate={[required, minValue(0), maxValue(65535)]} />
             <ReferenceInput label="Application" source="applications" reference="applications" allowEmpty>
-                <SelectInput optionText="name" />
+                <SelectArrayInput/>
             </ReferenceInput>
             <ReferenceInput label="SSL" source="ssl" reference="ssls" allowEmpty>
                 <SelectInput optionText="name" />
             </ReferenceInput>
             <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty validate={required}>
-                <CheckboxGroupInput optionText="name" />
+                <SelectArrayInput/>
             </ReferenceInput>
             <LongTextInput source="freeText" />
         </SimpleForm>

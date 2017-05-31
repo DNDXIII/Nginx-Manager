@@ -7,9 +7,6 @@ export const UpList = (upstreams) => (
     <List {...upstreams} filters={<Filter />}>
         <Datagrid>
             <TextField source="name" />
-            <ReferenceField label="Proxy Type" source="proxyTypeId" reference="proxytypes" >
-                <TextField source="name" />
-            </ReferenceField>
             <EditButton />
         </Datagrid>
     </List>

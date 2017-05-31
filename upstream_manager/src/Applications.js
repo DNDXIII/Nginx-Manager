@@ -1,5 +1,5 @@
 import React from 'react';
-import {required, List,ReferenceInput,SelectInput, Datagrid,CheckboxGroupInput, Edit,Delete, Create, TextField, EditButton, SimpleForm, TextInput  } from 'admin-on-rest/lib/mui';
+import {required, List,ReferenceInput,SelectInput, Datagrid,SelectArrayInput, Edit,Delete, Create, TextField, EditButton, SimpleForm, TextInput  } from 'admin-on-rest/lib/mui';
 import{EntityName, Filter} from'./Resources'
 
 
@@ -21,7 +21,7 @@ export const ApplicationEdit=(props)=> (
                 <SelectInput optionText="name" />
             </ReferenceInput>
             <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty validate={required}>
-                <CheckboxGroupInput optionText="name"/>
+                <SelectArrayInput/>
             </ReferenceInput>
         </SimpleForm>
     </Edit>
@@ -35,7 +35,7 @@ export const ApplicationCreate=(props)=>(
                 <SelectInput optionText="name" />
             </ReferenceInput>
             <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty validate={required}>
-                <CheckboxGroupInput optionText="name"/>
+                <SelectArrayInput/>
             </ReferenceInput>
         </SimpleForm>
     </Create>
