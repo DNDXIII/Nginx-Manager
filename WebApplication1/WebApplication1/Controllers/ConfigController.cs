@@ -24,8 +24,15 @@ namespace WebApplication1.Controllers
         }
 
         [EnableCors("Cors")]
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(new NGINXConfig().GenerateConfig(_allRep));
+        }
+
+        [EnableCors("Cors")]
         [HttpGet("download")]
-        public void Get()
+        public void Download()
         {
             var config = new NGINXConfig();
             Response.ContentType = "text/plain";

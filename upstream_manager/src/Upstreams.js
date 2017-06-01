@@ -1,5 +1,5 @@
 import React from 'react';
-import {required, CheckboxGroupInput, LongTextInput, List, Datagrid, Edit, Delete, ReferenceField, Create, TextField, EditButton, ReferenceInput, SelectInput, SimpleForm, TextInput } from 'admin-on-rest/lib/mui';
+import {required, CheckboxGroupInput, LongTextInput, List, Datagrid, Edit, Delete, Create, TextField, EditButton, ReferenceInput, SelectInput, SimpleForm, TextInput } from 'admin-on-rest/lib/mui';
 import { EntityName, Filter } from './Resources';
 
 

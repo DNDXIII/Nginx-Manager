@@ -27,7 +27,6 @@ namespace WebApplication1.Models
                 strb.AppendLine(vs.GenerateConfig(allRep));
             }
 
-            strb.AppendLine("}");
             return Text.Replace("{{config}}", strb.ToString());
         }
 
