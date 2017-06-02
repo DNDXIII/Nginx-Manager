@@ -79,7 +79,6 @@ class Config extends React.Component {
             return;
         }
 
-        fetch("http://localhost:5000/api/config/deploy");
         var socket = new WebSocket("ws://localhost:5000/api");
         socket.onopen = e => {
             this.setState({ message: "Starting deploy.", open: true });
@@ -89,8 +88,9 @@ class Config extends React.Component {
             console.log("socket closed", e);
         };
 
-        socket.onmessage = function (e) {
-            console.log(e.data);
+        socket.onmessage = (e) => {
+             console.log(e.data);
+            this.setState({ message: e.data, open: true });
         };
 
         socket.onerror = function (e) {
@@ -103,25 +103,7 @@ class Config extends React.Component {
         this.setState({ text: t });
     }
 
-    mambo = () => {
-        var socket = new WebSocket("ws://localhost:5000/api");
-        socket.onopen = e => {
-            console.log("socket opened", e);
-        };
-
-        socket.onclose = function (e) {
-            console.log("socket closed", e);
-        };
-
-        socket.onmessage = function (e) {
-            console.log(e.data);
-        };
-
-        socket.onerror = function (e) {
-            console.error(e.data);
-        };
-    }
-
+    
     render() {
         return (
             <Card>
@@ -133,7 +115,6 @@ class Config extends React.Component {
                     <FlatButton onTouchTap={this.handleDownload} icon={<Download />} label="Download" />
                     <FlatButton onTouchTap={this.handleTestConfig} icon={<Build />} label="Test Locally" />
                     <FlatButton onTouchTap={this.handleDeploy} icon={<Upload />} label="Deploy" />
-                    <FlatButton onTouchTap={this.mambo} icon={<Upload />} label="mambo" />
                 </CardActions>
                 <Snackbar
                     open={this.state.open}
