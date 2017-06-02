@@ -46,6 +46,7 @@ class Config extends React.Component {
     }
 
     handleTestConfig = () => {
+        this.setState({ message: "Testing...", open: true });
         fetch("http://localhost:5000/api/config/test")
             .then((resp) => {
                 if (resp.ok)
@@ -73,15 +74,52 @@ class Config extends React.Component {
     }
 
     handleDeploy = () => {//todo
-        if (!this.state.tested)
+        if (!this.state.tested){
             this.setState({ message: "File must be successfully tested locally first.", open: true });
-        else
-            alert("ueeeee");
+            return;
+        }
+
+        fetch("http://localhost:5000/api/config/deploy");
+        var socket = new WebSocket("ws://localhost:5000/api");
+        socket.onopen = e => {
+            this.setState({ message: "Starting deploy.", open: true });
+        };
+
+        socket.onclose = function (e) {
+            console.log("socket closed", e);
+        };
+
+        socket.onmessage = function (e) {
+            console.log(e.data);
+        };
+
+        socket.onerror = function (e) {
+            console.error(e.data);
+        };
     }
 
     async componentDidMount() {
         var t = await this.handleGetConfig();
         this.setState({ text: t });
+    }
+
+    mambo = () => {
+        var socket = new WebSocket("ws://localhost:5000/api");
+        socket.onopen = e => {
+            console.log("socket opened", e);
+        };
+
+        socket.onclose = function (e) {
+            console.log("socket closed", e);
+        };
+
+        socket.onmessage = function (e) {
+            console.log(e.data);
+        };
+
+        socket.onerror = function (e) {
+            console.error(e.data);
+        };
     }
 
     render() {
@@ -95,6 +133,7 @@ class Config extends React.Component {
                     <FlatButton onTouchTap={this.handleDownload} icon={<Download />} label="Download" />
                     <FlatButton onTouchTap={this.handleTestConfig} icon={<Build />} label="Test Locally" />
                     <FlatButton onTouchTap={this.handleDeploy} icon={<Upload />} label="Deploy" />
+                    <FlatButton onTouchTap={this.mambo} icon={<Upload />} label="mambo" />
                 </CardActions>
                 <Snackbar
                     open={this.state.open}
@@ -128,3 +167,7 @@ function handleDeployConfig() {
             alert("Something went wrong.");
     }
 }
+
+
+
+

@@ -56,7 +56,7 @@ namespace WebApplication1
             services.AddSingleton<IRepository<GeneralConfig>>(gc);
             services.AddSingleton<IRepository<DeploymentServer>>(ds);
 
-            services.AddSingleton<AllRepositories>(new AllRepositories(s, u, p, vs, ssl, app,l,gc, ds));
+            services.AddSingleton(new AllRepositories(s, u, p, vs, ssl, app,l,gc, ds));
 
             // Add framework services.
             services.AddMvc();
@@ -68,7 +68,13 @@ namespace WebApplication1
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseWebSockets();
+            app.UseMiddleware<WebSMiddleware>();
+
             app.UseMvc();
+
+           
+
         }
     }
 }

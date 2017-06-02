@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Cors;
 using System.Diagnostics;
 using Renci.SshNet;
+using WebSocketManager;
 
 namespace WebApplication1.Controllers
 {
@@ -18,7 +19,7 @@ namespace WebApplication1.Controllers
     public class ConfigController : Controller
     {   
         private readonly AllRepositories _allRep;
-        public ConfigController(AllRepositories allRep)
+        public ConfigController(AllRepositories allRep )
         {
             _allRep = allRep;
         }
