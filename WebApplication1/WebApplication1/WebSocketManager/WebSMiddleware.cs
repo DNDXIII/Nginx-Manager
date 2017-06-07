@@ -105,9 +105,10 @@ public class WebSMiddleware
             using (var sftp = new SftpClient(d.Address, d.Port, username, password))
             {
                 sftp.Connect();
-                using (var uplfileStream = System.IO.File.OpenRead(filePath))
+                sftp.ChangeDirectory(@"/home");//MUST SUDO
+                using (var uplfileStream = File.OpenRead(filePath))
                 {
-                    sftp.UploadFile(uplfileStream, "nginxTest.conf", true);
+                    sftp.UploadFile(uplfileStream, "nginx.conf", true);
                 }
                 sftp.Disconnect();
                 SendStringAsync("Uploaded file to " + d.Name);
@@ -117,14 +118,20 @@ public class WebSMiddleware
             using (var sshclient = new SshClient(d.Address, d.Port, username, password))
             {
                 sshclient.Connect();
-                sshclient.CreateCommand(@"sudo mv /home/azureuser/nginxTest.conf /etc/nginx/nginx.conf").Execute();
-                var cmd = sshclient.CreateCommand(@"sudo systemctl reload nginx");
+                sshclient.CreateCommand(@"sudo mv /home/nginx.conf /etc/nginx/nginx.conf").Execute();
+                var cmd = sshclient.CreateCommand(@"sudo systemctl reload nginx ");
                 cmd.Execute();
                 if (cmd.ExitStatus != 0)
                 {
                     errorOcurred = true;
-                    SendStringAsync("Error occurred while trying to restart " + d.Name + "with the new configuration: "
-                        + new StreamReader(cmd.ExtendedOutputStream).ReadToEnd());
+                    SendStringAsync("Error occurred while trying to restart " + d.Name + " with the new configuration");
+
+                    /*
+                    cmd = sshclient.CreateCommand(@"sudo systemctl status nginx.service");
+                    cmd.Execute();
+                    SendStringAsync(new StreamReader(cmd.ExtendedOutputStream).ReadToEnd());
+                    */
+    
                     //restore 
                     foreach (DeploymentServer dd in deploymentServers)
                     {

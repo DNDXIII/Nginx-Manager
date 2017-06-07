@@ -15,7 +15,7 @@ class Config extends React.Component {
         super(props);
         this.state = {
             text: "Couldn't get Config from server.",
-            tested: false,
+            tested: true,
             message: "",
             open: false
         };
@@ -54,7 +54,8 @@ class Config extends React.Component {
                 else
                     resp.text()
                         .then((error) => {
-                            this.setState({ message: error, open: true });
+                            console.log(error);
+                            this.setState({ message: "Test failed: " + error, open: true });
                         })
             })
 
@@ -85,11 +86,10 @@ class Config extends React.Component {
         };
 
         socket.onclose = function (e) {
-            console.log("socket closed", e);
         };
 
         socket.onmessage = (e) => {
-             console.log(e.data);
+            console.log(e.data);
             this.setState({ message: e.data, open: true });
         };
 

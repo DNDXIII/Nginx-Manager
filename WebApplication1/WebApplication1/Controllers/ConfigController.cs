@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Cors;
 using System.Diagnostics;
 using Renci.SshNet;
+using System;
 
 namespace WebApplication1.Controllers
 {
@@ -63,12 +64,10 @@ namespace WebApplication1.Controllers
             p.StartInfo = pi;
             p.Start();
 
-
-            var s  = p.StandardOutput.ReadToEnd();
-
             p.WaitForExit();
+            var s = p.StandardOutput.ReadToEnd();
 
-
+            Console.WriteLine(s);
             //check if it was a positive response
             if (p.ExitCode!=0)
                 return StatusCode(500, s);
