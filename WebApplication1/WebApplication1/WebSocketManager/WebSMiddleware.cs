@@ -105,7 +105,7 @@ public class WebSMiddleware
             using (var sftp = new SftpClient(d.Address, d.Port, username, password))
             {
                 sftp.Connect();
-                sftp.ChangeDirectory(@"/home");//MUST SUDO
+                sftp.ChangeDirectory(@"/home/azureuser");
                 using (var uplfileStream = File.OpenRead(filePath))
                 {
                     sftp.UploadFile(uplfileStream, "nginx.conf", true);
@@ -118,19 +118,19 @@ public class WebSMiddleware
             using (var sshclient = new SshClient(d.Address, d.Port, username, password))
             {
                 sshclient.Connect();
-                sshclient.CreateCommand(@"sudo mv /home/nginx.conf /etc/nginx/nginx.conf").Execute();
-                var cmd = sshclient.CreateCommand(@"sudo systemctl reload nginx ");
+                sshclient.CreateCommand(@"sudo mv /home/azureuser/nginx.conf /etc/nginx/nginx.conf").Execute();
+                var cmd = sshclient.CreateCommand(@"sudo systemctl reload nginx");
                 cmd.Execute();
                 if (cmd.ExitStatus != 0)
                 {
                     errorOcurred = true;
                     SendStringAsync("Error occurred while trying to restart " + d.Name + " with the new configuration");
 
-                    /*
+                    
                     cmd = sshclient.CreateCommand(@"sudo systemctl status nginx.service");
                     cmd.Execute();
-                    SendStringAsync(new StreamReader(cmd.ExtendedOutputStream).ReadToEnd());
-                    */
+                    SendStringAsync("Error occurred on "+d.Name+ " read console for more details.\n\n\n" + cmd.Result);
+                    
     
                     //restore 
                     foreach (DeploymentServer dd in deploymentServers)

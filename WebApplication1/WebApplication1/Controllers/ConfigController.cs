@@ -67,7 +67,6 @@ namespace WebApplication1.Controllers
             p.WaitForExit();
             var s = p.StandardOutput.ReadToEnd();
 
-            Console.WriteLine(s);
             //check if it was a positive response
             if (p.ExitCode!=0)
                 return StatusCode(500, s);

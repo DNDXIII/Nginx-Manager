@@ -15,7 +15,7 @@ class Config extends React.Component {
         super(props);
         this.state = {
             text: "Couldn't get Config from server.",
-            tested: true,
+            tested: true, 
             message: "",
             open: false
         };
@@ -55,7 +55,7 @@ class Config extends React.Component {
                     resp.text()
                         .then((error) => {
                             console.log(error);
-                            this.setState({ message: "Test failed: " + error, open: true });
+                            this.setState({ message: "Test failed, check console for more information.", open: true });
                         })
             })
 
@@ -74,7 +74,7 @@ class Config extends React.Component {
         });
     }
 
-    handleDeploy = () => {//todo
+    handleDeploy = () => {
         if (!this.state.tested){
             this.setState({ message: "File must be successfully tested locally first.", open: true });
             return;
@@ -109,7 +109,9 @@ class Config extends React.Component {
             <Card>
                 <ViewTitle title="Configuration" />
                 <CardText>
-                    {this.state.text}
+                    <pre>
+                        {this.state.text}
+                    </pre>
                 </CardText>
                 <CardActions>
                     <FlatButton onTouchTap={this.handleDownload} icon={<Download />} label="Download" />
