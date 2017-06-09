@@ -26,7 +26,7 @@ export default ({ resources, onMenuTap, logout }) => (
         <MenuItem containerElement={<Link to="/ssls" />} primaryText="SSL's" onTouchTap={onMenuTap} leftIcon={<Lock />} />
         <MenuItem containerElement={<Link to="/proxytypes" />} primaryText="Proxy Types" onTouchTap={onMenuTap} leftIcon={<Router/*change*/ />} />
         <Divider />
-        <MenuItem containerElement={<Link to="/config" />} primaryText="Deploy" onTouchTap={onMenuTap} leftIcon={<Place />} />
+        <MenuItem containerElement={<Link to="/config" />} primaryText="Deploy Configuration" onTouchTap={onMenuTap} leftIcon={<Place />} />
         <MenuItem containerElement={<Link to="/deploymentservers" />} primaryText="Deployment Servers" onTouchTap={onMenuTap} leftIcon={<Router />} />
         <Divider />
         {logout}
