@@ -15,7 +15,7 @@ class Config extends React.Component {
         super(props);
         this.state = {
             text: "Couldn't get Config from server.",
-            tested: true, 
+            tested: false, 
             message: "",
             open: false
         };
