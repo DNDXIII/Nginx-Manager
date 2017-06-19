@@ -7,8 +7,6 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Cors;
 using System.Diagnostics;
-using Renci.SshNet;
-using System;
 
 namespace WebApplication1.Controllers
 {

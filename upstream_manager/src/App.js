@@ -14,8 +14,33 @@ import customRoutes from './customRoutes';
 import Menu from './Menu';
 import authClient from './authClient';
 
+export var apiUrl = {
+    base: 'localhost:5000/api',
+    nginxReload: function (id) {
+        return 'http://' + this.base + '/deploymentservers/reload/' + id;
+    },
+    downloadConfig: function () {
+        return 'http://' + this.base + '/config/download';
+    },
+    testConfig: function () {
+        return 'http://' + this.base + '/config/test';
+    },
+    getConfig: function () {
+        return 'http://' + this.base + '/config';
+    },
+    getWebSocket: function(){
+        return 'ws://'+ this.base;
+    }, 
+    deployConfig: function(){
+        return 'http://' + this.base + '/config/deploy';
+    },
+    nginxShutdown: function (id) {
+        return 'http://' + this.base + '/deploymentservers/shutdown/' + id;
+    }
+};
+
 const App = () => (
-    <Admin menu={Menu} customRoutes={customRoutes} /*authClient={authClient}*/ restClient={jsonServerRestClient('http://localhost:5000/api')}>
+    <Admin menu={Menu} customRoutes={customRoutes} /*authClient={authClient}*/ restClient={jsonServerRestClient("http://"+apiUrl.base)}>
         <Resource name="virtualservers" list={VirtualServerList} edit={VirtualServerEdit} create={VirtualServerCreate} remove={VirtualServerDelete} />
         <Resource name="servers" list={ServerList} edit={ServerEdit} create={ServerCreate} remove={ServerDelete} />
         <Resource name="upstreams" list={UpList} edit={UpEdit} create={UpCreate} remove={UpDelete} />

@@ -5,6 +5,7 @@ import Download from 'material-ui/svg-icons/file/file-download';
 import Build from 'material-ui/svg-icons/action/build';
 import Upload from 'material-ui/svg-icons/file/file-upload';
 import Snackbar from 'material-ui/Snackbar';
+import {apiUrl} from './App'
 
 
 import { ViewTitle } from 'admin-on-rest';
@@ -22,7 +23,7 @@ class Config extends React.Component {
     }
 
     handleDownload = () => {
-        var url = "http://localhost:5000/api/config/download";
+        var url = apiUrl.downloadConfig;
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", url, true);
         xmlHttp.responseType = 'blob'
@@ -47,7 +48,7 @@ class Config extends React.Component {
 
     handleTestConfig = () => {
         this.setState({ message: "Testing...", open: true });
-        fetch("http://localhost:5000/api/config/test")
+        fetch(apiUrl.testConfig)
             .then((resp) => {
                 if (resp.ok)
                     this.setState({ message: "Test successful.", open: true, tested: true });
@@ -62,7 +63,7 @@ class Config extends React.Component {
     }
 
     async handleGetConfig() {
-        var url = "http://localhost:5000/api/config";
+        var url = apiUrl.getConfig;
         const resp = await fetch(url);
         const text = await resp.text();
         return text;
@@ -80,7 +81,7 @@ class Config extends React.Component {
             return;
         }
 
-        var socket = new WebSocket("ws://localhost:5000/api");
+        var socket = new WebSocket(apiUrl.getWebSocket);
         socket.onopen = e => {
             this.setState({ message: "Starting deploy.", open: true });
         };
@@ -131,12 +132,8 @@ class Config extends React.Component {
 
 export default Config;
 
-
-
-
-
 function handleDeployConfig() {
-    var url = "http://localhost:5000/api/config/deploy";
+    var url = apiUrl.deployConfig;
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", url, true);
     xmlHttp.send(null);
