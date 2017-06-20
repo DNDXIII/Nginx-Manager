@@ -27,8 +27,8 @@ export class DeploymentServerEdit extends React.Component {
         this.state = {
             message: "",
             open: false,
-            text: [],
-            connected: false,
+            usertext: [],
+            alltext: [],
             socket: null
         };
     }
@@ -85,25 +85,6 @@ export class DeploymentServerEdit extends React.Component {
     }
 
     handleConnect = () => {
-        this.handleWebSocket();
-        this.setState({ connected: true });
-    }
-
-    handleDisconnect = () => {
-        this.state.socket.close();
-        this.setState({ connected: false, socket: null });
-    }
-
-    handleWriteLine = (line) => {
-        var newText = this.state.text;
-        var socket = this.state.socket;
-        newText.push(line + "\n");
-        this.setState({
-            text: newText,
-        });
-    }
-
-    handleWebSocket = () => {
         var s = new WebSocket(apiUrl.getWebSocket());
 
         this.setState({
@@ -114,18 +95,52 @@ export class DeploymentServerEdit extends React.Component {
             console.log("connected");
         };
 
-        s.onclose = function (e) {
+        s.onclose = (e)=> {
             s.close();
+            this.setState({
+                socket:null
+            })
             console.log("disconnected");
         };
 
         s.onmessage = (e) => {
-            console.log(e.data);
+            var newText = this.state.alltext;
+            newText.push(e.data);
+            this.setState({
+                alltext: newText,
+            })
+            console.log(e.data)
         };
 
         s.onerror = function (e) {
             console.error(e.data);
         };
+    }
+
+    handleDisconnect = () => {
+        this.state.socket.close();
+        this.setState({ socket: null });
+    }
+
+    handleWriteLine = (line) => {
+        var newUserText = this.state.usertext;
+        var newAllText = this.state.alltext;
+        var socket = this.state.socket;
+        newAllText.push(line);
+        newUserText.push(line)
+        this.setState({
+            usertext: newUserText,
+            alltext: newAllText
+        });
+        socket.send(line);
+    }
+
+    getText = () => {
+        var s = "";
+        for (var i = 0; i < this.state.alltext.length; i++)
+            s = s + this.state.alltext[i] + "\n";
+
+        return s;
     }
 
     render() {
@@ -142,12 +157,12 @@ export class DeploymentServerEdit extends React.Component {
                             <RaisedButton style={{ marginRight: 13 }} label="Shutdown Server" onTouchTap={() => { this.handleShutdown(this.props.match.params.id) }} />
                             <RaisedButton style={{ marginRight: 13 }} label="Start Server" onTouchTap={() => { this.handleStart(this.props.match.params.id) }} />
 
-                            {!this.state.connected ? <RaisedButton onTouchTap={this.handleConnect} label="Connect by SSH" /> : null}
+                            {!this.state.socket == null ? null : <RaisedButton onTouchTap={this.handleConnect} label="Connect by SSH" />}
 
                         </div>
                     </SimpleForm>
                 </Edit>
-                {this.state.connected ? <Terminal handleDisconnect={this.handleDisconnect} text={this.state.text} handleWriteLine={this.handleWriteLine} /> : null}
+                {this.state.socket == null ? null : <Terminal handleDisconnect={this.handleDisconnect} usertext={this.state.usertext} alltext={this.getText} handleWriteLine={this.handleWriteLine} />}
 
                 <Snackbar
                     open={this.state.open}

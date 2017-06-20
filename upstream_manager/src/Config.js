@@ -5,7 +5,7 @@ import Download from 'material-ui/svg-icons/file/file-download';
 import Build from 'material-ui/svg-icons/action/build';
 import Upload from 'material-ui/svg-icons/file/file-upload';
 import Snackbar from 'material-ui/Snackbar';
-import {apiUrl} from './App'
+import { apiUrl } from './App'
 
 
 import { ViewTitle } from 'admin-on-rest';
@@ -16,7 +16,7 @@ class Config extends React.Component {
         super(props);
         this.state = {
             text: "Couldn't get Config from server.",
-            tested: false, 
+            tested: false,
             message: "",
             open: false
         };
@@ -76,15 +76,19 @@ class Config extends React.Component {
     }
 
     handleDeploy = () => {
-        if (!this.state.tested){
+        if (!this.state.tested) {
             this.setState({ message: "File must be successfully tested locally first.", open: true });
             return;
         }
 
         var socket = new WebSocket(apiUrl.getWebSocket());
-        socket.onopen = e => {
+        socket.onopen = (e) => {
             this.setState({ message: "Starting deploy.", open: true });
         };
+
+        socket.onopen = (e) => {
+            socket.send("ws.DeployConfiguration")
+        }
 
         socket.onclose = function (e) {
             socket.close();
@@ -105,7 +109,7 @@ class Config extends React.Component {
         this.setState({ text: t });
     }
 
-    
+
     render() {
         return (
             <Card>

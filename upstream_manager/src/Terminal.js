@@ -21,16 +21,16 @@ export default class Terminal extends React.Component {
 
     handleKeyPress = (event) => {
         if (event.keyCode == 40) {
-            var pos = this.props.text.length - this.state.textPos;
-            if (pos < this.props.text.length) {
-                document.getElementById("inputfield").value = this.props.text[pos];
+            var pos = this.props.usertext.length - this.state.textPos;
+            if (pos < this.props.usertext.length) {
+                document.getElementById("inputfield").value = this.props.usertext[pos];
                 this.setState({ textPos: this.state.textPos - 1 });
             }
         }
         else if (event.keyCode == 38) {
-            var pos = this.props.text.length - this.state.textPos;
+            var pos = this.props.usertext.length - this.state.textPos;
             if (pos > 0) {
-                document.getElementById("inputfield").value = this.props.text[pos - 1];
+                document.getElementById("inputfield").value = this.props.usertext[pos - 1];
                 this.setState({ textPos: this.state.textPos + 1 });
             }
         }
@@ -53,7 +53,7 @@ export default class Terminal extends React.Component {
                     paddingBottom: "2%",
                     margin: 0
                 }}>
-                    {this.props.text}
+                    {this.props.alltext()}
                 </pre>
                 <form autoComplete="off" onSubmit={this.onLineSubmit}>
                     <input type="text" onKeyDown={this.handleKeyPress} id="inputfield" style={{

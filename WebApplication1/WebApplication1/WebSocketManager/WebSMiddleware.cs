@@ -44,6 +44,8 @@ public class WebSMiddleware
                 return;
             }
 
+            
+
             else if (result.MessageType == WebSocketMessageType.Close)
             {
                 await CloseSocket(currentSocket);
@@ -76,7 +78,12 @@ public class WebSMiddleware
     {
         string msg = Encoding.UTF8.GetString(buffer, 0, result.Count);
 
-        SendStringAsync(msg, socket, new CancellationToken());
+        if (msg == "ws.DeployConfiguration")
+        {
+            deployConfigAsync(socket);
+        }
+        else
+            SendStringAsync(msg, socket, new CancellationToken());
     }
 
     private async static void SendStringAsync(string data, WebSocket socket, CancellationToken ct = default(CancellationToken))
