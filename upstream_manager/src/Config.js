@@ -132,22 +132,3 @@ class Config extends React.Component {
 
 export default Config;
 
-function handleDeployConfig() {
-    var url = apiUrl.deployConfig;
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", url, true);
-    xmlHttp.send(null);
-
-    xmlHttp.onload = function (e) {
-        if (this.status == 200)
-            alert("File has been deployed successfully:\n" + this.responseText);
-        else if (this.status == 500)
-            alert("The file deployment has failed:\n " + this.responseText);
-        else
-            alert("Something went wrong.");
-    }
-}
-
-
-
-

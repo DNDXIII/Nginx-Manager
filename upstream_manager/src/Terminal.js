@@ -7,6 +7,7 @@ export default class Terminal extends React.Component {
         super(props);
         this.state = {
             text: [],
+            textPos: 0
         };
     }
 
@@ -23,8 +24,22 @@ export default class Terminal extends React.Component {
     }
 
     handleKeyPress = (event) => {
-        if (event.keycode == 38) {
-            alert('ububu')
+        if (event.keyCode == 40) {
+            var pos = this.state.text.length - this.state.textPos;
+            if (pos < this.state.text.length) {
+                document.getElementById("inputfield").value = this.state.text[pos];
+                this.setState({ textPos: this.state.textPos - 1 });
+            }
+        }
+        else if (event.keyCode == 38) {
+            var pos = this.state.text.length - this.state.textPos;
+            if (pos > 0) {
+                document.getElementById("inputfield").value = this.state.text[pos - 1];
+                this.setState({ textPos: this.state.textPos + 1 });
+            }
+        }
+        else if (this.state.textPos != 0) {
+            this.setState({ textPos: 0 });
         }
     }
 

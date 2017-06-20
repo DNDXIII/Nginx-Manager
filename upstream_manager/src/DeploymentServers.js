@@ -100,12 +100,12 @@ export class DeploymentServerEdit extends React.Component {
                         <TextInput source="address" validate={required} />
                         <NumberInput source="port" validate={[required, minValue(0), maxValue(65535)]} />
                         <BooleanInput label="Active" source="active" />
-                        <Paper zDepth={0}>
-                            <RaisedButton style={{ margin: 13 }} onTouchTap={() => { this.handleReload(this.props.match.params.id) }} label="Reload Server" />
-                            <RaisedButton label="Shutdown Server" onTouchTap={() => { this.handleShutdown(this.props.match.params.id) }} />
-                            <RaisedButton label="Start Server" onTouchTap={() => { this.handleStart(this.props.match.params.id) }} />
-                            {!this.state.connected ? <RaisedButton onTouchTap={this.handleConnect} style={{ margin: 13, marginBottom: 20 }} label="Connect SSH to the server." /> : null}
-                        </Paper>
+                        <div>
+                            <RaisedButton style={{ marginRight: 13, marginBottom: 20 }} onTouchTap={() => { this.handleReload(this.props.match.params.id) }} label="Reload Server" />
+                            <RaisedButton style={{ marginRight: 13 }} label="Shutdown Server" onTouchTap={() => { this.handleShutdown(this.props.match.params.id) }} />
+                            <RaisedButton style={{ marginRight: 13 }} label="Start Server" onTouchTap={() => { this.handleStart(this.props.match.params.id) }} />
+                            {!this.state.connected ? <RaisedButton onTouchTap={this.handleConnect}  label="Connect by SSH" /> : null}
+                        </div>
                     </SimpleForm>
                 </Edit>
                 {this.state.connected ? <Terminal handleDisconnect={this.handleDisconnect} /> : null}
