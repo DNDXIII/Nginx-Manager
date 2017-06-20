@@ -6,35 +6,31 @@ export default class Terminal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: [],
             textPos: 0
         };
     }
 
     onLineSubmit = (event) => {
         event.preventDefault();
-        var newText = this.state.text;
-        newText.push(document.getElementById("inputfield").value + "\n");
+        var line = document.getElementById("inputfield").value;
         document.getElementById("inputfield").value = "";
-        this.setState({
-            text: newText,
-        });
+        this.props.handleWriteLine(line);
         var div = document.getElementById("textBox");
         div.scrollTop = div.scrollHeight - div.clientHeight;
     }
 
     handleKeyPress = (event) => {
         if (event.keyCode == 40) {
-            var pos = this.state.text.length - this.state.textPos;
-            if (pos < this.state.text.length) {
-                document.getElementById("inputfield").value = this.state.text[pos];
+            var pos = this.props.text.length - this.state.textPos;
+            if (pos < this.props.text.length) {
+                document.getElementById("inputfield").value = this.props.text[pos];
                 this.setState({ textPos: this.state.textPos - 1 });
             }
         }
         else if (event.keyCode == 38) {
-            var pos = this.state.text.length - this.state.textPos;
+            var pos = this.props.text.length - this.state.textPos;
             if (pos > 0) {
-                document.getElementById("inputfield").value = this.state.text[pos - 1];
+                document.getElementById("inputfield").value = this.props.text[pos - 1];
                 this.setState({ textPos: this.state.textPos + 1 });
             }
         }
@@ -57,7 +53,7 @@ export default class Terminal extends React.Component {
                     paddingBottom: "2%",
                     margin: 0
                 }}>
-                    {this.state.text}
+                    {this.props.text}
                 </pre>
                 <form autoComplete="off" onSubmit={this.onLineSubmit}>
                     <input type="text" onKeyDown={this.handleKeyPress} id="inputfield" style={{

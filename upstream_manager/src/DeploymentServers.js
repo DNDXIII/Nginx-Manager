@@ -28,7 +28,8 @@ export class DeploymentServerEdit extends React.Component {
             message: "",
             open: false,
             text: [],
-            connected: false
+            connected: false,
+            socket: null
         };
     }
 
@@ -48,7 +49,7 @@ export class DeploymentServerEdit extends React.Component {
         })
     }
 
-    handleStart(id){
+    handleStart(id) {
         const url = apiUrl.nginxStart(id)
         fetch(url, {
             method: 'POST',
@@ -84,11 +85,47 @@ export class DeploymentServerEdit extends React.Component {
     }
 
     handleConnect = () => {
+        this.handleWebSocket();
         this.setState({ connected: true });
     }
 
     handleDisconnect = () => {
-        this.setState({ connected: false });
+        this.state.socket.close();
+        this.setState({ connected: false, socket: null });
+    }
+
+    handleWriteLine = (line) => {
+        var newText = this.state.text;
+        var socket = this.state.socket;
+        newText.push(line + "\n");
+        this.setState({
+            text: newText,
+        });
+    }
+
+    handleWebSocket = () => {
+        var s = new WebSocket(apiUrl.getWebSocket());
+
+        this.setState({
+            socket: s
+        })
+
+        s.onopen = e => {
+            console.log("connected");
+        };
+
+        s.onclose = function (e) {
+            s.close();
+            console.log("disconnected");
+        };
+
+        s.onmessage = (e) => {
+            console.log(e.data);
+        };
+
+        s.onerror = function (e) {
+            console.error(e.data);
+        };
     }
 
     render() {
@@ -104,11 +141,13 @@ export class DeploymentServerEdit extends React.Component {
                             <RaisedButton style={{ marginRight: 13, marginBottom: 20 }} onTouchTap={() => { this.handleReload(this.props.match.params.id) }} label="Reload Server" />
                             <RaisedButton style={{ marginRight: 13 }} label="Shutdown Server" onTouchTap={() => { this.handleShutdown(this.props.match.params.id) }} />
                             <RaisedButton style={{ marginRight: 13 }} label="Start Server" onTouchTap={() => { this.handleStart(this.props.match.params.id) }} />
-                            {!this.state.connected ? <RaisedButton onTouchTap={this.handleConnect}  label="Connect by SSH" /> : null}
+
+                            {!this.state.connected ? <RaisedButton onTouchTap={this.handleConnect} label="Connect by SSH" /> : null}
+
                         </div>
                     </SimpleForm>
                 </Edit>
-                {this.state.connected ? <Terminal handleDisconnect={this.handleDisconnect} /> : null}
+                {this.state.connected ? <Terminal handleDisconnect={this.handleDisconnect} text={this.state.text} handleWriteLine={this.handleWriteLine} /> : null}
 
                 <Snackbar
                     open={this.state.open}

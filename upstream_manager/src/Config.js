@@ -81,12 +81,13 @@ class Config extends React.Component {
             return;
         }
 
-        var socket = new WebSocket(apiUrl.getWebSocket);
+        var socket = new WebSocket(apiUrl.getWebSocket());
         socket.onopen = e => {
             this.setState({ message: "Starting deploy.", open: true });
         };
 
         socket.onclose = function (e) {
+            socket.close();
         };
 
         socket.onmessage = (e) => {

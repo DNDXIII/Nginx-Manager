@@ -31,42 +31,82 @@ public class WebSMiddleware
             return;
         }
 
-        CancellationToken ct = context.RequestAborted;
         WebSocket currentSocket = await context.WebSockets.AcceptWebSocketAsync();
         var socketId = Guid.NewGuid().ToString();
 
         _sockets.TryAdd(socketId, currentSocket);
 
+        await Receive(currentSocket, async (result, buffer) =>
+        {
+            if (result.MessageType == WebSocketMessageType.Text)
+            {
+                ReceiveAsync(currentSocket, result, buffer);
+                return;
+            }
 
-        deployConfig();
+            else if (result.MessageType == WebSocketMessageType.Close)
+            {
+                await CloseSocket(currentSocket);
+                return;
+            }
 
-        WebSocket dummy;
-        _sockets.TryRemove(socketId, out dummy);
+        });
 
-        await currentSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", ct);
-        currentSocket.Dispose();
     }
 
-    private async static void SendStringAsync(string data, CancellationToken ct = default(CancellationToken))
+    private async Task Receive(WebSocket socket, Action<WebSocketReceiveResult, byte[]> handleMessage)
+    {
+        var buffer = new byte[1024 * 4];
+
+        while (socket.State == WebSocketState.Open)
+        {
+            var result = await socket.ReceiveAsync(buffer: new ArraySegment<byte>(buffer),
+                                                   cancellationToken: CancellationToken.None);
+
+            handleMessage(result, buffer);
+        }
+    }
+
+    private string GetId(WebSocket socket)
+    {
+        return _sockets.FirstOrDefault(p => p.Value == socket).Key;
+    }
+
+    public void ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer)
+    {
+        string msg = Encoding.UTF8.GetString(buffer, 0, result.Count);
+
+        SendStringAsync(msg, socket, new CancellationToken());
+    }
+
+    private async static void SendStringAsync(string data, WebSocket socket, CancellationToken ct = default(CancellationToken))
     {
         var buffer = Encoding.UTF8.GetBytes(data);
         var segment = new ArraySegment<byte>(buffer);
 
-        foreach (var s in _sockets)
-        {
-            if (s.Value.State != WebSocketState.Open)
-            {
-                continue;
-            }
+        await socket.SendAsync(segment, WebSocketMessageType.Text, true, ct);
 
-            await s.Value.SendAsync(segment, WebSocketMessageType.Text, true, ct);
-        }
 
     }
 
-    private void deployConfig()
+    private async Task CloseSocket(WebSocket socket)
+    {
+        await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", new CancellationToken());
+        socket.Dispose();
+        WebSocket dummy;
+        _sockets.TryRemove(GetId(socket), out dummy);
+    }
+
+    private async Task deployConfigAsync(WebSocket socket)
     {
         var deploymentServers = _allRep.DeploymentServerRep.GetAll().Where(x => x.Active);
+
+        if (deploymentServers.Count() == 0)
+        {
+            SendStringAsync("No servers to deploy to.", socket);
+            await CloseSocket(socket);
+            return;
+        }
 
         var filePath = Path.GetTempFileName();
         string username = "azureuser";
@@ -74,7 +114,7 @@ public class WebSMiddleware
 
 
         //create the file
-        SendStringAsync("Uploading configuration file.");
+        SendStringAsync("Uploading configuration file.", socket);
         File.WriteAllText(filePath, _allRep.GeneralConfigRep.GetAll().First().GenerateConfig(_allRep));
 
 
@@ -86,11 +126,12 @@ public class WebSMiddleware
                 ssh.Connect();
                 if (!createBackup(ssh))
                 {
-                    SendStringAsync("Error creating backup on " + d.Name );
+                    SendStringAsync("Error creating backup on " + d.Name, socket);
+                    await CloseSocket(socket);
                     return;
                 }
                 ssh.Disconnect();
-                SendStringAsync("Backup created on " + d.Name);
+                SendStringAsync("Backup created on " + d.Name, socket);
             }
 
         }
@@ -111,7 +152,7 @@ public class WebSMiddleware
                     sftp.UploadFile(uplfileStream, "nginx.conf", true);
                 }
                 sftp.Disconnect();
-                SendStringAsync("Uploaded file to " + d.Name);
+                SendStringAsync("Uploaded file to " + d.Name, socket);
             }
 
             //test the file again inside each server to deploy to
@@ -124,14 +165,14 @@ public class WebSMiddleware
                 if (cmd.ExitStatus != 0)
                 {
                     errorOcurred = true;
-                    SendStringAsync("Error occurred while trying to restart " + d.Name + " with the new configuration");
-                        
-                    
+                    SendStringAsync("Error occurred while trying to restart " + d.Name + " with the new configuration", socket);
+
+
                     cmd = sshclient.CreateCommand(@"sudo systemctl status nginx.service");
                     cmd.Execute();
-                    SendStringAsync("Error occurred on "+d.Name+ " read console for more details. " + cmd.Result);
-                    
-    
+                    SendStringAsync("Error occurred on " + d.Name + " read console for more details. " + cmd.Result, socket);
+
+
                     //restore 
                     foreach (DeploymentServer dd in deploymentServers)
                     {
@@ -141,20 +182,25 @@ public class WebSMiddleware
                             restoreBackup(ssh);
                             ssh.Disconnect();
                         }
-                        SendStringAsync(dd.Name + " has been reverted.");
+                        SendStringAsync(dd.Name + " has been reverted.", socket);
                     }
                 }
                 else
                 {
                     sshclient.Disconnect();
-                    SendStringAsync(d.Name + " has been successfully restarted with the new configuration.");
+                    SendStringAsync(d.Name + " has been successfully restarted with the new configuration.", socket);
                 }
             }
         }
-        if(errorOcurred)
-            SendStringAsync("The new configuration file could not be deployed.");
+        if (errorOcurred)
+            SendStringAsync("The new configuration file could not be deployed.", socket);
         else
-            SendStringAsync("The new configuration file has beens successfully deployed.");
+            SendStringAsync("The new configuration file has beens successfully deployed.", socket);
+
+        await CloseSocket(socket);
+
+        
+
     }
 
     private bool createBackup(SshClient sshclient)
@@ -170,4 +216,5 @@ public class WebSMiddleware
     {
         sshclient.CreateCommand(@"sudo cp /etc/nginx/backup/nginx.conf /etc/nginx/nginx.conf").Execute();
     }
+
 }
