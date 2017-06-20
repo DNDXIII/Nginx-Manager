@@ -36,6 +36,9 @@ export var apiUrl = {
     },
     nginxShutdown: function (id) {
         return 'http://' + this.base + '/deploymentservers/shutdown/' + id;
+    },
+    nginxStart: function (id) {
+        return 'http://' + this.base + '/deploymentservers/start/' + id;
     }
 };
 
