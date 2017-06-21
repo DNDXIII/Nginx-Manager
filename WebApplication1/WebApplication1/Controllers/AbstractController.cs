@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace WebApplication1.Controllers
 {
+
     [EnableCors("Cors")]
     public class AbstractController<E> : Controller where E :MongoObject
     {
@@ -41,6 +42,7 @@ namespace WebApplication1.Controllers
 
         // GET api/values/5
         // GET api/values/5,3,1
+
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {

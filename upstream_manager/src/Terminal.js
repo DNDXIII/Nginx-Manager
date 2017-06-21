@@ -15,8 +15,6 @@ export default class Terminal extends React.Component {
         var line = document.getElementById("inputfield").value;
         document.getElementById("inputfield").value = "";
         this.props.handleWriteLine(line);
-        var div = document.getElementById("textBox");
-        div.scrollTop = div.scrollHeight - div.clientHeight;
     }
 
     handleKeyPress = (event) => {

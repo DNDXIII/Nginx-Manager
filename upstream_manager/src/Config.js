@@ -55,7 +55,7 @@ class Config extends React.Component {
                 else
                     resp.text()
                         .then((error) => {
-                            console.log(error);
+                            console.error(error);
                             this.setState({ message: "Test failed, check console for more information.", open: true });
                         })
             })

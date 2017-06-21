@@ -17,10 +17,15 @@ public class WebSMiddleware
 
     private readonly RequestDelegate _next;
     private readonly AllRepositories _allRep;
+    private SshClient client;
+    private ShellStream stream;
+
     public WebSMiddleware(RequestDelegate next, AllRepositories allRep)
     {
         _allRep = allRep;
         _next = next;
+        client = null;
+        stream = null;
     }
 
     public async Task Invoke(HttpContext context)
@@ -40,7 +45,7 @@ public class WebSMiddleware
         {
             if (result.MessageType == WebSocketMessageType.Text)
             {
-                ReceiveAsync(currentSocket, result, buffer);
+                await ReceiveAsync(currentSocket, result, buffer);
                 return;
             }
 
@@ -54,6 +59,40 @@ public class WebSMiddleware
 
         });
 
+    }
+
+     private StringBuilder sendCommand(string customCMD)
+    {
+        StringBuilder answer;
+
+        var reader = new StreamReader(stream);
+        var writer = new StreamWriter(stream);
+        writer.AutoFlush = true;
+        WriteStream(customCMD, writer, stream);
+        answer = ReadStream(reader);
+        return answer;
+    }
+
+    private void WriteStream(string cmd, StreamWriter writer, ShellStream stream)
+    {
+        writer.WriteLine(cmd);
+        while (stream.Length == 0)
+        {
+            Thread.Sleep(500);
+        }
+    }
+
+    private StringBuilder ReadStream(StreamReader reader)
+    {
+        StringBuilder result = new StringBuilder();
+
+        string line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            result.AppendLine(line);
+            //Thread.Sleep(50);
+        }
+        return result;
     }
 
     private async Task Receive(WebSocket socket, Action<WebSocketReceiveResult, byte[]> handleMessage)
@@ -74,6 +113,15 @@ public class WebSMiddleware
         return _sockets.FirstOrDefault(p => p.Value == socket).Key;
     }
 
+    private void createClient(string id)
+    {
+        var server = _allRep.DeploymentServerRep.GetById(id);
+
+        client = new SshClient(server.Address, server.Port, "azureuser", "Collab.1234567890");
+        client.Connect();
+        stream = client.CreateShellStream("shell", 80, 24, 800, 600, 1024);
+    }
+
     public async Task ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer)
     {
         string msg = Encoding.UTF8.GetString(buffer, 0, result.Count);
@@ -82,8 +130,8 @@ public class WebSMiddleware
         {
             await deployConfigAsync(socket);
         }
-        else
-            SendStringAsync(msg, socket, new CancellationToken());
+        else 
+            ServerAction(msg, socket);
     }
 
     private async static void SendStringAsync(string data, WebSocket socket, CancellationToken ct = default(CancellationToken))
@@ -92,9 +140,34 @@ public class WebSMiddleware
         var segment = new ArraySegment<byte>(buffer);
 
         await socket.SendAsync(segment, WebSocketMessageType.Text, true, ct);
-
-
     }
+
+    
+    private string ServerAction(string msg, WebSocket socket)
+    {
+        var parts = msg.Split(new string[] { "___" }, StringSplitOptions.None);
+        string id = parts[0];
+        string op = parts[1];
+
+        string res ="";
+        if(client == null)
+        {
+            createClient(id);
+        }
+
+        res = sendCommand(op).ToString();
+
+
+        Console.WriteLine(res);
+        SendStringAsync(res,socket );
+            
+
+            
+
+        return res;
+        
+    }
+
 
     private async Task CloseSocket(WebSocket socket)
     {
@@ -102,6 +175,11 @@ public class WebSMiddleware
         socket.Dispose();
         WebSocket dummy;
         _sockets.TryRemove(GetId(socket), out dummy);
+        stream.Dispose();
+        stream = null;
+        client.Disconnect();
+        client.Dispose();
+        client = null;
     }
 
     private async Task deployConfigAsync(WebSocket socket)
@@ -161,6 +239,8 @@ public class WebSMiddleware
                 sftp.Disconnect();
                 SendStringAsync("Uploaded file to " + d.Name, socket);
             }
+
+
 
             //test the file again inside each server to deploy to
             using (var sshclient = new SshClient(d.Address, d.Port, username, password))

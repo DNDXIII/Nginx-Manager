@@ -44,7 +44,7 @@ export class DeploymentServerEdit extends React.Component {
                 this.setState({ message: "Service has been reloaded successfully.", open: true });
             else {
                 this.setState({ message: "An error ocurred, check console for more information.", open: true });
-                resp.text().then((text) => { console.log(text) })
+                resp.text().then((text) => { console.error(text) })
             }
         })
     }
@@ -59,7 +59,7 @@ export class DeploymentServerEdit extends React.Component {
                 this.setState({ message: "Service has been started successfully.", open: true });
             else {
                 this.setState({ message: "An error ocurred, check console for more information.", open: true });
-                resp.text().then((text) => { console.log(text) })
+                resp.text().then((text) => { console.error(text) })
             }
         })
     }
@@ -92,15 +92,18 @@ export class DeploymentServerEdit extends React.Component {
         })
 
         s.onopen = e => {
-            console.log("connected");
+            console.log("Connected");
+            s.send(this.props.match.params.id + "___");//to receive th header
         };
 
-        s.onclose = (e)=> {
+        s.onclose = (e) => {
             s.close();
             this.setState({
-                socket:null
+                socket: null,
+                alltext: [],
+                usertext: []
             })
-            console.log("disconnected");
+            console.log("Disconnected");
         };
 
         s.onmessage = (e) => {
@@ -109,6 +112,8 @@ export class DeploymentServerEdit extends React.Component {
             this.setState({
                 alltext: newText,
             })
+            var div = document.getElementById("textBox");
+            div.scrollTop = div.scrollHeight - div.clientHeight;
             console.log(e.data)
         };
 
@@ -126,13 +131,22 @@ export class DeploymentServerEdit extends React.Component {
         var newUserText = this.state.usertext;
         var newAllText = this.state.alltext;
         var socket = this.state.socket;
-        newAllText.push(line);
-        newUserText.push(line)
-        this.setState({
-            usertext: newUserText,
-            alltext: newAllText
-        });
-        socket.send(line);
+        debugger;
+        if (line === "" || !line) {
+            newAllText.push(line);  
+            this.setState({
+                alltext: newAllText
+            });
+        }
+        else {
+            newUserText.push(line)
+            this.setState({
+                usertext: newUserText
+            });
+            socket.send(line);
+        }
+        var div = document.getElementById("textBox");
+        div.scrollTop = div.scrollHeight - div.clientHeight;
     }
 
     getText = () => {
