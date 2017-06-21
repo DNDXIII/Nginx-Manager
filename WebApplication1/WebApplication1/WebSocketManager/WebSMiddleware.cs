@@ -74,13 +74,13 @@ public class WebSMiddleware
         return _sockets.FirstOrDefault(p => p.Value == socket).Key;
     }
 
-    public void ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer)
+    public async Task ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer)
     {
         string msg = Encoding.UTF8.GetString(buffer, 0, result.Count);
 
         if (msg == "ws.DeployConfiguration")
         {
-            deployConfigAsync(socket);
+            await deployConfigAsync(socket);
         }
         else
             SendStringAsync(msg, socket, new CancellationToken());

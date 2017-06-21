@@ -63,7 +63,7 @@ class Config extends React.Component {
     }
 
     async handleGetConfig() {
-        var url = apiUrl.getConfig;
+        var url = apiUrl.getConfig();
         const resp = await fetch(url);
         const text = await resp.text();
         return text;
