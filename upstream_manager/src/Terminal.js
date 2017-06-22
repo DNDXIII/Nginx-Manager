@@ -58,7 +58,7 @@ export default class Terminal extends React.Component {
                         width: 1200,
                         border: "none",
                         borderColor: "transparent",
-                        backgroundColor: "black",
+                        backgroundColor: "grey",
                         color: "white",
                         fontFamily: "Lucida Console",
                         fontSize: 17

@@ -93,7 +93,7 @@ export class DeploymentServerEdit extends React.Component {
 
         s.onopen = e => {
             console.log("Connected");
-            s.send(this.props.match.params.id + "___");//to receive th header
+            s.send(this.props.match.params.id);//to receive th header
         };
 
         s.onclose = (e) => {

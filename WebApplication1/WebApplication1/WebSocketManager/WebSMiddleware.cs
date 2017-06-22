@@ -17,15 +17,15 @@ public class WebSMiddleware
 
     private readonly RequestDelegate _next;
     private readonly AllRepositories _allRep;
-    private SshClient client;
-    private ShellStream stream;
+    private SshClient _client;
+    private ShellStream _stream;
 
     public WebSMiddleware(RequestDelegate next, AllRepositories allRep)
     {
         _allRep = allRep;
         _next = next;
-        client = null;
-        stream = null;
+        _client = null;
+        _stream = null;
     }
 
     public async Task Invoke(HttpContext context)
@@ -53,7 +53,7 @@ public class WebSMiddleware
 
             else if (result.MessageType == WebSocketMessageType.Close)
             {
-                await CloseSocket(currentSocket);
+                    await CloseSocket(currentSocket);
                 return;
             }
 
@@ -61,38 +61,17 @@ public class WebSMiddleware
 
     }
 
-     private StringBuilder sendCommand(string customCMD)
+    private void ReadStream(WebSocket socket, ShellStream stream)
     {
-        StringBuilder answer;
-
-        var reader = new StreamReader(stream);
-        var writer = new StreamWriter(stream);
-        writer.AutoFlush = true;
-        WriteStream(customCMD, writer, stream);
-        answer = ReadStream(reader);
-        return answer;
-    }
-
-    private void WriteStream(string cmd, StreamWriter writer, ShellStream stream)
-    {
-        writer.WriteLine(cmd);
-        while (stream.Length == 0)
+        using (var reader = new StreamReader(stream))
         {
-            Thread.Sleep(500);
+            string s;
+            while (stream != null)
+            {
+                s = stream.ReadLine();
+                SendStringAsync(s, socket);
+            }
         }
-    }
-
-    private StringBuilder ReadStream(StreamReader reader)
-    {
-        StringBuilder result = new StringBuilder();
-
-        string line;
-        while ((line = reader.ReadLine()) != null)
-        {
-            result.AppendLine(line);
-            //Thread.Sleep(50);
-        }
-        return result;
     }
 
     private async Task Receive(WebSocket socket, Action<WebSocketReceiveResult, byte[]> handleMessage)
@@ -113,13 +92,13 @@ public class WebSMiddleware
         return _sockets.FirstOrDefault(p => p.Value == socket).Key;
     }
 
-    private void createClient(string id)
+    private void CreateClient(string id)
     {
         var server = _allRep.DeploymentServerRep.GetById(id);
 
-        client = new SshClient(server.Address, server.Port, "azureuser", "Collab.1234567890");
-        client.Connect();
-        stream = client.CreateShellStream("shell", 80, 24, 800, 600, 1024);
+        _client = new SshClient(server.Address, server.Port, "azureuser", "Collab.1234567890");
+        _client.Connect();
+        _stream = _client.CreateShellStream("shell", 80, 24, 800, 600, 1024);
     }
 
     public async Task ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer)
@@ -128,7 +107,7 @@ public class WebSMiddleware
 
         if (msg == "ws.DeployConfiguration")
         {
-            await deployConfigAsync(socket);
+            await DeployConfigAsync(socket);
         }
         else 
             ServerAction(msg, socket);
@@ -143,29 +122,20 @@ public class WebSMiddleware
     }
 
     
-    private string ServerAction(string msg, WebSocket socket)
+    private void ServerAction(string msg, WebSocket socket)
     {
-        var parts = msg.Split(new string[] { "___" }, StringSplitOptions.None);
-        string id = parts[0];
-        string op = parts[1];
 
-        string res ="";
-        if(client == null)
+        if(_client == null)
         {
-            createClient(id);
+            CreateClient(msg);
+            new Thread(delegate () {
+                ReadStream(socket, _stream);
+            }).Start();
+            return;
         }
 
-        res = sendCommand(op).ToString();
+        _stream.WriteLine(msg);
 
-
-        Console.WriteLine(res);
-        SendStringAsync(res,socket );
-            
-
-            
-
-        return res;
-        
     }
 
 
@@ -175,14 +145,14 @@ public class WebSMiddleware
         socket.Dispose();
         WebSocket dummy;
         _sockets.TryRemove(GetId(socket), out dummy);
-        stream.Dispose();
-        stream = null;
-        client.Disconnect();
-        client.Dispose();
-        client = null;
+        _stream.Dispose();
+        _stream = null;
+        _client.Disconnect();
+        _client.Dispose();
+        _client = null;
     }
 
-    private async Task deployConfigAsync(WebSocket socket)
+    private async Task DeployConfigAsync(WebSocket socket)
     {
         var deploymentServers = _allRep.DeploymentServerRep.GetAll().Where(x => x.Active);
 
@@ -209,7 +179,7 @@ public class WebSMiddleware
             using (var ssh = new SshClient(d.Address, d.Port, username, password))
             {
                 ssh.Connect();
-                if (!createBackup(ssh))
+                if (!CreateBackup(ssh))
                 {
                     SendStringAsync("Error creating backup on " + d.Name, socket);
                     await CloseSocket(socket);
@@ -266,7 +236,7 @@ public class WebSMiddleware
                         using (var ssh = new SshClient(dd.Address, dd.Port, username, password))
                         {
                             ssh.Connect();
-                            restoreBackup(ssh);
+                            RestoreBackup(ssh);
                             ssh.Disconnect();
                         }
                         SendStringAsync(dd.Name + " has been reverted.", socket);
@@ -290,7 +260,7 @@ public class WebSMiddleware
 
     }
 
-    private bool createBackup(SshClient sshclient)
+    private bool CreateBackup(SshClient sshclient)
     {
         var cmd = sshclient.CreateCommand(@"sudo rm -rf /etc/nginx/backup && sudo mkdir /etc/nginx/backup && sudo cp /etc/nginx/nginx.conf /etc/nginx/backup");
         cmd.Execute();
@@ -299,7 +269,7 @@ public class WebSMiddleware
         return true;
     }
 
-    private void restoreBackup(SshClient sshclient)
+    private void RestoreBackup(SshClient sshclient)
     {
         sshclient.CreateCommand(@"sudo cp /etc/nginx/backup/nginx.conf /etc/nginx/nginx.conf").Execute();
     }
