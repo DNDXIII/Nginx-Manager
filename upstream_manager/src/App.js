@@ -14,10 +14,13 @@ import customRoutes from './customRoutes';
 import Menu from './Menu';
 import authClient from './authClient';
 
-export var apiUrl = {
+export const apiUrl = {
     base: 'localhost:5000/api',
     nginxReload: function (id) {
         return 'http://' + this.base + '/deploymentservers/reload/' + id;
+    },
+    authenticate: function () {
+        return 'http://' + this.base + '/authenticate';
     },
     downloadConfig: function () {
         return 'http://' + this.base + '/config/download';

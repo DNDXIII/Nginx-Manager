@@ -4,7 +4,6 @@ import { EntityName, Filter } from './Resources'
 import RaisedButton from 'material-ui/RaisedButton';
 import { apiUrl } from './App'
 import Snackbar from 'material-ui/Snackbar';
-import Paper from 'material-ui/Paper';
 import Terminal from './Terminal'
 
 export const DeploymentServerList = (props) => (
