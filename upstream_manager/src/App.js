@@ -20,7 +20,7 @@ export const apiUrl = {
         return 'http://' + this.base + '/deploymentservers/reload/' + id;
     },
     authenticate: function () {
-        return 'http://' + this.base + '/authenticate';
+        return 'http://' + this.base + '/jwt';
     },
     downloadConfig: function () {
         return 'http://' + this.base + '/config/download';
@@ -46,7 +46,7 @@ export const apiUrl = {
 };
 
 const App = () => (
-    <Admin menu={Menu} customRoutes={customRoutes} /*authClient={authClient}*/ restClient={jsonServerRestClient("http://"+apiUrl.base)}>
+    <Admin menu={Menu} customRoutes={customRoutes} authClient={authClient} restClient={jsonServerRestClient("http://"+apiUrl.base)}>
         <Resource name="virtualservers" list={VirtualServerList} edit={VirtualServerEdit} create={VirtualServerCreate} remove={VirtualServerDelete} />
         <Resource name="servers" list={ServerList} edit={ServerEdit} create={ServerCreate} remove={ServerDelete} />
         <Resource name="upstreams" list={UpList} edit={UpEdit} create={UpCreate} remove={UpDelete} />
