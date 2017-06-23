@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -25,28 +23,19 @@ namespace WebApplication1.DataAccess
             _collection = _db.GetCollection<E>(name);
         }
 
-        public async void GenerateIndexesAsync()//TODO
-        {
-            var options = new CreateIndexOptions() { Unique = true };
-            var field = new StringFieldDefinition<E>("Name");
-            var indexDefinition = new IndexKeysDefinitionBuilder<E>().Ascending(field);
-            await _collection.Indexes.CreateOneAsync(indexDefinition, options);
-        }
-    
-
         public E Add(E e)
         { 
             try{
                 AddAsync(e);
                 return e;   
-            }catch{//TODO
+            }catch{
                 throw;
             }
         }
 
         private async void AddAsync(E e) 
         {
-            try{//TODO
+            try{
                 await _collection.InsertOneAsync(e);
             }catch{
                 throw ;

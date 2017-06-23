@@ -9,7 +9,10 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using WebApplication1.Common;
+using WebApplication1.DataAccess;
 using WebApplication1.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WebApplication1.Controllers
 {
@@ -19,12 +22,13 @@ namespace WebApplication1.Controllers
         private readonly JwtIssuerOptions _jwtOptions;
         private readonly ILogger _logger;
         private readonly JsonSerializerSettings _serializerSettings;
+        private readonly IRepository<User> _users;
 
-        public JwtController(IOptions<JwtIssuerOptions> jwtOptions, ILoggerFactory loggerFactory)
+        public JwtController(IOptions<JwtIssuerOptions> jwtOptions, ILoggerFactory loggerFactory, IRepository<User> users)
         {
             _jwtOptions = jwtOptions.Value;
             ThrowIfInvalidOptions(_jwtOptions);
-
+            _users = users;
             _logger = loggerFactory.CreateLogger<JwtController>();
 
             _serializerSettings = new JsonSerializerSettings
@@ -44,21 +48,12 @@ namespace WebApplication1.Controllers
                 return BadRequest("Invalid credentials");
             }
 
-            var claims = new[]
-            {
-        new Claim(JwtRegisteredClaimNames.Sub, applicationUser.Username),
-        new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
-        new Claim(JwtRegisteredClaimNames.Iat,
-                  ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
-                  ClaimValueTypes.Integer64),
-        identity.FindFirst("DisneyCharacter")
-      };
+            
 
             // Create the JWT security token and encode it.
             var jwt = new JwtSecurityToken(
                 issuer: _jwtOptions.Issuer,
                 audience: _jwtOptions.Audience,
-                claims: claims,
                 notBefore: _jwtOptions.NotBefore,
                 expires: _jwtOptions.Expiration,
                 signingCredentials: _jwtOptions.SigningCredentials);
@@ -102,34 +97,20 @@ namespace WebApplication1.Controllers
                                new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
                               .TotalSeconds);
 
-        /// <summary>
-        /// IMAGINE BIG RED WARNING SIGNS HERE!
-        /// You'd want to retrieve claims through your claims provider
-        /// in whatever way suits you, the below is purely for demo purposes!
-        /// </summary>
-        private static Task<ClaimsIdentity> GetClaimsIdentity(User user)
+        private Task<GenericIdentity> GetClaimsIdentity(User user)
         {
-            if (user.Username == "MickeyMouse" &&
-                user.Password == "MickeyMouseIsBoss123")
-            {
-                return Task.FromResult(new ClaimsIdentity(
-                  new GenericIdentity(user.Username, "Token"),
-                  new[]
-                  {
-            new Claim("DisneyCharacter", "IAmMickey")
-                  }));
-            }
+            User us = ((List<User>)_users.GetAll()).FirstOrDefault(u => u.Username == user.Username);
 
-            if (user.Username == "NotMickeyMouse" &&
-                user.Password == "MickeyMouseIsBoss123")
+            if (us != null)
             {
-                return Task.FromResult(new ClaimsIdentity(
-                  new GenericIdentity(user.Username, "Token"),
-                  new Claim[] { }));
+                if (us.Password == user.Password)
+                {
+                    return Task.FromResult(new GenericIdentity(user.Username, "Token"));
+                }
             }
 
             // Credentials are invalid, or account doesn't exist
-            return Task.FromResult<ClaimsIdentity>(null);
+            return Task.FromResult<GenericIdentity>(null);
         }
     }
 }

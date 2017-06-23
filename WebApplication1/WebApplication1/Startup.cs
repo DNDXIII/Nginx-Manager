@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebApplication1.Common;
+using System;
 
 namespace WebApplication1
 {
@@ -25,15 +26,19 @@ namespace WebApplication1
         }
 
         public IConfigurationRoot Configuration { get; }
-        //TEMPORARY 
-        private const string SecretKey = "needtogetthisfromenvironment";
-        private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
+        //TEMPORARY  TODO
+
+        private const string SecretKey = "needtogetthisfromenvironment";
+
+        //sdkfnasdjkfnsdfmaskf TODO ACKNOWLEDGE ME PLS
+
+        private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
-
+            
             services.AddCors(o => o.AddPolicy("Cors", builder =>
             {
                 builder.AllowAnyOrigin()
@@ -69,7 +74,9 @@ namespace WebApplication1
             LocationsDataAccess l = new LocationsDataAccess();
             GeneralConfigDataAccess gc = new GeneralConfigDataAccess();
             DeploymentServerDataAccess ds = new DeploymentServerDataAccess();
+            UserDataAccess us = new UserDataAccess();
 
+            services.AddSingleton<IRepository<User>>(us);
             services.AddSingleton<IRepository<Upstream>>(u);
             services.AddSingleton<IRepository<Server>>(s);
             services.AddSingleton<IRepository<ProxyType>>(p);
@@ -80,6 +87,7 @@ namespace WebApplication1
             services.AddSingleton<IRepository<GeneralConfig>>(gc);
             services.AddSingleton<IRepository<DeploymentServer>>(ds);
 
+
             services.AddSingleton(new AllRepositories(s, u, p, vs, ssl, app,l,gc, ds));
 
             // Add framework services.
@@ -89,16 +97,38 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+
+                ValidateAudience = true,
+                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = _signingKey,
+
+                RequireExpirationTime = true,
+                ValidateLifetime = true,
+
+                ClockSkew = TimeSpan.Zero
+            };
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            loggerFactory.AddDebug();  
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters
+            });
 
             app.UseWebSockets();
             app.UseMiddleware<WebSMiddleware>();
 
             app.UseMvc();
-
-           
-
         }
     }
 }
