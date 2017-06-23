@@ -7,9 +7,11 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Cors;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize]
     [Route("api/config")]
     public class ConfigController : Controller
     {   

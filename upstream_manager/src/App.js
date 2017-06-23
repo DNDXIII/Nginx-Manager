@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { jsonServerRestClient, Admin, Resource } from 'admin-on-rest';
+import { jsonServerRestClient, Admin, fetchUtils, Resource } from 'admin-on-rest';
 import { UpList, UpEdit, UpCreate, UpDelete } from './Upstreams';
 import { ServerList, ServerCreate, ServerEdit, ServerDelete } from './Servers';
 import { VirtualServerCreate, VirtualServerDelete, VirtualServerEdit, VirtualServerList } from './VirtualServers';
@@ -31,10 +31,10 @@ export const apiUrl = {
     getConfig: function () {
         return 'http://' + this.base + '/config';
     },
-    getWebSocket: function(){
-        return 'ws://'+ this.base;
-    }, 
-    deployConfig: function(){
+    getWebSocket: function () {
+        return 'ws://' + this.base;
+    },
+    deployConfig: function () {
         return 'http://' + this.base + '/config/deploy';
     },
     nginxShutdown: function (id) {
@@ -45,8 +45,19 @@ export const apiUrl = {
     }
 };
 
+
+const httpClient = (url, options = {}) => {
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    const token = localStorage.getItem('token');
+    options.headers.set('Authorization', `Bearer ${token}`);
+    return fetchUtils.fetchJson(url, options);
+}
+const restClient = jsonServerRestClient("http://" + apiUrl.base, httpClient);
+
 const App = () => (
-    <Admin menu={Menu} customRoutes={customRoutes} authClient={authClient} restClient={jsonServerRestClient("http://"+apiUrl.base)}>
+    <Admin menu={Menu} customRoutes={customRoutes} authClient={authClient} restClient={restClient}>
         <Resource name="virtualservers" list={VirtualServerList} edit={VirtualServerEdit} create={VirtualServerCreate} remove={VirtualServerDelete} />
         <Resource name="servers" list={ServerList} edit={ServerEdit} create={ServerCreate} remove={ServerDelete} />
         <Resource name="upstreams" list={UpList} edit={UpEdit} create={UpCreate} remove={UpDelete} />

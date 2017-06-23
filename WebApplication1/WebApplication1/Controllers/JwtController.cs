@@ -13,9 +13,11 @@ using WebApplication1.DataAccess;
 using WebApplication1.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Cors;
 
 namespace WebApplication1.Controllers
 {
+    [EnableCors("Cors")]
     [Route("api/[controller]")]
     public class JwtController : Controller
     {

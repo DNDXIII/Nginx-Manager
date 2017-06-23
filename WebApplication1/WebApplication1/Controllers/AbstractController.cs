@@ -3,12 +3,13 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.DataAccess;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebApplication1.Controllers
 {
-
+    [Authorize]
     [EnableCors("Cors")]
     public class AbstractController<E> : Controller where E :MongoObject
     {

@@ -48,7 +48,10 @@ class Config extends React.Component {
 
     handleTestConfig = () => {
         this.setState({ message: "Testing...", open: true });
-        fetch(apiUrl.testConfig)
+        const token = localStorage.getItem('token');
+        fetch(apiUrl.testConfig, {
+            headers: new Headers({ 'Authorization': `Bearer ${token}` }),
+        })
             .then((resp) => {
                 if (resp.ok)
                     this.setState({ message: "Test successful.", open: true, tested: true });
@@ -64,7 +67,10 @@ class Config extends React.Component {
 
     async handleGetConfig() {
         var url = apiUrl.getConfig();
-        const resp = await fetch(url);
+        const token = localStorage.getItem('token');
+        const resp = await fetch(url, {
+            headers: new Headers({ 'Authorization': `Bearer ${token}` }),
+        });
         const text = await resp.text();
         return text;
     }

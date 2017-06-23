@@ -34,10 +34,13 @@ export class DeploymentServerEdit extends React.Component {
 
 
     handleReload(id) {
-        const url = apiUrl.nginxReload(id)
+        const url = apiUrl.nginxReload(id);
+        const token = localStorage.getItem('token');
         fetch(url, {
             method: 'POST',
             body: null,
+            headers: new Headers({ 'Authorization': `Bearer ${token}` }),
+
         }).then((resp) => {
             if (resp.ok)
                 this.setState({ message: "Service has been reloaded successfully.", open: true });
@@ -50,9 +53,12 @@ export class DeploymentServerEdit extends React.Component {
 
     handleStart(id) {
         const url = apiUrl.nginxStart(id)
+        const token = localStorage.getItem('token');
         fetch(url, {
             method: 'POST',
             body: null,
+            headers: new Headers({ 'Authorization': `Bearer ${token}` }),
+
         }).then((resp) => {
             if (resp.ok)
                 this.setState({ message: "Service has been started successfully.", open: true });
@@ -66,9 +72,12 @@ export class DeploymentServerEdit extends React.Component {
 
     handleShutdown(id) {
         const url = apiUrl.nginxShutdown(id);
+        const token = localStorage.getItem('token');
         fetch(url, {
             method: 'POST',
             body: null,
+            headers: new Headers({ 'Authorization': `Bearer ${token}` }),
+
         }).then((resp) => {
             if (resp.ok)
                 this.setState({ message: "Service has been shutdown successfully.", open: true });
@@ -132,7 +141,7 @@ export class DeploymentServerEdit extends React.Component {
         var socket = this.state.socket;
         debugger;
         if (line === "" || !line) {
-            newAllText.push(line);  
+            newAllText.push(line);
             this.setState({
                 alltext: newAllText
             });

@@ -1,13 +1,12 @@
-using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Renci.SshNet;
-using System;
 using WebApplication1.DataAccess;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-
+    [Authorize]
     [Route("api/deploymentservers")]
     public class DeploymentServersController : AbstractController<DeploymentServer>
     {
