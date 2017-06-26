@@ -75,6 +75,8 @@ namespace WebApplication1
             GeneralConfigDataAccess gc = new GeneralConfigDataAccess();
             DeploymentServerDataAccess ds = new DeploymentServerDataAccess();
             UserDataAccess us = new UserDataAccess();
+            BlacklistDataAccess b = new BlacklistDataAccess();
+
 
             services.AddSingleton<IRepository<User>>(us);
             services.AddSingleton<IRepository<Upstream>>(u);
@@ -86,9 +88,11 @@ namespace WebApplication1
             services.AddSingleton<IRepository<Location>>(l);
             services.AddSingleton<IRepository<GeneralConfig>>(gc);
             services.AddSingleton<IRepository<DeploymentServer>>(ds);
+            services.AddSingleton<IRepository<Blacklist>>(b);
 
 
-            services.AddSingleton(new AllRepositories(s, u, p, vs, ssl, app,l,gc, ds));
+
+            services.AddSingleton(new AllRepositories(s, u, p, vs, ssl, app,l,gc, ds, b));
 
             // Add framework services.
             services.AddMvc();

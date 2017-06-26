@@ -10,6 +10,9 @@ import DeviceHub from 'material-ui/svg-icons/hardware/device-hub';
 import Place from 'material-ui/svg-icons/maps/place';
 import LineWeight from 'material-ui/svg-icons/action/line-weight';
 import Lock from 'material-ui/svg-icons/action/lock';
+import Prohibited from 'material-ui/svg-icons/av/not-interested';
+
+
 
 
 
@@ -23,6 +26,7 @@ export default ({ resources, onMenuTap, logout }) => (
         <MenuItem containerElement={<Link to="/upstreams" />} primaryText="Upstreams" onTouchTap={onMenuTap} leftIcon={<DeviceHub />} />
         <MenuItem containerElement={<Link to="/locations" />} primaryText="Locations" onTouchTap={onMenuTap} leftIcon={<Place />} />
         <MenuItem containerElement={<Link to="/applications" />} primaryText="Applications" onTouchTap={onMenuTap} leftIcon={<LineWeight />} />
+        <MenuItem containerElement={<Link to="/blacklists" />} primaryText="Blacklists" onTouchTap={onMenuTap} leftIcon={<Prohibited />} />
         <MenuItem containerElement={<Link to="/ssls" />} primaryText="SSL's" onTouchTap={onMenuTap} leftIcon={<Lock />} />
         <MenuItem containerElement={<Link to="/proxytypes" />} primaryText="Proxy Types" onTouchTap={onMenuTap} leftIcon={<Router/*change*/ />} />
         <Divider />

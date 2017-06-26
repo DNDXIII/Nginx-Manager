@@ -23,6 +23,8 @@ namespace WebApplication1.Models
         public List<string> Applications { get; set; }
         [BsonElement("SSL")]
         public string SSL { get; set; }
+        [BsonElement("Blacklist")]
+        public string Blacklist { get; set; }
         [BsonElement("FreeText")]
         public string FreeText { get; set; }
         [BsonElement("Priority")]
@@ -50,6 +52,11 @@ namespace WebApplication1.Models
 
             if (FreeText != null)
                 strb.AppendLine("\t"+ FreeText);
+
+            if (Blacklist != null)
+                strb.AppendLine(allRep.BlacklistRep.GetById(Blacklist).GenerateConfig());
+            
+
 
 
             strb.AppendLine("\t}");

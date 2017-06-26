@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebApplication1.Models;
+﻿using WebApplication1.Models;
 
 namespace WebApplication1.DataAccess
 {
@@ -17,12 +13,14 @@ namespace WebApplication1.DataAccess
         public IRepository<Location> LocationRep { get; }
         public IRepository<GeneralConfig> GeneralConfigRep { get; }
         public IRepository<DeploymentServer> DeploymentServerRep { get; }
+        public IRepository<Blacklist> BlacklistRep { get; }
+
 
 
 
         public AllRepositories(ServersDataAccess s, UpstreamDataAccess u, ProxyTypeDataAccess p,
          VirtualServerDataAccess vs, SSLDataAccess ssl, ApplicationDataAccess app, LocationsDataAccess l, GeneralConfigDataAccess gc,
-         DeploymentServerDataAccess ds)
+         DeploymentServerDataAccess ds, BlacklistDataAccess b)
         {
             ServerRep = s;
             UpstreamRep = u;
@@ -33,6 +31,7 @@ namespace WebApplication1.DataAccess
             LocationRep = l;
             GeneralConfigRep = gc;
             DeploymentServerRep = ds;
+            BlacklistRep = b;
         }
     }
 }

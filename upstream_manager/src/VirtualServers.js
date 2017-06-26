@@ -29,6 +29,9 @@ export const VirtualServerEdit = (props) => (
             <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty >
                 <SelectArrayInput />
             </ReferenceInput>
+            <ReferenceInput label="Blacklist" source="blacklist" reference="blacklists" allowEmpty>
+                <SelectInput optionText = "name" />
+            </ReferenceInput>
             <LongTextInput source="freeText" />
         </SimpleForm>
     </Edit>
@@ -50,6 +53,9 @@ export const VirtualServerCreate = (props) => (
             </ReferenceInput>
             <ReferenceInput label="Locations" source="locations" reference="locations" allowEmpty>
                 <SelectArrayInput />
+            </ReferenceInput>
+            <ReferenceInput label="Blacklist" source="blacklist" reference="blacklists" allowEmpty>
+                <SelectInput optionText = "name" />
             </ReferenceInput>
             <LongTextInput source="freeText" />
         </SimpleForm>

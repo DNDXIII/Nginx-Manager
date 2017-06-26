@@ -23,9 +23,11 @@ class Config extends React.Component {
     }
 
     handleDownload = () => {
-        var url = apiUrl.downloadConfig;
+        var url = apiUrl.downloadConfig();
         var xmlHttp = new XMLHttpRequest();
+        const token = localStorage.getItem('token');
         xmlHttp.open("GET", url, true);
+        xmlHttp.setRequestHeader("Authorization", "Bearer " + token)
         xmlHttp.responseType = 'blob'
         xmlHttp.send(null);
 
@@ -49,7 +51,7 @@ class Config extends React.Component {
     handleTestConfig = () => {
         this.setState({ message: "Testing...", open: true });
         const token = localStorage.getItem('token');
-        fetch(apiUrl.testConfig, {
+        fetch(apiUrl.testConfig(), {
             headers: new Headers({ 'Authorization': `Bearer ${token}` }),
         })
             .then((resp) => {
