@@ -25,6 +25,8 @@ namespace WebApplication1.Models
         public string SSL { get; set; }
         [BsonElement("FreeText")]
         public string FreeText { get; set; }
+        [BsonElement("Priority")]
+        public int Priority { get; set; }
 
         public string GenerateConfig(AllRepositories allRep)
         {

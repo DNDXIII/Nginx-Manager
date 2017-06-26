@@ -22,7 +22,10 @@ namespace WebApplication1.Models
                 strb.AppendLine(up.GenerateConfig(allRep));
             }
 
-            foreach (var vs in allRep.VirtualServerRep.GetAll())
+            //to order the virtual servers by their priority
+            List<VirtualServer> virtualServers =((List<VirtualServer>) allRep.VirtualServerRep.GetAll()).OrderBy(vs=>vs.Priority).ToList();
+
+            foreach (var vs in virtualServers)
             {
                 strb.AppendLine(vs.GenerateConfig(allRep));
             }

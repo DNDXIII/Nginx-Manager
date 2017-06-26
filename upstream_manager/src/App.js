@@ -66,7 +66,7 @@ const App = () => (
         <Resource name="deploymentservers" list={DeploymentServerList} edit={DeploymentServerEdit} create={DeploymentServerCreate} remove={DeploymentServerDelete} />
         <Resource name="ssls" list={SSLList} edit={SSLEdit} create={SSLCreate} remove={SSLDelete} />}
         <Resource name="proxytypes" list={ProxyList} edit={ProxyEdit} create={ProxyCreate} />
-        <Resource name="generalconfig" list={GeneralConfigList} edit={GeneralConfigEdit} create={GeneralConfigCreate} delete={GeneralConfigDelete} />
+        <Resource name="generalconfig" list={GeneralConfigList} edit={GeneralConfigEdit}  />
     </Admin>
 );
 

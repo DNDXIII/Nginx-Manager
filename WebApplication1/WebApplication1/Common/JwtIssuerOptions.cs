@@ -22,7 +22,7 @@ namespace WebApplication1.Common
         public DateTime IssuedAt => DateTime.UtcNow;
 
       
-        public TimeSpan ValidFor { get; set; } = TimeSpan.FromMinutes(5);
+        public TimeSpan ValidFor { get; set; } = TimeSpan.FromDays(30);
 
        
         public DateTime Expiration => IssuedAt.Add(ValidFor);
