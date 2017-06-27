@@ -7,7 +7,7 @@ import Snackbar from 'material-ui/Snackbar';
 import Terminal from './Terminal'
 
 export const DeploymentServerList = (props) => (
-    <List {...props} filters={<Filter />}>
+    <List title="Deployment Servers List" {...props} filters={<Filter />}>
         <Datagrid>
             <TextField source="name" />
             <TextField source="address" />
