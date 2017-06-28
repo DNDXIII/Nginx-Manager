@@ -96,7 +96,7 @@ public class WebSMiddleware
     {
         var server = _allRep.DeploymentServerRep.GetById(id);
 
-        _client = new SshClient(server.Address, server.Port, "azureuser", "Collab.1234567890");
+        _client = new SshClient(server.Address, server.Port, server.Username, server.getPassword());
         _client.Connect();
         _stream = _client.CreateShellStream("shell", 80, 24, 800, 600, 1024);
     }
@@ -164,9 +164,6 @@ public class WebSMiddleware
         }
 
         var filePath = Path.GetTempFileName();
-        string username = "azureuser";
-        string password = "Collab.1234567890";
-
 
         //create the file
         SendStringAsync("Uploading configuration file.", socket);
@@ -176,7 +173,7 @@ public class WebSMiddleware
         //create backup
         foreach (DeploymentServer d in deploymentServers)
         {
-            using (var ssh = new SshClient(d.Address, d.Port, username, password))
+            using (var ssh = new SshClient(d.Address, d.Port, d.Username, d.getPassword()))
             {
                 ssh.Connect();
                 if (!CreateBackup(ssh))
@@ -198,7 +195,7 @@ public class WebSMiddleware
             if (errorOcurred)
                 break;
 
-            using (var sftp = new SftpClient(d.Address, d.Port, username, password))
+            using (var sftp = new SftpClient(d.Address, d.Port, d.Username, d.getPassword()))
             {
                 sftp.Connect();
                 sftp.ChangeDirectory(@"/tmp");
@@ -213,7 +210,7 @@ public class WebSMiddleware
 
 
             //test the file again inside each server to deploy to
-            using (var sshclient = new SshClient(d.Address, d.Port, username, password))
+            using (var sshclient = new SshClient(d.Address, d.Port, d.Username, d.getPassword()))
             {
                 sshclient.Connect();
                 sshclient.CreateCommand(@"sudo mv /tmp/nginx.conf /etc/nginx/nginx.conf").Execute();
@@ -233,7 +230,7 @@ public class WebSMiddleware
                     //restore 
                     foreach (DeploymentServer dd in deploymentServers)
                     {
-                        using (var ssh = new SshClient(dd.Address, dd.Port, username, password))
+                        using (var ssh = new SshClient(dd.Address, dd.Port, dd.Username, dd.getPassword()))
                         {
                             ssh.Connect();
                             RestoreBackup(ssh);

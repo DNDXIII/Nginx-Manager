@@ -15,24 +15,20 @@ namespace WebApplication1.Models
         public bool Active { get; set; }
         [BsonElement("Username")]
         public string Username { get; set; }
+        private string _password;
         [BsonElement("Password")]
-        public string Password;
-
-        public void setPassword(string pass)
+        public string Password
         {
-            Password = Encryption.EncryptString(pass, "49GOVPZ61AMJYIGXVKQSPEWXFNQZT05N");
+            set
+            {
+                _password = Encryption.EncryptString(value, "49GOVPZ61AMJYIGXVKQSPEWXFNQZT05N");
+            }
         }
 
         public string getPassword()
         {
-            return Encryption.DecryptString(Password, "49GOVPZ61AMJYIGXVKQSPEWXFNQZT05N");
+            return Encryption.DecryptString(_password, "49GOVPZ61AMJYIGXVKQSPEWXFNQZT05N");
         }
-/*
 
-
-        public DeploymentServer(string Password)
-        {
-            this.Password = Encryption.EncryptString(Password, "49GOVPZ61AMJYIGXVKQSPEWXFNQZT05N");
-        }*/
     }
 }

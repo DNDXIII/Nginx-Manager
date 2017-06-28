@@ -40,7 +40,7 @@ namespace WebApplication1.Controllers
         private IActionResult ServerAction(string id, string op)
         {
             var server = _allRep.DeploymentServerRep.GetById(id);
-            using (var client = new SshClient(server.Address, server.Port, "azureuser", "Collab.1234567890"))
+            using (var client = new SshClient(server.Address, server.Port, server.Username, server.getPassword()))
             {
                 client.Connect();
                 var cmd = client.CreateCommand(op);
