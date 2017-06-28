@@ -4,16 +4,16 @@ namespace WebApplication1.DataAccess
 {
     public class AllRepositories
     {
-        public IRepository<Server> ServerRep { get; }
-        public IRepository<Upstream> UpstreamRep { get; }
-        public IRepository<ProxyType> ProxyTypeRep { get; }
-        public IRepository<VirtualServer> VirtualServerRep { get; }
-        public IRepository<SSL> SSLRep { get; }
-        public IRepository<Application> ApplicationRep { get; }
-        public IRepository<Location> LocationRep { get; }
-        public IRepository<GeneralConfig> GeneralConfigRep { get; }
-        public IRepository<DeploymentServer> DeploymentServerRep { get; }
-        public IRepository<Blacklist> BlacklistRep { get; }
+        public ServersDataAccess ServerRep { get; }
+        public UpstreamDataAccess UpstreamRep { get; }
+        public ProxyTypeDataAccess ProxyTypeRep { get; }
+        public VirtualServerDataAccess VirtualServerRep { get; }
+        public SSLDataAccess SSLRep { get; }
+        public ApplicationDataAccess ApplicationRep { get; }
+        public LocationsDataAccess LocationRep { get; }
+        public GeneralConfigDataAccess GeneralConfigRep { get; }
+        public DeploymentServerDataAccess DeploymentServerRep { get; }
+        public BlacklistDataAccess BlacklistRep { get; }
 
 
 

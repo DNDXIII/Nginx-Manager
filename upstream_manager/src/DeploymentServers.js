@@ -197,6 +197,12 @@ export class DeploymentServerEdit extends React.Component {
     }
 }
 
+const validatePassword=(value, values)=>{
+    if(value!=values.password)
+        return "Passwords do not match";
+    return undefined;
+}
+
 
 
 export const DeploymentServerCreate = (props) => (
@@ -205,6 +211,9 @@ export const DeploymentServerCreate = (props) => (
             <TextInput source="name" validate={required} />
             <TextInput source="address" validate={required} />
             <NumberInput source="port" defaultValue={80} validate={[required, minValue(0), maxValue(65535)]} />
+            <TextInput source="username" validate={required}/>
+            <TextInput source="password" type="password" validate={required}/>
+            <TextInput label="Confirm Password" source="passwordcheck" type="password" validate={[required, validatePassword]}/>
             <BooleanInput label="Active" source="active" />
         </SimpleForm>
     </Create>

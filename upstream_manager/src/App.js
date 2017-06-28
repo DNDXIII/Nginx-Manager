@@ -58,7 +58,7 @@ const httpClient = (url, options = {}) => {
 const restClient = jsonServerRestClient("http://" + apiUrl.base, httpClient);
 
 const App = () => (
-    <Admin menu={Menu} customRoutes={customRoutes} authClient={authClient} restClient={restClient}>
+    <Admin menu={Menu} customRoutes={customRoutes} /*authClient={authClient}*/ restClient={restClient}>
         <Resource name="virtualservers" list={VirtualServerList} edit={VirtualServerEdit} create={VirtualServerCreate} remove={VirtualServerDelete} />
         <Resource name="servers" list={ServerList} edit={ServerEdit} create={ServerCreate} remove={ServerDelete} />
         <Resource name="upstreams" list={UpList} edit={UpEdit} create={UpCreate} remove={UpDelete} />

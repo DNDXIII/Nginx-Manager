@@ -20,7 +20,7 @@ namespace WebApplication1.DataAccess
         {
             var databaseName = connectionString.Split('/').Last();
 
-            var _client = new MongoClient(connectionString);
+            _client = new MongoClient(connectionString);
             _db = _client.GetDatabase(databaseName);
             _collection = _db.GetCollection<E>(name);
         }

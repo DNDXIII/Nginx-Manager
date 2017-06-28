@@ -65,17 +65,17 @@ namespace WebApplication1
 
             var connectionString = Configuration.GetValue<string>("AppSettings:MongoDB");
 
-            services.AddSingleton<IRepository<User>>(new UserDataAccess(connectionString));
-            services.AddSingleton<IRepository<Upstream>>(new UpstreamDataAccess(connectionString));
-            services.AddSingleton<IRepository<Server>>(new ServersDataAccess(connectionString));
-            services.AddSingleton<IRepository<ProxyType>>(new ProxyTypeDataAccess(connectionString));
-            services.AddSingleton<IRepository<VirtualServer>>(new VirtualServerDataAccess(connectionString));
-            services.AddSingleton<IRepository<SSL>>(new SSLDataAccess(connectionString));
-            services.AddSingleton<IRepository<Application>>(new ApplicationDataAccess(connectionString));
-            services.AddSingleton<IRepository<Location>>(new LocationsDataAccess(connectionString));
-            services.AddSingleton<IRepository<GeneralConfig>>(new GeneralConfigDataAccess(connectionString));
-            services.AddSingleton<IRepository<DeploymentServer>>(new DeploymentServerDataAccess(connectionString));
-            services.AddSingleton<IRepository<Blacklist>>(new BlacklistDataAccess(connectionString));
+            services.AddSingleton(new UserDataAccess(connectionString));
+            services.AddSingleton(new UpstreamDataAccess(connectionString));
+            services.AddSingleton(new ServersDataAccess(connectionString));
+            services.AddSingleton(new ProxyTypeDataAccess(connectionString));
+            services.AddSingleton(new VirtualServerDataAccess(connectionString));
+            services.AddSingleton(new SSLDataAccess(connectionString));
+            services.AddSingleton(new ApplicationDataAccess(connectionString));
+            services.AddSingleton(new LocationsDataAccess(connectionString));
+            services.AddSingleton(new GeneralConfigDataAccess(connectionString));
+            services.AddSingleton(new DeploymentServerDataAccess(connectionString));
+            services.AddSingleton(new BlacklistDataAccess (connectionString));
 
 
             services.AddSingleton<AllRepositories>();
