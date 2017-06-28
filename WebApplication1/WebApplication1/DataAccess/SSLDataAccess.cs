@@ -11,7 +11,8 @@ namespace WebApplication1.DataAccess
 {
     public class SSLDataAccess : AbstractDataAccess<SSL>
     {
-        public SSLDataAccess() : base("SSLs"){
+        public SSLDataAccess(string connectionString) : base("SSLs", connectionString)
+        {
            
         }
     }    

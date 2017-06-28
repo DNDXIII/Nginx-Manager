@@ -10,7 +10,8 @@ namespace WebApplication1.DataAccess
 {
     public class VirtualServerDataAccess :AbstractDataAccess<VirtualServer>
     {   
-        public VirtualServerDataAccess() : base("VirtualServers"){ 
+        public VirtualServerDataAccess(string connectionString) : base("VirtualServers", connectionString)
+        { 
         }
     }
 }

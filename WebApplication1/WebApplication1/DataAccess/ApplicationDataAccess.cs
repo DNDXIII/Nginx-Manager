@@ -4,7 +4,8 @@ namespace WebApplication1.DataAccess
 {
     public class ApplicationDataAccess :AbstractDataAccess<Application>
     {   
-        public ApplicationDataAccess() : base("Applications"){ 
+        public ApplicationDataAccess(string connectionString) : base("Applications", connectionString)
+        { 
         }
     }
 }

@@ -10,7 +10,7 @@ namespace WebApplication1.DataAccess
 {
     public class GeneralConfigDataAccess : AbstractDataAccess<GeneralConfig>
     {
-        public GeneralConfigDataAccess() : base("GeneralConfig")
+        public GeneralConfigDataAccess(string connectionString) : base("GeneralConfig", connectionString)
         {
         }
     }

@@ -10,7 +10,8 @@ namespace WebApplication1.DataAccess
 {
     public class DeploymentServerDataAccess :AbstractDataAccess<DeploymentServer>
     {   
-        public DeploymentServerDataAccess() : base("DeploymentServers"){ 
+        public DeploymentServerDataAccess(string connectionString) : base("DeploymentServers", connectionString)
+        { 
         }
     }
 }

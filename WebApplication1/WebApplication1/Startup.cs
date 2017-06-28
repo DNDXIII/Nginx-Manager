@@ -63,36 +63,22 @@ namespace WebApplication1
                 options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
             });
 
-            
+            var connectionString = Configuration.GetValue<string>("AppSettings:MongoDB");
 
-            UpstreamDataAccess u = new UpstreamDataAccess();
-            ServersDataAccess s = new ServersDataAccess();
-            ProxyTypeDataAccess p = new ProxyTypeDataAccess();
-            VirtualServerDataAccess vs = new VirtualServerDataAccess();
-            SSLDataAccess ssl = new SSLDataAccess();
-            ApplicationDataAccess app = new ApplicationDataAccess();
-            LocationsDataAccess l = new LocationsDataAccess();
-            GeneralConfigDataAccess gc = new GeneralConfigDataAccess();
-            DeploymentServerDataAccess ds = new DeploymentServerDataAccess();
-            UserDataAccess us = new UserDataAccess();
-            BlacklistDataAccess b = new BlacklistDataAccess();
-
-
-            services.AddSingleton<IRepository<User>>(us);
-            services.AddSingleton<IRepository<Upstream>>(u);
-            services.AddSingleton<IRepository<Server>>(s);
-            services.AddSingleton<IRepository<ProxyType>>(p);
-            services.AddSingleton<IRepository<VirtualServer>>(vs);
-            services.AddSingleton<IRepository<SSL>>(ssl);
-            services.AddSingleton<IRepository<Application>>(app);
-            services.AddSingleton<IRepository<Location>>(l);
-            services.AddSingleton<IRepository<GeneralConfig>>(gc);
-            services.AddSingleton<IRepository<DeploymentServer>>(ds);
-            services.AddSingleton<IRepository<Blacklist>>(b);
+            services.AddSingleton<IRepository<User>>(new UserDataAccess(connectionString));
+            services.AddSingleton<IRepository<Upstream>>(new UpstreamDataAccess(connectionString));
+            services.AddSingleton<IRepository<Server>>(new ServersDataAccess(connectionString));
+            services.AddSingleton<IRepository<ProxyType>>(new ProxyTypeDataAccess(connectionString));
+            services.AddSingleton<IRepository<VirtualServer>>(new VirtualServerDataAccess(connectionString));
+            services.AddSingleton<IRepository<SSL>>(new SSLDataAccess(connectionString));
+            services.AddSingleton<IRepository<Application>>(new ApplicationDataAccess(connectionString));
+            services.AddSingleton<IRepository<Location>>(new LocationsDataAccess(connectionString));
+            services.AddSingleton<IRepository<GeneralConfig>>(new GeneralConfigDataAccess(connectionString));
+            services.AddSingleton<IRepository<DeploymentServer>>(new DeploymentServerDataAccess(connectionString));
+            services.AddSingleton<IRepository<Blacklist>>(new BlacklistDataAccess(connectionString));
 
 
-
-            services.AddSingleton(new AllRepositories(s, u, p, vs, ssl, app,l,gc, ds, b));
+            services.AddSingleton<AllRepositories>();
 
             // Add framework services.
             services.AddMvc();

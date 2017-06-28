@@ -16,10 +16,12 @@ namespace WebApplication1.DataAccess
         protected IMongoCollection<E> _collection;
 
        
-        public AbstractDataAccess(string name)
+        public AbstractDataAccess(string name, string connectionString)
         {
-            _client = new MongoClient();
-            _db = _client.GetDatabase("NginxDB");
+            var databaseName = connectionString.Split('/').Last();
+
+            var _client = new MongoClient(connectionString);
+            _db = _client.GetDatabase(databaseName);
             _collection = _db.GetCollection<E>(name);
         }
 

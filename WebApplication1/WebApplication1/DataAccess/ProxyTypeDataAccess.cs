@@ -8,6 +8,6 @@ namespace WebApplication1.DataAccess
 {
     public class ProxyTypeDataAccess: AbstractDataAccess<ProxyType>
     {
-        public ProxyTypeDataAccess() : base("ProxyTypes") { }
+        public ProxyTypeDataAccess(string connectionString) : base("ProxyTypes", connectionString) { }
     }
 }
