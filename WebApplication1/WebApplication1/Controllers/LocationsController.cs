@@ -11,6 +11,6 @@ namespace WebApplication1.Controllers
     [Route("api/locations")]
     public class LocationsController : AbstractController<Location>
     {
-        public LocationsController(IRepository<Location> repository) : base(repository) { }
+        public LocationsController(LocationsDataAccess repository) : base(repository) { }
     }
 }

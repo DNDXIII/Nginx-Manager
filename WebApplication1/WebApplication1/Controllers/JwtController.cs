@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using WebApplication1.Common;
@@ -26,7 +25,7 @@ namespace WebApplication1.Controllers
         private readonly JsonSerializerSettings _serializerSettings;
         private readonly IRepository<User> _users;
 
-        public JwtController(IOptions<JwtIssuerOptions> jwtOptions, ILoggerFactory loggerFactory, IRepository<User> users)
+        public JwtController(IOptions<JwtIssuerOptions> jwtOptions, ILoggerFactory loggerFactory, UserDataAccess users)
         {
             _jwtOptions = jwtOptions.Value;
             ThrowIfInvalidOptions(_jwtOptions);

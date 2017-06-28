@@ -7,7 +7,7 @@ namespace WebApplication1.Controllers
     [Route("api/virtualservers")]
     public class VirtualServerController : AbstractController<VirtualServer>
     {
-        public VirtualServerController(IRepository<VirtualServer> repository) : base(repository)
+        public VirtualServerController(VirtualServerDataAccess repository) : base(repository)
         {
         }
     }

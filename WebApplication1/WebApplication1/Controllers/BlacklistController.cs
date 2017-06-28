@@ -7,6 +7,6 @@ namespace WebApplication1.Controllers
     [Route("api/blacklists")]
     public class BlacklistController : AbstractController<Blacklist>
     {
-        public BlacklistController(IRepository<Blacklist> repository) : base(repository) { }
+        public BlacklistController(BlacklistDataAccess repository) : base(repository) { }
     }
 }

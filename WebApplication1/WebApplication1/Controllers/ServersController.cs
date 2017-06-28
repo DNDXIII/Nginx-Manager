@@ -7,6 +7,6 @@ namespace WebApplication1.Controllers
     [Route("api/servers")]
     public class ServersController : AbstractController<Server>
     {
-        public ServersController(IRepository<Server> serverRepository):base(serverRepository) { }
+        public ServersController(ServersDataAccess serverRepository):base(serverRepository) { }
     }
 }

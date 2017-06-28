@@ -11,7 +11,6 @@ namespace WebApplication1.DataAccess
     {
        
 
-        private IMongoClient _client;
         private IMongoDatabase _db;
         protected IMongoCollection<E> _collection;
 
@@ -20,7 +19,7 @@ namespace WebApplication1.DataAccess
         {
             var databaseName = connectionString.Split('/').Last();
 
-            _client = new MongoClient(connectionString);
+            var _client = new MongoClient(connectionString);
             _db = _client.GetDatabase(databaseName);
             _collection = _db.GetCollection<E>(name);
         }

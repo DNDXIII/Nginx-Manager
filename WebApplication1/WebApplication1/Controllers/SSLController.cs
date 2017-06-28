@@ -12,6 +12,6 @@ namespace WebApplication1.Controllers
     [Route("api/ssls")]
     public class SSLController : AbstractController<SSL>
     {
-        public SSLController(IRepository<SSL> sslRepository):base(sslRepository) { }
+        public SSLController(SSLDataAccess sslRepository):base(sslRepository) { }
     }
 }

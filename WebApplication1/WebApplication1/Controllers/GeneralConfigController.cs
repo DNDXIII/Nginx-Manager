@@ -7,6 +7,6 @@ namespace WebApplication1.Controllers
     [Route("api/generalconfig")]
     public class GeneralConfigController : AbstractController<GeneralConfig>
     {
-        public GeneralConfigController(IRepository<GeneralConfig> repository) : base(repository) { }
+        public GeneralConfigController(GeneralConfigDataAccess repository) : base(repository) { }
     }
 }

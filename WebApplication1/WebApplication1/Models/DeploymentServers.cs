@@ -1,11 +1,5 @@
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebApplication1.DataAccess;
+using WebApplication1.Common;
 
 namespace WebApplication1.Models
 {
@@ -19,5 +13,26 @@ namespace WebApplication1.Models
         public int Port { get; set; }
         [BsonElement("Active")]
         public bool Active { get; set; }
+        [BsonElement("Username")]
+        public string Username { get; set; }
+        [BsonElement("Password")]
+        public string Password;
+
+        public void setPassword(string pass)
+        {
+            Password = Encryption.EncryptString(pass, "49GOVPZ61AMJYIGXVKQSPEWXFNQZT05N");
+        }
+
+        public string getPassword()
+        {
+            return Encryption.DecryptString(Password, "49GOVPZ61AMJYIGXVKQSPEWXFNQZT05N");
+        }
+/*
+
+
+        public DeploymentServer(string Password)
+        {
+            this.Password = Encryption.EncryptString(Password, "49GOVPZ61AMJYIGXVKQSPEWXFNQZT05N");
+        }*/
     }
 }

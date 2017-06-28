@@ -11,7 +11,7 @@ namespace WebApplication1.Controllers
     public class DeploymentServersController : AbstractController<DeploymentServer>
     {
         private AllRepositories _allRep;
-        public DeploymentServersController(IRepository<DeploymentServer> repository, AllRepositories allrep) : base(repository)
+        public DeploymentServersController(DeploymentServerDataAccess repository, AllRepositories allrep) : base(repository)
         {
             _allRep = allrep;
          }

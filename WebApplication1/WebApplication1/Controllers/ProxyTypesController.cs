@@ -11,6 +11,6 @@ namespace WebApplication1.Controllers
     [Route("api/proxytypes")]
     public class ProxyTypesController : AbstractController<ProxyType>
     {
-        public ProxyTypesController(IRepository<ProxyType> repository) : base(repository) { }
+        public ProxyTypesController(ProxyTypeDataAccess repository) : base(repository) { }
     }
 }
