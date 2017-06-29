@@ -16,7 +16,7 @@ import Menu from './Menu';
 import authClient from './authClient';
 
 export const apiUrl = {
-    base: 'localhost:5000/api',
+    base: 'nginxmanager.northeurope.cloudapp.azure.com/api',
     nginxReload: function (id) {
         return 'http://' + this.base + '/deploymentservers/reload/' + id;
     },

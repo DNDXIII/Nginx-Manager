@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Models;
 using WebApplication1.DataAccess;
@@ -50,19 +51,24 @@ namespace WebApplication1.Controllers
             foreach (var sv in _allRep.ServerRep.GetAll())
                 config.Replace(sv.Address, "127.0.0.1");
 
+            Console.WriteLine("Configuration generated");
+
             var filePath = Path.GetTempFileName();
             System.IO.File.WriteAllText(filePath, config.ToString());
 
-
+            Console.WriteLine("Configuration created");
 
             //tests the file and writes the output 
             Process p = new Process();
             ProcessStartInfo pi = new ProcessStartInfo();
             pi.FileName = "cmd.exe";
-            pi.Arguments = @"/C docker run -v " + filePath + @":/etc/nginx/nginx.conf -P -it nginx-image nginx -t";
+            pi.Arguments = @"/C docker run -v " + @":/etc/nginx/nginx.conf -P -it nginx-image nginx -t";
             pi.RedirectStandardOutput = true;
             p.StartInfo = pi;
             p.Start();
+
+            Console.WriteLine("Configuration created");
+
 
             p.WaitForExit();
             var s = p.StandardOutput.ReadToEnd();

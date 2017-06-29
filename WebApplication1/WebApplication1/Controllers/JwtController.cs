@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Cors;
 namespace WebApplication1.Controllers
 {
     [EnableCors("Cors")]
-    [Route("api/[controller]")]
+    [Route("api/jwt")]
     public class JwtController : Controller
     {
         private readonly JwtIssuerOptions _jwtOptions;
