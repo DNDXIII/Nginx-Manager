@@ -45,7 +45,14 @@ public class WebSMiddleware
         {
             if (result.MessageType == WebSocketMessageType.Text)
             {
-                await ReceiveAsync(currentSocket, result, buffer);
+                try
+                {
+                    await ReceiveAsync(currentSocket, result, buffer);
+                }
+                catch (Exception)
+                {
+                    return;
+                }
                 return;
             }
 
@@ -96,7 +103,7 @@ public class WebSMiddleware
     {
         var server = _allRep.DeploymentServerRep.GetById(id);
 
-        _client = new SshClient(server.Address, server.Port, server.Username, server.getPassword());
+        _client = new SshClient(server.Address, server.Port, server.Username, server.Password);
         _client.Connect();
         _stream = _client.CreateShellStream("shell", 80, 24, 800, 600, 1024);
     }
@@ -173,7 +180,7 @@ public class WebSMiddleware
         //create backup
         foreach (DeploymentServer d in deploymentServers)
         {
-            using (var ssh = new SshClient(d.Address, d.Port, d.Username, d.getPassword()))
+            using (var ssh = new SshClient(d.Address, d.Port, d.Username, d.Password))
             {
                 ssh.Connect();
                 if (!CreateBackup(ssh))
@@ -195,7 +202,7 @@ public class WebSMiddleware
             if (errorOcurred)
                 break;
 
-            using (var sftp = new SftpClient(d.Address, d.Port, d.Username, d.getPassword()))
+            using (var sftp = new SftpClient(d.Address, d.Port, d.Username, d.Password))
             {
                 sftp.Connect();
                 sftp.ChangeDirectory(@"/tmp");
@@ -210,7 +217,7 @@ public class WebSMiddleware
 
 
             //test the file again inside each server to deploy to
-            using (var sshclient = new SshClient(d.Address, d.Port, d.Username, d.getPassword()))
+            using (var sshclient = new SshClient(d.Address, d.Port, d.Username, d.Password))
             {
                 sshclient.Connect();
                 sshclient.CreateCommand(@"sudo mv /tmp/nginx.conf /etc/nginx/nginx.conf").Execute();
@@ -230,7 +237,7 @@ public class WebSMiddleware
                     //restore 
                     foreach (DeploymentServer dd in deploymentServers)
                     {
-                        using (var ssh = new SshClient(dd.Address, dd.Port, dd.Username, dd.getPassword()))
+                        using (var ssh = new SshClient(dd.Address, dd.Port, dd.Username, dd.Password))
                         {
                             ssh.Connect();
                             RestoreBackup(ssh);

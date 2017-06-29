@@ -104,7 +104,8 @@ namespace WebApplication1.Controllers
 
             if (us != null)
             {
-                if (us.Password == user.Password)
+                var hashedPass = Hash.ComputeHash(user.Password, us.Salt);
+                if (us.Password == hashedPass)
                 {
                     return Task.FromResult(new GenericIdentity(user.Username, "Token"));
                 }

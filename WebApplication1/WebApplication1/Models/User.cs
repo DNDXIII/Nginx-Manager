@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System.Security.Cryptography;
 
 namespace WebApplication1.Models
 {
@@ -6,20 +7,10 @@ namespace WebApplication1.Models
     {
         [BsonElement("Username")]
         public string Username { get; set; }
-        private string _password;
+        [BsonElement("Salt")]
+        public byte[] Salt { get; set; }
         [BsonElement("Password")]
-        public string Password
-        {
-            get
-            {
-                return _password;
-            }
-            set
-            {
-                _password = Hash.ComputeHash(value, Username);
-            }
-        }
+        public string Password { get; set; }
 
-        
     }
 }

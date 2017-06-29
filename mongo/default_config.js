@@ -1,7 +1,8 @@
 db.Users.insert({ 
-    '_id' : '591d83e81624075a208ams9c', 
+    '_id' : '591d83e81622075a208ams9c', 
     'Username' : 'root', 
-    'Password' : "123"
+    'Salt':BinData(0,"YNdTjdKvYTaU4rqT6ZhOZw=="),
+    'Password' : "Uil6+rVPpk6DvASr5Dikay3FfxmVItyupIZV6ELU2V4="
 });
 db.GeneralConfig.insert({ 
     '_id' : '591d74c4d8c50d3d8c3c7das', 

@@ -7,11 +7,10 @@ public class Hash
 {
   
     public static string ComputeHash(string plainText,
-                                     string salt)
+                                     byte[] saltBytes)
     {
-    
+
         byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-        byte[] saltBytes= Encoding.UTF8.GetBytes(salt);
 
         byte[] plainTextWithSaltBytes =
                 new byte[plainTextBytes.Length + saltBytes.Length];
