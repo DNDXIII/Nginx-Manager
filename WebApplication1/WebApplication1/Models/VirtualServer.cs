@@ -42,6 +42,10 @@ namespace WebApplication1.Models
 
             if (SSL != null && SSL != "")
                 strb.Append(allRep.SSLRep.GetById(SSL).GenerateConfig());
+
+            if (FreeText != null)
+                strb.AppendLine("\t" + FreeText);
+
             if (Applications != null)//&& Applications.Count!=0
                     strb.Append(allRep.ApplicationRep.GetById(Applications).GenerateConfig(allRep, ApplicationsUpstreamId));
 
@@ -49,10 +53,6 @@ namespace WebApplication1.Models
                 foreach (var l in Locations)
                     strb.Append(allRep.LocationRep.GetById(l).GenerateConfig(allRep, null));
 
-
-
-            if (FreeText != null)
-                strb.AppendLine("\t"+ FreeText);
 
             if (Blacklist != null)
                 strb.AppendLine(allRep.BlacklistRep.GetById(Blacklist).GenerateConfig());

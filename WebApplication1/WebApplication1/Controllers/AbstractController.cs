@@ -33,7 +33,7 @@ namespace WebApplication1.Controllers
             {
                 var es = _repository.GetList(_sort, _order, _start, _end);
 
-                HttpContext.Response.Headers.Add("X-Total-Count", es.Count().ToString());
+                HttpContext.Response.Headers.Add("X-Total-Count", _repository.GetAll().Count().ToString());
                 HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "X-Total-Count");
 
                 return Ok(es);
