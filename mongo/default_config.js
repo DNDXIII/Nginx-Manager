@@ -14,3 +14,9 @@ db.ProxyTypes.insert({
     'Description' : 'Every server gets the same amount of requests.', 
     'ProxyValue' : ''
 });
+db.ProxyTypes.insert({ 
+    '_id' : '591d74c4d2r50d3d8c3c78b4', 
+    'Name' : 'Sticky', 
+    'Description' : 'Sticks to the client.', 
+    'ProxyValue' : 'sticky;'
+});
