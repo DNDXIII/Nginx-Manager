@@ -14,7 +14,7 @@ const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) 
     />
 )
 
-const renderIps = ({ fields, meta: { error } }) => (
+const RenderMap = ({ fields, meta: { error } }) => (
     <ul style={{
         listStyle: "none",
         paddingLeft: 0
@@ -38,7 +38,7 @@ const renderIps = ({ fields, meta: { error } }) => (
 const FieldArraysForm = (props) => {
     return (
         <span>
-            <FieldArray name="ips" component={renderIps} />
+            <FieldArray name={props.source} component={RenderMap} />
         </span>
 
     )

@@ -21,7 +21,10 @@ export const VirtualServerEdit = (props) => (
             <TextInput source="domain" defaultValue="" validate={required} />
             <NumberInput source="listen" defaultValue="80" validate={[required, minValue(0), maxValue(65535)]} />
             <ReferenceInput label="Application" source="applications" reference="applications" allowEmpty>
-                <SelectArrayInput />
+                <SelectInput />
+            </ReferenceInput>
+            <ReferenceInput label="Upstream for the Application" source="applicationsUpstreamId" reference="upstreams" allowEmpty>
+                <SelectInput />
             </ReferenceInput>
             <ReferenceInput label="SSL" source="ssl" reference="ssls" allowEmpty>
                 <SelectInput optionText="name" />
@@ -46,7 +49,10 @@ export const VirtualServerCreate = (props) => (
             <TextInput source="domain" defaultValue="" validate={required} />
             <NumberInput source="listen" defaultValue="80" validate={[required, minValue(0), maxValue(65535)]} />
             <ReferenceInput label="Application" source="applications" reference="applications" allowEmpty>
-                <SelectArrayInput />
+                <SelectInput />
+            </ReferenceInput>
+            <ReferenceInput label="Upstream for the Application" source="applicationsUpstreamId" reference="upstreams" allowEmpty>
+                <SelectInput />
             </ReferenceInput>
             <ReferenceInput label="SSL" source="ssl" reference="ssls" allowEmpty>
                 <SelectInput optionText="name" />

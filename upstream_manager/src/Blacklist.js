@@ -8,7 +8,7 @@ export const BlacklistEdit = (props) => (
     <Edit title={<EntityName />} {...props} >
         <SimpleForm >
             <TextInput source="name" validate={required} />
-            <ArrayInput />
+            <ArrayInput source="ips"  />
         </SimpleForm>
     </Edit>
 );
@@ -17,7 +17,7 @@ export const BlacklistCreate = (props) => (
     <Create {...props} >
         <SimpleForm >
             <TextInput source="name" validate={required} />
-            <ArrayInput />
+            <ArrayInput source="ips" />
         </SimpleForm>
     </Create>
 );

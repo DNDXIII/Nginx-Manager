@@ -20,7 +20,9 @@ namespace WebApplication1.Models
         [BsonElement("Locations")]
         public List<string> Locations { get; set; }
         [BsonElement("Applications")]
-        public List<string> Applications { get; set; }
+        public string Applications { get; set; }//applications id
+        [BsonElement("ApplicationsUpstreamId")]
+        public string ApplicationsUpstreamId { get; set; }// upstream to use inside the application
         [BsonElement("SSL")]
         public string SSL { get; set; }
         [BsonElement("Blacklist")]
@@ -40,9 +42,8 @@ namespace WebApplication1.Models
 
             if (SSL != null && SSL != "")
                 strb.Append(allRep.SSLRep.GetById(SSL).GenerateConfig());
-            if (Applications != null && Applications.Count!=0)
-                foreach (string app in Applications)
-                    strb.Append(allRep.ApplicationRep.GetById(app).GenerateConfig(allRep));
+            if (Applications != null)//&& Applications.Count!=0
+                    strb.Append(allRep.ApplicationRep.GetById(Applications).GenerateConfig(allRep, ApplicationsUpstreamId));
 
             if (Locations != null && Locations.Count!=0)
                 foreach (var l in Locations)
