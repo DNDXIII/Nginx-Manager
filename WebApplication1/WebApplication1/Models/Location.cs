@@ -39,7 +39,7 @@ namespace WebApplication1.Models
 
             var up = allRep.UpstreamRep.GetById(upstreamToPassTo);
 
-            if (PassType!=null && PassType!="")
+            if (PassType!=null && PassType!="" && up!=null)
                 strb.AppendLine("\t\t\t" + PassType + " " +up.Protocol+ up.Name.Replace(" ", "_") + ";");
 
             if (FreeText != null && FreeText!="")

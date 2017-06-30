@@ -26,14 +26,14 @@ export const LocationEdit=(props)=> (
                 {id:"~", description:"Regex case sensitive (~)"},
                 {id:"~*", description:"Regex case insensitive (~*)"},
                 {id:"^~", description:"Best non Regex (^~)"},
-            ]} optionText="description" optionValue="id" allowEmpty/> 
+            ]} optionText="description" optionValue="id" allowEmpty  validate={required }/> 
             <SelectInput source="passType" choices={[
                 {id:"proxy_pass"},
                 {id:"fastcgi_pass"},
                 {id:"uwsgi_pass"},
                 {id:"scgi_pass"},
                 {id:"memcached_pass"},
-            ]} optionText="id" optionValue="id"/>
+            ]} optionText="id" optionValue="id" allowEmpty />
             <LongTextInput source="freeText" />
         </SimpleForm>
     </Edit>
@@ -41,7 +41,7 @@ export const LocationEdit=(props)=> (
 
 
 export const LocationCreate=(props)=>(
-    <Create title="Create new Virtual Server" {...props }>
+    <Create title="Create new Location" {...props }>
         <SimpleForm >
             <TextInput source="name" defaultValue="" validate={required } />
             <TextInput source="uri" defaultValue="" validate={required }  />
@@ -53,14 +53,14 @@ export const LocationCreate=(props)=>(
                 {id:"~", description:"Case sensitive (~)"},
                 {id:"~*", description:"Case insensitive (~*)"},
                 {id:"^~", description:"Dunno what to write for this one (^~)"},
-            ]} optionText="description" optionValue="id" allowEmpty/> 
+            ]} optionText="description" optionValue="id" allowEmpty  validate={required }/> 
             <SelectInput source="passType" choices={[
                 {id:"proxy_pass"},
                 {id:"fastcgi_pass"},
                 {id:"uwsgi_pass"},
                 {id:"scgi_pass"},
                 {id:"memcached_pass"},
-            ]} optionText="id" optionValue="id"/>
+            ]} optionText="id" optionValue="id" allowEmpty/>
             <LongTextInput source="freeText" />
         </SimpleForm>
     </Create>
