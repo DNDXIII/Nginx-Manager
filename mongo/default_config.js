@@ -18,5 +18,5 @@ db.ProxyTypes.insert({
     '_id' : '591d74c4d2r50d3d8c3c78b4', 
     'Name' : 'Sticky', 
     'Description' : 'Sticks to the client.', 
-    'ProxyValue' : 'sticky;'
+    'ProxyValue' : 'sticky'
 });
