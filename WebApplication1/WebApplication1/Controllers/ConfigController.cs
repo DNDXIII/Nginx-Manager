@@ -53,7 +53,7 @@ namespace WebApplication1.Controllers
 
             Console.WriteLine("Configuration generated");
 
-            var filePath = Path.GetTempFileName();
+            var filePath = @"/tmp/nginx.conf";
             System.IO.File.WriteAllText(filePath, config.ToString());
 
             Console.WriteLine("Configuration created");
@@ -61,8 +61,10 @@ namespace WebApplication1.Controllers
             //tests the file and writes the output 
             Process p = new Process();
             ProcessStartInfo pi = new ProcessStartInfo();
-            pi.FileName = "cmd.exe";
-            pi.Arguments = @"/C docker run -v " + @":/etc/nginx/nginx.conf -P -it nginx-image nginx -t";
+            pi.FileName = "/bin/bash";
+            var command = @"docker run -v " + filePath + @":/etc/nginx/nginx.conf -P -it nginx-image nginx -t";
+            Console.WriteLine("-c \" "+command+" \"");
+            pi.Arguments = "-c \" " + command + " \"";
             pi.RedirectStandardOutput = true;
             p.StartInfo = pi;
             p.Start();
