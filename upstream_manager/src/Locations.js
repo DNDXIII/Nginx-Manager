@@ -50,9 +50,9 @@ export const LocationCreate=(props)=>(
             </ReferenceInput>
             <SelectInput source="matchType" choices={[
                 {id:"=", description:"Exact match (=)"},
-                {id:"~", description:"Case sensitive (~)"},
-                {id:"~*", description:"Case insensitive (~*)"},
-                {id:"^~", description:"Dunno what to write for this one (^~)"},
+                {id:"~", description:"Regex case sensitive (~)"},
+                {id:"~*", description:"Regex case insensitive (~*)"},
+                {id:"^~", description:"Best non Regex (^~)"},
             ]} optionText="description" optionValue="id" allowEmpty  validate={required }/> 
             <SelectInput source="passType" choices={[
                 {id:"proxy_pass"},
