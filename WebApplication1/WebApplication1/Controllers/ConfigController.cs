@@ -62,11 +62,11 @@ namespace WebApplication1.Controllers
             Process p = new Process();
             ProcessStartInfo pi = new ProcessStartInfo();
             pi.FileName = "/bin/bash";
-            var command = @"docker run -v " + filePath + @":/etc/nginx/nginx.conf -P -it nginx-image nginx -t";
-            Console.WriteLine("-c \" "+command+" \"");
+            var command = @"docker run -v " + filePath + @":/etc/nginx/nginx.conf -P -i nginx-image nginx -t";
             pi.Arguments = "-c \" " + command + " \"";
             pi.UseShellExecute = false;
             pi.RedirectStandardOutput = true;
+            pi.RedirectStandardError = true;
             p.StartInfo = pi;
             p.Start();
 
@@ -78,7 +78,7 @@ namespace WebApplication1.Controllers
 
             //check if it was a positive response
             if (p.ExitCode!=0)
-                return StatusCode(500, s);
+                return StatusCode(400, p.StandardError.ReadToEnd());
             return Ok(s);
         }
 

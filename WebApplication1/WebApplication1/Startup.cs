@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebApplication1.Models;
 using WebApplication1.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;

@@ -1,9 +1,7 @@
 import React from 'react'
-import { FieldArray,Field, reduxForm } from 'redux-form'
+import { FieldArray,Field } from 'redux-form'
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-
-const required = value => value ? undefined : 'Required'
 
 const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
     <TextField hintText={label}
