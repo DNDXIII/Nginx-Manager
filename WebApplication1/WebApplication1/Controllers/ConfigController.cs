@@ -65,11 +65,12 @@ namespace WebApplication1.Controllers
             var command = @"docker run -v " + filePath + @":/etc/nginx/nginx.conf -P -it nginx-image nginx -t";
             Console.WriteLine("-c \" "+command+" \"");
             pi.Arguments = "-c \" " + command + " \"";
+            pi.UseShellExecute = false;
             pi.RedirectStandardOutput = true;
             p.StartInfo = pi;
             p.Start();
 
-            Console.WriteLine("Configuration created");
+            Console.WriteLine("Tester has been run");
 
 
             p.WaitForExit();

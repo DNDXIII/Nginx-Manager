@@ -1,5 +1,5 @@
 import React from 'react';
-import {required, List,Delete, Datagrid, Edit, Create, TextField, EditButton, SimpleForm, LongTextInput } from 'admin-on-rest/lib/mui';
+import {required, List, Datagrid, Edit, EditButton, SimpleForm, LongTextInput } from 'admin-on-rest/lib/mui';
 import { EntityName } from './Resources'
 import LargeTextField from './LargeTextField'
 

@@ -256,12 +256,9 @@ public class WebSMiddleware
         if (errorOcurred)
             SendStringAsync("The new configuration file could not be deployed.", socket);
         else
-            SendStringAsync("The new configuration file has beens successfully deployed.", socket);
+            SendStringAsync("The new configuration file has been successfully deployed.", socket);
 
         await CloseSocket(socket);
-
-        
-
     }
 
     private bool CreateBackup(SshClient sshclient)

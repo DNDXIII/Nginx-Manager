@@ -15,7 +15,7 @@ public class Hash
         byte[] plainTextWithSaltBytes =
                 new byte[plainTextBytes.Length + saltBytes.Length];
 
-        // Copy plain text bytes into resulting array.
+        // Copy plain text bytes into resulting array.  
         for (int i = 0; i < plainTextBytes.Length; i++)
             plainTextWithSaltBytes[i] = plainTextBytes[i];
 

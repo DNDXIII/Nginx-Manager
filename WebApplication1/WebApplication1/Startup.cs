@@ -31,7 +31,7 @@ namespace WebApplication1
 
         private const string SecretKey = "needtogetthisfromenvironment";
 
-        //sdkfnasdjkfnsdfmaskf TODO ACKNOWLEDGE ME PLS
+        //TODO
 
         private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -51,7 +51,6 @@ namespace WebApplication1
                 var policy = new AuthorizationPolicyBuilder()
                                  .RequireAuthenticatedUser()
                                  .Build();
-                //config.Filters.Add(new AuthorizeFilter(policy));
             });
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));

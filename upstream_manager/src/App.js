@@ -8,7 +8,7 @@ import { ProxyList, ProxyEdit, ProxyCreate } from './ProxyTypes';
 import { SSLCreate, SSLDelete, SSLEdit, SSLList } from './SSLs';
 import { ApplicationCreate, ApplicationDelete, ApplicationEdit, ApplicationList } from './Applications';
 import { LocationCreate, LocationDelete, LocationEdit, LocationList } from './Locations';
-import { GeneralConfigCreate, GeneralConfigList, GeneralConfigEdit, GeneralConfigDelete } from './GeneralConfig';
+import {  GeneralConfigList, GeneralConfigEdit } from './GeneralConfig';
 import { DeploymentServerList, DeploymentServerCreate, DeploymentServerEdit, DeploymentServerDelete } from './DeploymentServers';
 import { BlacklistList, BlacklistCreate, BlacklistEdit, BlacklistDelete } from './Blacklist';
 import customRoutes from './customRoutes';
@@ -33,7 +33,7 @@ export const apiUrl = {
         return 'http://' + this.base + '/config';
     },
     getWebSocket: function () {
-        return 'ws://' + this.base;
+        return 'ws://' + this.base+'/ws';
     },
     deployConfig: function () {
         return 'http://' + this.base + '/config/deploy';
