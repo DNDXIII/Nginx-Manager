@@ -23,7 +23,7 @@ export const BlacklistCreate = (props) => (
 );
 
 export const BlacklistList = (props) => (
-    <List {...props} filters={<Filter />}>
+    <List title="Whitelists List" {...props} filters={<Filter />}>
         <Datagrid>
             <TextField source="name" />
             <EditButton />
