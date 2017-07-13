@@ -26,7 +26,7 @@ namespace WebApplication1.DataAccess
 
 
             //check if there is any upstream that references this server before deletion
-            if ((upCollection.Find(new BsonDocument()).ToList()).Where(vs => vs.SSL.Contains(id)).Count() > 0)
+            if ((upCollection.Find(new BsonDocument()).ToList()).Where(vs => vs.SSL==id).Count() > 0)
                 return false;
             return true;
         }
