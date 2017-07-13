@@ -1,5 +1,5 @@
 import React from 'react';
-import {required, CheckboxGroupInput, LongTextInput, List, Datagrid, Edit, Delete, Create, TextField, EditButton, ReferenceInput, SelectInput, SimpleForm, TextInput } from 'admin-on-rest/lib/mui';
+import {minValue, maxValue, NumberInput, required, CheckboxGroupInput, LongTextInput, List, Datagrid, Edit, Delete, Create, TextField, EditButton, ReferenceInput, SelectInput, SimpleForm, TextInput } from 'admin-on-rest/lib/mui';
 import { EntityName, Filter } from './Resources';
 
 
@@ -16,10 +16,9 @@ export const UpEdit = (upstreams) => (
     <Edit title={<EntityName />} {...upstreams} >
         <SimpleForm>
             <TextInput source="name" validate={required}/>
-            <SelectInput source="protocol" optionValue="id" validate={required} choices={[
-                { id: 'http://', name: 'HTTP' },
-                { id: 'https://', name: 'HTTPS' },
-            ]} />
+            <NumberInput source="port" validate={[required, minValue(0), maxValue(65535)]} />
+            <NumberInput source="maxFails" label="Max Fails" validate={[required, minValue(0), maxValue(65535)]} />
+            <NumberInput source="failTimeout" label="Fail Timeout" validate={[required, minValue(0), maxValue(65535)]} />
             <ReferenceInput label="Proxy Type" allowEmpty source="proxyTypeId" reference="proxytypes" validate={required}  >
                 <SelectInput optionText="name" />
             </ReferenceInput>
@@ -36,10 +35,9 @@ export const UpCreate = (upstreams) => (
     <Create {...upstreams }>
         <SimpleForm>
             <TextInput source="name" validate={required}/>
-            <SelectInput source="protocol" validate={required} optionValue="id" choices={[
-                { id: 'http://', name: 'HTTP' },
-                { id: 'https://', name: 'HTTPS' },
-            ]} />
+            <NumberInput source="port" defaultValue={80} validate={[required, minValue(0), maxValue(65535)]} />
+            <NumberInput source="maxFails" label="Max Fails" defaultValue={1} validate={[required, minValue(0), maxValue(65535)]} />
+            <NumberInput source="failTimeout" label="Fail Timeout" defaultValue={10} validate={[required, minValue(0), maxValue(65535)]} />
             <ReferenceInput label="Proxy Type" allowEmpty source="proxyTypeId" reference="proxytypes" validate={required}  >
                 <SelectInput optionText="name" />
             </ReferenceInput>

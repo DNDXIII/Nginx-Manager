@@ -14,11 +14,15 @@ namespace WebApplication1.Models
         public string ProxyTypeId { get; set; }
         [BsonElement("ServerIds")]
         public List<string> ServerIds { get; set; }
-        [BsonElement("Protocol")]
-        public string Protocol { get; set; }
         [BsonElement("FreeText")]
         public string FreeText { get; set; }
-        
+        [BsonElement("Port")]
+        public int Port { get; set; }
+        [BsonElement("MaxFails")]
+        public int MaxFails { get; set; }
+        [BsonElement("FailTimeout")]
+        public int FailTimeout { get; set; }
+
         public string GenerateConfig(AllRepositories allRep)
         {
             var strb = new StringBuilder();
@@ -29,7 +33,7 @@ namespace WebApplication1.Models
                 strb.AppendLine("\t\t"+ pType.ProxyValue + ";");            
 
             for(int i = 0; i < ServerIds.Count; i++)
-                strb.AppendLine("\t" + allRep.ServerRep.GetById(ServerIds[i]).GenerateConfig());
+                strb.AppendLine("\t" + allRep.ServerRep.GetById(ServerIds[i]).GenerateConfig(Port, MaxFails, FailTimeout));
 
             if(FreeText!=null && FreeText!="")
                 strb.AppendLine("\t" + FreeText);

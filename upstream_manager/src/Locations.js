@@ -21,6 +21,10 @@ export const LocationEdit=(props)=> (
             <ReferenceInput label="Upstream to pass to:" source="pass" reference="upstreams" allowEmpty>
                 <SelectInput optionText="name"/>
             </ReferenceInput>
+             <SelectInput source="protocol" validate={required} optionValue="id" choices={[
+                { id: 'http://', name: 'HTTP' },
+                { id: 'https://', name: 'HTTPS' },
+            ]} />
             <SelectInput source="matchType" choices={[
                 {id:"=", description:"Exact match (=)"},
                 {id:"~", description:"Regex case sensitive (~)"},
@@ -48,6 +52,10 @@ export const LocationCreate=(props)=>(
             <ReferenceInput label="Upstream to pass to:" source="pass" reference="upstreams" allowEmpty>
                 <SelectInput optionText="name"/>
             </ReferenceInput>
+             <SelectInput source="protocol" validate={required} optionValue="id" choices={[
+                { id: 'http://', name: 'HTTP' },
+                { id: 'https://', name: 'HTTPS' },
+            ]} />
             <SelectInput source="matchType" choices={[
                 {id:"=", description:"Exact match (=)"},
                 {id:"~", description:"Regex case sensitive (~)"},

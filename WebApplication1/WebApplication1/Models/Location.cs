@@ -1,12 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using WebApplication1.DataAccess;
-using WebApplication1.Models;
 
 
 namespace WebApplication1.Models
@@ -25,6 +19,8 @@ namespace WebApplication1.Models
         public string MatchType { get; set; }
         [BsonElement("FreeText")]
         public string FreeText { get; set; }
+        [BsonElement("Protocol")]
+        public string Protocol { get; set; }
 
         public string GenerateConfig(AllRepositories allRep, string upstreamId)//upstreamId is used when trying to override 
                                                                                //the Pass variable, oterwise should be null
@@ -40,7 +36,7 @@ namespace WebApplication1.Models
             var up = allRep.UpstreamRep.GetById(upstreamToPassTo);
 
             if (PassType!=null && PassType!="" && up!=null)
-                strb.AppendLine("\t\t\t" + PassType + " " +up.Protocol+ up.Name.Replace(" ", "_") + ";");
+                strb.AppendLine("\t\t\t" + PassType + " " +Protocol+ up.Name.Replace(" ", "_") + ";");
 
             if (FreeText != null && FreeText!="")
                 strb.AppendLine("\t\t\t" + FreeText);
