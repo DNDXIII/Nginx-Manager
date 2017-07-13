@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WebApplication1.Models
 {
-    public class Blacklist : MongoObject
+    public class Whitelist : MongoObject
     {
         [BsonElement("Name")]
         public string Name { get; set; }

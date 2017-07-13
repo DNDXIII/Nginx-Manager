@@ -10,16 +10,18 @@ import { ApplicationCreate, ApplicationDelete, ApplicationEdit, ApplicationList 
 import { LocationCreate, LocationDelete, LocationEdit, LocationList } from './Locations';
 import {  GeneralConfigList, GeneralConfigEdit } from './GeneralConfig';
 import { DeploymentServerList, DeploymentServerCreate, DeploymentServerEdit, DeploymentServerDelete } from './DeploymentServers';
-import { BlacklistList, BlacklistCreate, BlacklistEdit, BlacklistDelete } from './Blacklist';
+import { WhitelistList, WhitelistCreate, WhitelistEdit, WhitelistDelete } from './Whitelists';
 import customRoutes from './customRoutes';
 import Menu from './Menu';
 import authClient from './authClient';
 
 export const apiUrl = {
-    base: 'nginxmanager.northeurope.cloudapp.azure.com/api',
+
+    //base: 'nginxmanager.northeurope.cloudapp.azure.com/api',
+    base: 'localhost:5000/api',
     nginxReload: function (id) {
         return 'http://' + this.base + '/deploymentservers/reload/' + id;
-    },
+    },  
     authenticate: function () {
         return 'http://' + this.base + '/jwt';
     },
@@ -64,7 +66,7 @@ const App = () => (
         <Resource name="upstreams" list={UpList} edit={UpEdit} create={UpCreate} remove={UpDelete} />
         <Resource name="locations" list={LocationList} edit={LocationEdit} create={LocationCreate} remove={LocationDelete} />
         <Resource name="applications" list={ApplicationList} edit={ApplicationEdit} create={ApplicationCreate} remove={ApplicationDelete} />
-        <Resource name="blacklists" list={BlacklistList} edit={BlacklistEdit} create={BlacklistCreate} remove={BlacklistDelete} />
+        <Resource name="whitelists" list={WhitelistList} edit={WhitelistEdit} create={WhitelistCreate} remove={WhitelistDelete} />
         <Resource name="deploymentservers" list={DeploymentServerList} edit={DeploymentServerEdit} create={DeploymentServerCreate} remove={DeploymentServerDelete} />
         <Resource name="ssls" list={SSLList} edit={SSLEdit} create={SSLCreate} remove={SSLDelete} />}
         <Resource name="proxytypes" list={ProxyList} edit={ProxyEdit} create={ProxyCreate} />

@@ -4,7 +4,7 @@ import { EntityName, Filter } from './Resources';
 import ArrayInput from './ArrayInput';
 
 
-export const BlacklistEdit = (props) => (
+export const WhitelistEdit = (props) => (
     <Edit title={<EntityName />} {...props} >
         <SimpleForm >
             <TextInput source="name" validate={required} />
@@ -13,7 +13,7 @@ export const BlacklistEdit = (props) => (
     </Edit>
 );
 
-export const BlacklistCreate = (props) => (
+export const WhitelistCreate = (props) => (
     <Create {...props} >
         <SimpleForm >
             <TextInput source="name" validate={required} />
@@ -22,7 +22,7 @@ export const BlacklistCreate = (props) => (
     </Create>
 );
 
-export const BlacklistList = (props) => (
+export const WhitelistList = (props) => (
     <List title="Whitelists List" {...props} filters={<Filter />}>
         <Datagrid>
             <TextField source="name" />
@@ -32,6 +32,6 @@ export const BlacklistList = (props) => (
 );
 
 
-export const BlacklistDelete = (props) => (
+export const WhitelistDelete = (props) => (
     <Delete title={<EntityName />} {...props} />
 );

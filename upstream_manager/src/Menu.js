@@ -28,9 +28,9 @@ export default ({ resources, onMenuTap, logout }) => (
 
         <MenuItem containerElement={<Link to="/virtualservers" />} primaryText="Virtual Servers" onTouchTap={onMenuTap} leftIcon={<Tethering />} />
         <Divider />
-        <MenuItem containerElement={<Link to="/blacklists" />} primaryText="Whitelist" onTouchTap={onMenuTap} leftIcon={<Prohibited />} />
+        <MenuItem containerElement={<Link to="/whitelists" />} primaryText="Whitelists" onTouchTap={onMenuTap} leftIcon={<Prohibited />} />
         <MenuItem containerElement={<Link to="/ssls" />} primaryText="SSL's" onTouchTap={onMenuTap} leftIcon={<Lock />} />
-        <MenuItem containerElement={<Link to="/proxytypes" />} primaryText="Proxy Types" onTouchTap={onMenuTap} leftIcon={<Router/*change*/ />} />
+        <MenuItem containerElement={<Link to="/proxytypes" />} primaryText="Proxy Types" onTouchTap={onMenuTap} leftIcon={<Router />} />
         <Divider />
         <MenuItem containerElement={<Link to="/deploymentservers" />} primaryText="Deployment Servers" onTouchTap={onMenuTap} leftIcon={<Router />} />
         <MenuItem containerElement={<Link to="/config" />} primaryText="Deploy Configuration" onTouchTap={onMenuTap} leftIcon={<Place />} />

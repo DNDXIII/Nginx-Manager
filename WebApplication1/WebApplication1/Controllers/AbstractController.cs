@@ -104,7 +104,11 @@ namespace WebApplication1.Controllers
             if (e == null)
                 return NotFound();
 
-            _repository.Delete(id);
+
+            if (!_repository.Delete(id))
+            {
+                return BadRequest();
+            }
 
             return Ok(e);
         }

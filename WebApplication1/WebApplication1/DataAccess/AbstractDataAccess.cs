@@ -11,7 +11,7 @@ namespace WebApplication1.DataAccess
     {
        
 
-        private IMongoDatabase _db;
+        protected IMongoDatabase _db;
         protected IMongoCollection<E> _collection;
 
        
@@ -44,12 +44,13 @@ namespace WebApplication1.DataAccess
 
         }
 
-        public void Delete(string id)
+        public virtual bool Delete(string id)
         {
             DeleteAsync(id);
+            return true;
         }
 
-        private async void DeleteAsync(string id)
+        public virtual async void DeleteAsync(string id)
         {
             var filter = Builders<E>.Filter.Eq("Id", id);
             await _collection.DeleteOneAsync(filter);

@@ -5,7 +5,9 @@ namespace WebApplication1.DataAccess
 {
     public class UpstreamDataAccess : AbstractDataAccess<Upstream>
     {
-        public UpstreamDataAccess(string connectionString) : base("Upstreams", connectionString) {
-         }     
+        public UpstreamDataAccess(string connectionString) : base("Upstreams", connectionString)
+        {
+        }    
+        
     }
 }

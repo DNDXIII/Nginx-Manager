@@ -1,9 +1,4 @@
-﻿using MongoDB.Bson;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 
 namespace WebApplication1.DataAccess
 {
@@ -12,7 +7,7 @@ namespace WebApplication1.DataAccess
         E Add(E e);
         IEnumerable<E> GetAll();
         E GetById(string id);
-        void Delete(string id);
+        bool Delete(string id);
         void Update(string id, E e);
         IEnumerable<E> GetList(string sort, string order, int start, int end);
     }

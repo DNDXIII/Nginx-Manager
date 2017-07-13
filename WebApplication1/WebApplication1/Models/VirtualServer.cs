@@ -25,8 +25,8 @@ namespace WebApplication1.Models
         public string ApplicationsUpstreamId { get; set; }// upstream to use inside the application
         [BsonElement("SSL")]
         public string SSL { get; set; }
-        [BsonElement("Blacklist")]
-        public string Blacklist { get; set; }
+        [BsonElement("Whitelist")]
+        public string Whitelist { get; set; }
         [BsonElement("FreeText")]
         public string FreeText { get; set; }
         [BsonElement("Priority")]
@@ -54,8 +54,8 @@ namespace WebApplication1.Models
                     strb.Append(allRep.LocationRep.GetById(l).GenerateConfig(allRep, null));
 
 
-            if (Blacklist != null)
-                strb.AppendLine(allRep.BlacklistRep.GetById(Blacklist).GenerateConfig());
+            if (Whitelist != null)
+                strb.AppendLine(allRep.WhitelistRep.GetById(Whitelist).GenerateConfig());
             
 
 

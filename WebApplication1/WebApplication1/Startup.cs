@@ -73,7 +73,7 @@ namespace WebApplication1
             services.AddSingleton(new LocationsDataAccess(connectionString));
             services.AddSingleton(new GeneralConfigDataAccess(connectionString));
             services.AddSingleton(new DeploymentServerDataAccess(connectionString));
-            services.AddSingleton(new BlacklistDataAccess (connectionString));
+            services.AddSingleton(new WhitelistDataAccess(connectionString));
 
 
             services.AddSingleton<AllRepositories>();

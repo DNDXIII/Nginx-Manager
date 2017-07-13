@@ -13,14 +13,14 @@ namespace WebApplication1.DataAccess
         public LocationsDataAccess LocationRep { get; }
         public GeneralConfigDataAccess GeneralConfigRep { get; }
         public DeploymentServerDataAccess DeploymentServerRep { get; }
-        public BlacklistDataAccess BlacklistRep { get; }
+        public WhitelistDataAccess WhitelistRep { get; }
 
 
 
 
         public AllRepositories(ServersDataAccess s, UpstreamDataAccess u, ProxyTypeDataAccess p,
          VirtualServerDataAccess vs, SSLDataAccess ssl, ApplicationDataAccess app, LocationsDataAccess l, GeneralConfigDataAccess gc,
-         DeploymentServerDataAccess ds, BlacklistDataAccess b)
+         DeploymentServerDataAccess ds, WhitelistDataAccess b)
         {
             ServerRep = s;
             UpstreamRep = u;
@@ -31,7 +31,7 @@ namespace WebApplication1.DataAccess
             LocationRep = l;
             GeneralConfigRep = gc;
             DeploymentServerRep = ds;
-            BlacklistRep = b;
+            WhitelistRep = b;
         }
     }
 }
