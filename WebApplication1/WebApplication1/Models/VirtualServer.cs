@@ -1,10 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using WebApplication1.DataAccess;
 
 namespace WebApplication1.Models
@@ -17,12 +13,10 @@ namespace WebApplication1.Models
         public string Domain { get; set; }
         [BsonElement("Listen")]
         public int Listen { get; set; }
-        [BsonElement("Locations")]
-        public List<string> Locations { get; set; }
         [BsonElement("Applications")]
-        public string Applications { get; set; }//applications id
+        public List<string> Applications { get; set; }//applications id
         [BsonElement("ApplicationsUpstreamId")]
-        public string ApplicationsUpstreamId { get; set; }// upstream to use inside the application
+        public List<string> ApplicationsUpstreamId { get; set; }// upstream to use inside the application
         [BsonElement("SSL")]
         public string SSL { get; set; }
         [BsonElement("Whitelist")]
@@ -46,20 +40,12 @@ namespace WebApplication1.Models
             if (FreeText != null)
                 strb.AppendLine("\t" + FreeText);
 
-            if (Applications != null)//&& Applications.Count!=0
-                    strb.Append(allRep.ApplicationRep.GetById(Applications).GenerateConfig(allRep, ApplicationsUpstreamId));
-
-            if (Locations != null && Locations.Count!=0)
-                foreach (var l in Locations)
-                    strb.Append(allRep.LocationRep.GetById(l).GenerateConfig(allRep, null));
-
+            for(int i=0;i< Applications.Count;i++)
+                strb.Append(allRep.ApplicationRep.GetById(Applications[i]).GenerateConfig(allRep, ApplicationsUpstreamId[i]));
 
             if (Whitelist != null)
                 strb.AppendLine(allRep.WhitelistRep.GetById(Whitelist).GenerateConfig());
             
-
-
-
             strb.AppendLine("\t}");
 
             return strb.ToString();

@@ -10,15 +10,17 @@ namespace WebApplication1.Models
         [BsonElement("Name")]
         public string Name { get; set; }
         [BsonElement("Locations")]
-        public List<string> Locations { get; set; } 
-       
+        public List<Location> Locations { get; set; }
+        [BsonElement("Protocol")]
+        public string Protocol { get; set; }
+
         public string GenerateConfig(AllRepositories allRep, string UpstreamId)
         {
             var strb = new StringBuilder();
 
             foreach(var l in Locations)
             {
-                strb.AppendLine(allRep.LocationRep.GetById(l).GenerateConfig(allRep, UpstreamId));
+                strb.AppendLine(l.GenerateConfig(allRep, UpstreamId, Protocol));
             }
 
             return strb.ToString();

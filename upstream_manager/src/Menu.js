@@ -23,7 +23,6 @@ export default ({ resources, onMenuTap, logout }) => (
         <MenuItem containerElement={<Link to="/servers" />} primaryText="Servers" onTouchTap={onMenuTap} leftIcon={<Wifi />} />
         <MenuItem containerElement={<Link to="/upstreams" />} primaryText="Upstreams" onTouchTap={onMenuTap} leftIcon={<DeviceHub />} />
         <Divider />
-        <MenuItem containerElement={<Link to="/locations" />} primaryText="Locations" onTouchTap={onMenuTap} leftIcon={<Place />} />
         <MenuItem containerElement={<Link to="/applications" />} primaryText="Applications" onTouchTap={onMenuTap} leftIcon={<LineWeight />} />
 
         <MenuItem containerElement={<Link to="/virtualservers" />} primaryText="Virtual Servers" onTouchTap={onMenuTap} leftIcon={<Tethering />} />

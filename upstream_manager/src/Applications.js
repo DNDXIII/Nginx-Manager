@@ -1,21 +1,11 @@
 import React from 'react';
-import { required, List, ReferenceInput, Datagrid, SelectArrayInput, Edit, Delete, Create, TextField, EditButton, SimpleForm, TextInput } from 'admin-on-rest/lib/mui';
+import { required, List, ReferenceInput, Datagrid, SelectInput, LongTextInput, Edit, Delete, Create, TextField, EditButton, SimpleForm, TextInput } from 'admin-on-rest/lib/mui';
 import { EntityName, Filter } from './Resources'
 import { Card, CardHeader } from 'material-ui/Card';
 import { Field, FieldArray, reduxForm } from 'redux-form'
 import { default as TextFieldMUI } from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-
-
-const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
-    <TextFieldMUI
-        hintText={label}
-        floatingLabelText={label}
-        errorText={touched && error}
-        {...input}
-        {...custom}
-    />
-);
+import Divider from 'material-ui/Divider';
 
 export const ApplicationList = (props) => (
     <List {...props} filters={<Filter />}>
@@ -31,89 +21,72 @@ export const ApplicationEdit = (props) => (
     <Edit title={<EntityName />}  {...props}>
         <SimpleForm >
             <TextInput source="name" defaultValue="" validate={required} />
-            <Locations />
-        </SimpleForm>
+            </SimpleForm>
     </Edit>
 );
 
 export const ApplicationCreate = (props) => (
     <Create {...props }>
         <SimpleForm >
-            <Locations />
+            <Field name="name" label="Name" component={TextInput} validate={required} />
+            <Field name="protocol" component={SelectInput} choices={[
+                { id: 'http://', name: 'HTTP' },
+                { id: 'https://', name: 'HTTPS' },
+            ]} optionValue="id" allowEmpty validate={required} label="Protocol" /><br />
+            <ul style={{
+                listStyle: "none",
+                paddingLeft: 13,
+                paddingBottom: 13,
+                paddingTop: 13
+            }}>
+
+
+                <h3>Locations</h3>
+
+                <FieldArray name="locations" component={(locations) =>
+                    <div style={{ marginLeft: 13 }}>
+                        {
+                            locations.fields.map((loc, index) =>
+                                <li key={index}>
+                                    <Field
+                                        name={`${loc}.uri`}
+                                        component={TextInput}
+                                        label="URI"
+                                    /><br />
+                                    <Field name={`${loc}.passtype`} component={SelectInput} choices={[
+                                        { id: "proxy_pass" },
+                                        { id: "fastcgi_pass" },
+                                        { id: "uwsgi_pass" },
+                                        { id: "scgi_pass" },
+                                        { id: "memcached_pass" },
+                                    ]} optionText="id" optionValue="id" allowEmpty label="Pass Type" /><br />
+
+
+                                    <Field name={`${loc}.matchType`} component={SelectInput} choices={[
+                                        { id: "=", description: "Exact match (=)" },
+                                        { id: "~", description: "Regex case sensitive (~)" },
+                                        { id: "~*", description: "Regex case insensitive (~*)" },
+                                        { id: "^~", description: "Best non Regex (^~)" },
+                                    ]} optionText="description" optionValue="id" allowEmpty label="Match Type" /><br />
+
+                                    <Field name={`${loc}.freeText`} component={LongTextInput} allowEmpty label="Free Text" /><br />
+
+                                    <RaisedButton secondary={true} style={{ marginTop: 13, marginBottom: 13 }} label="remove" onTouchTap={() => locations.fields.remove(index)} />
+                                    <Divider />
+
+                                </li>
+                            )}
+                        <RaisedButton primary={true} style={{ marginTop: 26, marginBottom: 13, }} label="Add Location" onTouchTap={() => locations.fields.push({})} />
+                    </div>
+
+                } />
+            </ul>
 
         </SimpleForm>
     </Create>
 );
 
 
-export class Locations extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            expanded: false,
-        };
-    }
-
-    handleExpandChange = (expanded) => {
-        this.setState({ expanded: expanded });
-    }
-
-        render(){
-            return(
-                <div>
-                    <Field style={{paddingLeft: 13}} name="name" label="Name" component={renderTextField}/>
-                    <ul style={{
-                        listStyle: "none",
-                        paddingLeft: 13,
-                        paddingBottom: 13,
-                        paddingTop: 13
-                    }}>
-                        <h3>Locations</h3>
-                       
-                        <FieldArray name="locations" component={(locations) =>
-                            <div>
-                                {
-                                    locations.fields.map((loc, index)=>
-                                    <li  key={index}>
-                                        <Field 
-                                            style={{marginLeft:13}}
-                                            name={`${loc}.name`}
-                                            component={renderTextField}
-                                            label={`Name`} /><br/>
-                                        <Field
-                                            style={{marginLeft:13}}
-                                            name={`${loc}.uri`}
-                                            component={renderTextField}
-                                            label={`Uri`} /><br/>
-                                        <RaisedButton secondary={true} style={{ marginLeft: 13 }} label="remove" onTouchTap={() => locations.fields.remove(index)} />
-
-                                    </li>
-                                )}
-                                <RaisedButton primary={true} style={{ marginLeft: 13, marginTop:13, marginBottom:13, }}  label="Add Location" onTouchTap={() => locations.fields.push({})} />
-                            </div>
-
-                        }/>
-                    </ul>
-                </div>
-            )
-        }
-}
-
 export const ApplicationDelete = (props) => (
     <Delete title={<EntityName />} {...props} />
 );
- /*
-  {
-                fields.map((loc, index) => (
-                    <li style={{ listStyleType: "none" }} key={index}>
-                        <Field
-                            name={fields.get(index).ola}
-                            type="text"
-                            component={renderTextField}
-                            label={`Location #${index + 1}`} />
-                        <RaisedButton style={{ marginLeft: 13 }} label="remove" onTouchTap={() => fields.remove(index)} />
-
-                    </li>
-                ))}
-            <RaisedButton label="Add Location" onTouchTap={() => fields.push({ola:"ola"})} />
-            */

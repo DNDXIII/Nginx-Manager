@@ -17,8 +17,8 @@ import authClient from './authClient';
 
 export const apiUrl = {
 
-    base: 'nginxmanager.northeurope.cloudapp.azure.com/api',
-    //base: 'localhost:5000/api',
+    //base: 'nginxmanager.northeurope.cloudapp.azure.com/api',
+    base: 'localhost:5000/api',
     nginxReload: function (id) {
         return 'http://' + this.base + '/deploymentservers/reload/' + id;
     },  
@@ -64,7 +64,6 @@ const App = () => (
         <Resource name="virtualservers" list={VirtualServerList} edit={VirtualServerEdit} create={VirtualServerCreate} remove={VirtualServerDelete} />
         <Resource name="servers" list={ServerList} edit={ServerEdit} create={ServerCreate} remove={ServerDelete} />
         <Resource name="upstreams" list={UpList} edit={UpEdit} create={UpCreate} remove={UpDelete} />
-        <Resource name="locations" list={LocationList} edit={LocationEdit} create={LocationCreate} remove={LocationDelete} />
         <Resource name="applications" list={ApplicationList} edit={ApplicationEdit} create={ApplicationCreate} remove={ApplicationDelete} />
         <Resource name="whitelists" list={WhitelistList} edit={WhitelistEdit} create={WhitelistCreate} remove={WhitelistDelete} />
         <Resource name="deploymentservers" list={DeploymentServerList} edit={DeploymentServerEdit} create={DeploymentServerCreate} remove={DeploymentServerDelete} />

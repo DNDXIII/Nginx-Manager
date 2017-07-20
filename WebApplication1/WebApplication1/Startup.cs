@@ -70,7 +70,6 @@ namespace WebApplication1
             services.AddSingleton(new VirtualServerDataAccess(connectionString));
             services.AddSingleton(new SSLDataAccess(connectionString));
             services.AddSingleton(new ApplicationDataAccess(connectionString));
-            services.AddSingleton(new LocationsDataAccess(connectionString));
             services.AddSingleton(new GeneralConfigDataAccess(connectionString));
             services.AddSingleton(new DeploymentServerDataAccess(connectionString));
             services.AddSingleton(new WhitelistDataAccess(connectionString));
