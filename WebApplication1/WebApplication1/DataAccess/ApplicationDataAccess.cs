@@ -21,12 +21,22 @@ namespace WebApplication1.DataAccess
 
         private bool CanDelete(string id)
         {
-            var upCollection = _db.GetCollection<VirtualServer>("VirtualServers");
+            var vsCollection = _db.GetCollection<VirtualServer>("VirtualServers");
 
 
             //check if there is any reference to this object before deletion
-            if ((upCollection.Find(new BsonDocument()).ToList()).Where(vs => vs.Applications.Contains(id)).Count() > 0)
-                return false;
+
+            var vsList =vsCollection.Find(new BsonDocument()).ToList();
+            
+            foreach(var vs in vsList)
+            {
+                foreach(var a in vs.Applications)
+                {
+                    if (a.ApplicationId == id)
+                        return false;
+                }
+            }
+            
             return true;
         }
     }

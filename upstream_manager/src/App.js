@@ -7,7 +7,6 @@ import { VirtualServerCreate, VirtualServerDelete, VirtualServerEdit, VirtualSer
 import { ProxyList, ProxyEdit, ProxyCreate } from './ProxyTypes';
 import { SSLCreate, SSLDelete, SSLEdit, SSLList } from './SSLs';
 import { ApplicationCreate, ApplicationDelete, ApplicationEdit, ApplicationList } from './Applications';
-import { LocationCreate, LocationDelete, LocationEdit, LocationList } from './Locations';
 import {  GeneralConfigList, GeneralConfigEdit } from './GeneralConfig';
 import { DeploymentServerList, DeploymentServerCreate, DeploymentServerEdit, DeploymentServerDelete } from './DeploymentServers';
 import { WhitelistList, WhitelistCreate, WhitelistEdit, WhitelistDelete } from './Whitelists';

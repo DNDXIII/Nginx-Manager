@@ -14,9 +14,7 @@ namespace WebApplication1.Models
         [BsonElement("Listen")]
         public int Listen { get; set; }
         [BsonElement("Applications")]
-        public List<string> Applications { get; set; }//applications id
-        [BsonElement("ApplicationsUpstreamId")]
-        public List<string> ApplicationsUpstreamId { get; set; }// upstream to use inside the application
+        public List<ApplicationRef> Applications { get; set; }//applications and their upstream 
         [BsonElement("SSL")]
         public string SSL { get; set; }
         [BsonElement("Whitelist")]
@@ -25,6 +23,14 @@ namespace WebApplication1.Models
         public string FreeText { get; set; }
         [BsonElement("Priority")]
         public int Priority { get; set; }
+
+        public class ApplicationRef
+        {
+            [BsonElement("ApplicationId")]
+            public string ApplicationId { get; set; }//applications id
+            [BsonElement("UpstreamToPass")]
+            public string UpstreamToPass { get; set; }// upstream to use inside the application
+        }
 
         public string GenerateConfig(AllRepositories allRep)
         {
@@ -41,7 +47,7 @@ namespace WebApplication1.Models
                 strb.AppendLine("\t" + FreeText);
 
             for(int i=0;i< Applications.Count;i++)
-                strb.Append(allRep.ApplicationRep.GetById(Applications[i]).GenerateConfig(allRep, ApplicationsUpstreamId[i]));
+                strb.Append(allRep.ApplicationRep.GetById(Applications[i].ApplicationId).GenerateConfig(allRep, Applications[i].UpstreamToPass));
 
             if (Whitelist != null)
                 strb.AppendLine(allRep.WhitelistRep.GetById(Whitelist).GenerateConfig());
