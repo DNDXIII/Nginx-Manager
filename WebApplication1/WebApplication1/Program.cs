@@ -18,6 +18,7 @@ namespace WebApplication1
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
+				.UseUrls("http://0.0.0.0:80")
                 .Build();
 
           host.Run();
