@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebApplication1.Common;
 using System;
+using System.IO;
 
 namespace WebApplication1
 {
@@ -115,7 +116,20 @@ namespace WebApplication1
             app.UseWebSockets();
             app.UseMiddleware<WebSMiddleware>();
 
-            app.UseMvc();
+            app.Use(async (context, next) =>
+            {
+                await next();
+                if (context.Response.StatusCode == 404 &&
+                   !Path.HasExtension(context.Request.Path.Value) &&
+                   !context.Request.Path.Value.StartsWith("/api/"))
+                {
+                    context.Request.Path = "/index.html";
+                    await next();
+                }
+            });
+            app.UseMvcWithDefaultRoute();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
         }
     }
 }
