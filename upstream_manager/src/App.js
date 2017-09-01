@@ -16,7 +16,7 @@ import authClient from './authClient';
 
 export const apiUrl = {
 
-    base: 'nginxmanager.northeurope.cloudapp.azure.com/api',
+    base: 'nginx-manager-game.westeurope.cloudapp.azure.com/api',
     //base: 'localhost:5000/api',
     nginxReload: function (id) {
         return 'http://' + this.base + '/deploymentservers/reload/' + id;
